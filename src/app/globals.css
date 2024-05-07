@@ -1968,10 +1968,23 @@ p {
   margin: 0 auto;
 } */
 
+/* Chat box page */
+.user-name {
+  color:   #525252;
+  font-size: 20px;
+  font-weight: 600;
+}
 
+.product-name{
+  color:   #525252;
+}
+
+.btn-request-review {
+  color: #046BFB !important;
+  background-color: #F1F7FF !important;
+}
 
 /* media queries */
-
 @media only screen and (max-width: 480px) {
   .homecategories {
     height: 153px;
