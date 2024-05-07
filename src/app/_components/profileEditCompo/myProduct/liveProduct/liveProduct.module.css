@@ -1,0 +1,385 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+.blue_btn {
+    background: #046BFB;
+    padding: 14px 32px 14px 32px;
+    border-radius: 4px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+    outline: none;
+    color: #FFFFFF;
+    border: 1px solid #046BFB;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 0px 15px;
+}
+
+.blue_btn:hover {
+    background: transparent;
+    border: 1px solid #046BFB;
+    color: #046BFB;
+    transition: all 0.5s;
+}
+
+.transparent_btn {
+    background: transparent;
+    border: 1px solid #046BFB;
+    color: #046BFB;
+    transition: all 0.5s;
+    padding: 14px 32px 14px 32px;
+    border-radius: 4px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+    outline: none;
+    cursor: pointer;
+}
+
+.transparent_btn:hover {
+    background: #046BFB;
+    border: 1px solid #046BFB;
+    color: #fff;
+    transition: all 0.5s;
+}
+
+.edit_profile_heading_container h2 {
+    font-family: "Poppins";
+    font-size: 20px;
+    font-weight: 600;
+    border-bottom: 1px solid #D9D9D9;
+    padding-bottom: 10px;
+    color: #525252;
+}
+
+.edit_profile_tab_options {
+    background: #F7F8F9;
+    max-width: 360px;
+    margin: 30px auto 30px auto;
+    padding: 12px;
+    border-radius: 35px;
+}
+.activeButtonPersonal {
+    font-family: "Poppins";
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0px 8px 24px 2px #046BFB26;
+    color: #fff;
+    background: #046BFB;
+    padding: 8px 48px;
+}
+
+.activeButtonBusiness {
+    font-family: "Poppins";
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0px 8px 24px 2px #EF623926;
+    color: #fff;
+    background: #EF6239;
+    padding: 8px 48px;
+}
+
+.personalBusinessBtn{
+    color: #757575;
+    font-family: "Poppins";
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    border: none;
+    background: none;
+    padding: 8px 48px;
+}
+
+.productImgDiv img {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.productImgDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 12%;
+}
+
+.productTitle {
+    font-family: "Poppins";
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    color: #525252;
+    margin: 0px;
+}
+.productPrice{
+    font-family: "Poppins";
+    font-size: 15px;
+    font-weight: 600;
+    color: #046BFB;
+    margin: 0px;
+}
+.productPrice span{
+    font-family: "Poppins";
+    font-size: 8px;
+    font-weight: 400;
+    color: #525252;
+}
+
+.productContainer {
+    display: flex;
+    align-items: center;
+    border: 1px solid #D9D9D9;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 17px 0px;
+}
+.productdescriptionWithBtn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 85%;
+}
+.promoteBtn{
+    background: #046BFB;
+    padding: 8px 24px 8px 24px;
+    border-radius: 4px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+    outline: none;
+    color: #FFFFFF;
+    border: 1px solid #046BFB;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin-right: 15px;
+}
+.editBtn{
+    background: transparent;
+    border: 1px solid #046BFB;
+    color: #046BFB;
+    transition: all 0.5s;
+    padding: 8px 24px 8px 24px;
+    border-radius: 4px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+    outline: none;
+    cursor: pointer;
+    margin-right: 15px;
+}
+.deleteBtn{
+    background: #F7F8F9;
+    border: none;
+    color: #EF6239;
+    transition: all 0.5s;
+    padding: 8px 24px 8px 24px;
+    border-radius: 4px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+    outline: none;
+    cursor: pointer;
+
+}
+
+@media only screen and (max-width: 1149px) {
+
+    .edit_profile_heading_container h2 {
+        font-size: 18px;
+    }
+    .promoteBtn{
+        padding: 7px 20px 7px 20px;
+        font-size: 14px;
+    }
+    .editBtn{
+        padding: 7px 20px 7px 20px;
+        font-size: 14px;
+    }
+    .deleteBtn{
+        padding: 7px 20px 7px 20px;
+        font-size: 14px;
+    }
+    .productTitle {
+        font-size: 16px;
+    }
+    .productPrice{
+        font-size: 14px;
+    }
+}
+@media only screen and (max-width:830px){
+    .productContainer{
+        flex-wrap: wrap;
+    }
+    .productTitleWithDesc{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    .productBtnDiv{
+        width: 100%;
+        margin-top: 5px;
+    }
+    .productdescriptionWithBtn{
+        flex-direction: column;
+    }
+    .promoteBtn{
+        padding: 5px 15px 5px 15px;
+        font-size: 13px;
+    }
+    .editBtn{
+        padding: 5px 15px 5px 15px;
+        font-size: 13px;
+    }
+    .deleteBtn{
+        padding: 5px 15px 5px 15px;
+        font-size: 13px;
+    }
+    .productImgDiv img{
+        height: 63px;
+    }
+    
+}
+
+@media only screen and (max-width: 768px) {
+    .blue_btn {
+        padding: 9px 25px 9px 25px;
+    }
+
+    .transparent_btn {
+        padding: 9px 25px 9px 25px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .activeButtonBusiness{
+        padding: 7px 35px;
+        font-size: 12px;
+    }
+    .activeButtonPersonal{
+        padding: 7px 35px;
+        font-size: 12px;
+    }
+    .personalBusinessBtn{
+        padding: 7px 35px;
+        font-size: 12px;
+    }
+    .productTitle{
+        font-size: 15px;
+    }
+    .edit_profile_tab_options {
+        max-width: 280px;
+        margin: 25px auto 25px auto;
+        padding: 6px;
+    }
+    .promoteBtn{
+        padding: 5px 15px 5px 15px;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+    .editBtn{
+        padding: 5px 15px 5px 15px;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+    .deleteBtn{
+        padding: 5px 15px 5px 15px;
+        font-size: 12px;
+    }
+    .productContainer{
+        justify-content: space-between;
+    }
+    
+    
+}
+
+@media only screen and (max-width: 403px) {
+
+    .activeButtonBusiness{
+        padding: 7px 25px;
+    }
+    .activeButtonPersonal{
+        padding: 7px 25px;
+    }
+    .personalBusinessBtn{
+        padding: 7px 25px;
+    }
+
+    .edit_profile_tab_options {
+        max-width: 276px;
+    }
+}
+
+@media only screen and (max-width:385px) {
+
+    .activeButtonBusiness{
+        padding: 7px 22px;
+    }
+    .activeButtonPersonal{
+        padding: 7px 22px;
+    }
+    .personalBusinessBtn{
+        padding: 7px 22px;
+    }
+    .productContainer{
+        padding: 10px 10px;
+    }
+    .productImgDiv img {
+        height: 55px;
+        margin-right: 5px;
+    }
+    .promoteBtn{
+        padding: 5px 10px 5px 10px;
+        font-size: 10px;
+        margin-right: 5px;
+    }
+    .editBtn{
+        padding: 5px 10px 5px 10px;
+        font-size: 10px;
+        margin-right: 5px;
+    }
+    .deleteBtn{
+        padding: 5px 10px 5px 10px;
+        font-size: 10px;
+    }
+    .productTitle {
+        font-size: 12px;
+    }
+    .productPrice{
+        font-size: 12px;
+    }
+    .productBtnDiv{
+        margin-top: 0px;
+    }
+}
+
+@media only screen and (max-width:330px) {
+    .productTitle {
+        font-size: 10px;
+    }
+    .productPrice{
+        font-size: 10px;
+    }
+    .activeButtonBusiness{
+        padding: 7px 18px;
+    }
+    .activeButtonPersonal{
+        padding: 7px 18px;
+    }
+    .personalBusinessBtn{
+        padding: 7px 18px;
+    }
+}

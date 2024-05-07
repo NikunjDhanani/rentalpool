@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"], // Source files alias
+      "@env/*": ["./.env/*"] // Environment files alias
+    }
+  }
+}

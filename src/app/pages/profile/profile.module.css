@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+
+.blue_btn {
+    background: #046BFB;
+    padding: 14px 32px 14px 32px;
+    border-radius: 4px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+    outline: none;
+    color: #FFFFFF;
+    border: 1px solid #046BFB;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.blue_btn:hover {
+    background: transparent;
+    border: 1px solid #046BFB;
+    color: #046BFB;
+    transition: all 0.5s;
+}
+
+.transparent_btn {
+    background: transparent;
+    border: 1px solid #046BFB;
+    color: #046BFB;
+    transition: all 0.5s;
+    padding: 14px 32px 14px 32px;
+    border-radius: 4px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+    outline: none;
+    cursor: pointer;
+}
+
+.transparent_btn:hover {
+    background: #046BFB;
+    border: 1px solid #046BFB;
+    color: #fff;
+    transition: all 0.5s;
+}
+
+.edit_profile_sub_container {
+    max-width: 1150px;
+    width: 100%;
+    margin: 0 auto;
+    background: #F7F8F9;
+    padding: 30px 30px 50px 30px;
+    border-radius: 30px;
+
+}
+
+.my_account_heading_container h1 {
+    color: #046BFB;
+    font-size: 28px;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+    line-height: 140%;
+    margin-bottom: 17px;
+}
+
+.my_account_tab_options_container ul {
+    list-style-type: none;
+    padding: 13px 0px;
+}
+
+.my_account_tab_options_container{
+    width: 20%;
+}
+.my_account_tab_content_container{
+    width: 75%;
+}
+
+.my_account_tab_content_container {
+    width: 100%;
+    max-width: 85%;
+    background: #fff;
+    padding: 30px 30px 50px 30px;
+    border-radius: 8px;
+}
+
+.my_account_tab_container {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.my_account_tab_options_container ul {
+    padding-left: 0px;
+}
+
+.my_account_tab_options_container ul li {
+    padding: 17px 0px;
+    border-bottom: 1px solid #D9D9D9;
+    font-size: 18px;
+    line-height: 140%;
+    font-family: "Poppins", sans-serif;
+    color: #525252;
+    text-decoration: none;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.my_account_tab_options_container ul li.active_main_tab {
+    color: #046BFB;
+    font-weight: 500;
+}
+
+
+@media only screen and (max-width: 1149px){
+    .edit_profile_sub_container {
+        max-width: 1021px;   
+    }
+    .my_account_tab_options_container ul li {
+        font-size: 16px;
+    }
+    .my_account_heading_container h1 {
+        font-size: 25px;
+    }
+   
+}
+
+@media only screen and (max-width: 1024px){
+     .my_account_heading_container h1 {
+        font-size: 24px;
+    }
+    .edit_profile_sub_container {
+        max-width: 100%;   
+        
+    }
+    .my_account_profile_container{
+        padding: 0px 20px;
+    } 
+}
+
+@media only screen and (max-width: 767px){
+
+     .my_account_tab_container {
+        flex-direction: column;
+        gap: 0px;
+    }
+
+     .my_account_tab_options_container {
+        max-width: 100%;
+        width: 100%;
+        overflow: auto;
+    }
+
+     .my_account_tab_options_container ul{
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 20px;
+        overflow: auto;
+    }
+
+     .my_account_tab_options_container ul li{
+        border-bottom: none;
+        white-space: nowrap;
+    }
+     .my_account_tab_content_container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+     .my_account_tab_content_container,
+     .edit_profile_sub_container {
+        padding: 20px;
+    }
+    .my_account_tab_options_container ul{
+        padding: 10px 0px;
+        margin: 0px;
+    }
+    .my_account_heading_container h1 {
+        margin-bottom: 0px;
+    }
+    
+}
+
+
+@media only screen and (max-width: 480px){
+.my_account_tab_options_container{
+padding: 0px;
+}
+.my_account_tab_content_container{
+    padding: 13px;
+}
+.my_account_tab_options_container ul li {
+    font-size: 14px;
+}
+
+}

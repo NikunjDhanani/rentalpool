@@ -1,0 +1,358 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+.referAndEarnTitle {
+    font-family: "Poppins";
+    font-size: 28px;
+    font-weight: 700;
+    color: #046BFB;
+    text-align: center;
+    margin: 20px 0px;
+}
+
+.promotProductDescription {
+    font-family: "Poppins";
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.promotProductImgDescDiv {
+    padding: 12px 30px;
+    border: 1px solid #E8E8ED;
+    border-radius: 10px;
+    max-width: 252px;
+    margin: 0 auto;
+}
+
+.promotProductImg {
+    max-width: 190px;
+    height: 220px;
+    border-radius: 5px;
+}
+
+.promotProductImg {
+    width: 100%;
+}
+
+.productTitle {
+    font-family: "Poppins";
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    color: #525252;
+    margin: 0px;
+    margin-top: 10px;
+}
+
+.productPrice {
+    font-family: "Poppins";
+    font-size: 15px;
+    font-weight: 600;
+    color: #046BFB;
+    margin: 0px;
+}
+
+.productPrice span {
+    font-family: "Poppins";
+    font-size: 8px;
+    font-weight: 400;
+    color: #525252;
+}
+.planContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin: 17px 0px;
+    width: 60%;
+    margin: 17px auto 0px auto;
+}
+.mainTitleForPlan {
+    font-family: "Poppins";
+    font-size: 28px;
+    font-weight: 700;
+    color: #EF6239;
+    padding-bottom: 10px;
+}
+.planDescription{
+    font-family: "Poppins";
+    font-size: 14px;
+    font-weight: 400;
+    color: #525252;
+    margin: 0;
+}
+.planPriceDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.planPriceDivContainer{
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+}
+.pricingPercent {
+    font-family: "Poppins";
+    font-size: 12px;
+    font-weight: 500;
+    color: #046BFB;
+margin: 0;
+}
+.offerPricing {
+    font-family: "Poppins";
+    font-size: 20px;
+    font-weight: 600;
+    color: #757575;
+    text-decoration-line: line-through;
+
+}
+.price {
+    font-family: "Poppins";
+    font-size: 30px;
+    font-weight: 700;
+    color: #046BFB;
+    margin-left: 12px;
+}
+
+.backBtn {
+    background: transparent;
+    border: 1px solid #046BFB;
+    color: #046BFB;
+    transition: all 0.5s;
+    padding: 10px 25px 10px 25px;
+    border-radius: 4px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+    outline: none;
+    cursor: pointer;
+}
+.backBtnDiv{
+    text-align: end;
+}
+.backBtn img{
+    margin-right: 10px;
+}
+
+.coinTotalDetailDiv{
+    border: 1px solid #E8E8ED;
+    padding: 15px 45px;
+    margin: 25px 30px;
+}
+.coinTotalTitleDiv, .coinTotalDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.coinTotalTitleDiv{
+    border-bottom: 1px solid #D9D9D9;
+}
+.coinTotalTitleDiv p{
+    font-family: "Poppins";
+    font-size: 18px;
+    font-weight: 400;
+    color: #525252;
+    margin-top: 12px;
+}
+.availableCoinTitle{
+    color: #046BFB;
+    font-family: "Poppins";
+    font-size: 18px;
+    font-weight: 500;
+}
+.coinTotalDiv p{
+    font-family: "Poppins";
+    font-size: 18px;
+    font-weight: 500;
+    color: #525252;
+    margin-top: 12px;
+}
+.blue_btn {
+    background: #046BFB;
+    padding: 14px 82px 14px 82px;
+    border-radius: 4px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+    outline: none;
+    color: #FFFFFF;
+    border: 1px solid #046BFB;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1149px) {
+    .productTitle {
+        font-size: 16px;
+    }
+
+    .productPrice {
+        font-size: 14px;
+    }
+    .planContainer{
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 788px){
+    .mainTitleForPlan{
+        font-size: 22px;
+        padding-bottom: 0px;
+    }
+    .planDescription{
+        font-size: 12px;
+    }
+    .pricingPercent{
+        font-size: 10px;
+    }
+    .offerPricing{
+        margin-bottom: 7px;
+        font-size: 14px;
+    }
+    .price{
+        font-size: 20px;
+        margin-bottom: 7px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+
+    .referAndEarnTitle {
+        font-size: 20px;
+    }
+    .backBtn {
+        padding: 9px 25px 9px 25px;
+    }
+    .coinTotalDiv p{
+        font-size: 16PX;
+    }
+    .coinTotalTitleDiv p{
+        font-size: 16PX;
+    }
+    .blue_btn{
+        width: 100%;
+        padding: 9px 0px 9px 0px;
+    }
+    .backBtn {
+        padding: 7px 20px 7px 20px;
+        font-size: 12px;
+    }
+    .backBtn img{
+        margin-right: 4px;
+    width: 10px;
+    }
+    .coinTotalDetailDiv{
+        margin: 20px 0px;
+    }
+}
+
+@media only screen and (max-width: 520px) {
+    .planContainer{
+        padding: 15px;
+    }
+    .mainTitleForPlan{
+        font-size: 18px;
+    }
+    .planDescription{
+        font-size: 12px;
+    }
+    .planPriceDivContainer{
+        flex-direction: row;
+    }
+    .pricingPercent{
+        text-align: end;
+    }
+    .offerPricing{
+        font-size: 12px;
+    }
+    .price{
+        font-size: 17px;
+    }
+   .blue_btn{
+    width: 100%;
+    padding: 9px 0px 9px 0px;
+   }
+}
+
+@media only screen and (max-width: 480px) {
+    .productTitle {
+        font-size: 15px;
+    }
+    .planTitleDescriptionDiv{
+        width: 60%;
+    }
+    .planPriceDiv{
+        width: 40%;
+    }
+    .coinTotalTitleDiv p{
+        font-size: 12px;
+    }
+    .coinTotalDiv p{
+        font-size: 14px;
+    }
+    .promotProductImgDescDiv{
+        max-width: 100%;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        padding: 10px 15px;
+    }
+    .promotProductImg{
+        max-width: 47px;
+        height: auto;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+    .promotProductImg img{
+        border-radius: 5px;
+        
+    }
+    .backBtn img{
+        margin-bottom: 2px;
+    }
+    .backBtn{
+        font-size: 10px;
+        padding: 5px 15px;
+    }
+}
+
+@media only screen and (max-width:385px) {
+    .productTitle {
+        font-size: 12px;
+    }
+
+    .productPrice {
+        font-size: 12px;
+    }
+    .planDescription {
+        font-size: 10px;
+    }
+    .price{
+        font-size: 14px;
+    }
+    .backBtn{
+        padding: 8px 18px 8px 18px;
+        font-size: 14px;
+    }
+}
+@media only screen and (max-width: 350px){
+    .price{
+        margin-left: 0px;
+    }
+   
+}
+
+@media only screen and (max-width:330px) {
+    .productTitle {
+        font-size: 10px;
+    }
+
+    .productPrice {
+        font-size: 10px;
+    }
+}
