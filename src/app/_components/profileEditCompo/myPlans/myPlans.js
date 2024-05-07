@@ -5,25 +5,29 @@ import styles from "./myPlans.module.css";
 import axios from "axios";
 
 const MyPlans = () => {
-
-
     const [planData, setPlanData] = useState([])
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const accessToken = localStorage.getItem("authToken")
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}users/myPackages/`, {
+                    headers: {
+                        token: "7d06038979f128c1af0790237774a13fc47a5815"
+                    }
+                });
+                setPlanData(response.data);
+                console.log(response.data); 
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
-        axios({
-            url: `${process.env.NEXT_PUBLIC_BASE_URL}users/myPackages/`,
-            method: "GET",    
-        })
-            .then((res) => {
-                setPlanData(res.data)
-                console.log(res.data);
-            })
-            .catch((err) => {
-                console.error(err);
-            })
+        fetchData();
 
     }, []);
+
+    console.log("planData", planData)
 
 
     return (
@@ -36,29 +40,29 @@ const MyPlans = () => {
                     <div className={styles.edit_profile_tab_container}>
                         {planData.map((plan, index) => (
                             <div key={index} className={styles.activatedPlan_div} style={{ background: "#E7F9E0", margin: "20px 0px" }}>
-                            <div className={styles.activatedPlanContainerDiv} >
-                                <h3 className={styles.mainTitleForPlan}>{plan.package.name}</h3>
+                                <div className={styles.activatedPlanContainerDiv} >
+                                    <h3 className={styles.mainTitleForPlan}>{plan.package.name}</h3>
 
-                                <button className={styles.activatedBtn}>{plan.status}</button>
-                            </div>
-                            <div className={styles.activatedProductPlanMainDiv}>
-                                <div className={styles.productPlanDetailsDiv}>
-                                    <p className={styles.productNumber}>{plan.used_products}</p>
-                                    <p className={styles.productNumberTitle}>Used Product</p>
+                                    <button className={styles.activatedBtn}>{plan.status}</button>
                                 </div>
-                                <div className={styles.productPlanDetailsDiv}>
-                                    <p className={styles.productNumber}>{plan.remaining_product}</p>
-                                    <p className={styles.productNumberTitle}>Remain Product</p>
-                                </div>
-                                <div className={styles.productPlanDetailsDiv}>
-                                    <p className={styles.productNumber}>{plan.total_products}</p>
-                                    <p className={styles.productNumberTitle}>Total Product</p>
-                                </div>
+                                <div className={styles.activatedProductPlanMainDiv}>
+                                    <div className={styles.productPlanDetailsDiv}>
+                                        <p className={styles.productNumber}>{plan.used_products}</p>
+                                        <p className={styles.productNumberTitle}>Used Product</p>
+                                    </div>
+                                    <div className={styles.productPlanDetailsDiv}>
+                                        <p className={styles.productNumber}>{plan.remaining_product}</p>
+                                        <p className={styles.productNumberTitle}>Remain Product</p>
+                                    </div>
+                                    <div className={styles.productPlanDetailsDiv}>
+                                        <p className={styles.productNumber}>{plan.total_products}</p>
+                                        <p className={styles.productNumberTitle}>Total Product</p>
+                                    </div>
 
+                                </div>
                             </div>
-                        </div>
-                       )) }
-                        
+                        ))}
+
                         <hr ></hr>
                         <div className={styles.upgradePlanDiv}>
 

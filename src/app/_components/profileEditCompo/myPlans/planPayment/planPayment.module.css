@@ -229,6 +229,40 @@
     margin: 0px;
 }
 
+/* Modal */
+.modal_title{
+    color : #046BFB
+}
+
+.promo_title{
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.seprator{
+    background-color: #D9D9D9;
+    height: 1px;
+    width: 100%;
+    margin: 15px 0;
+}
+
+.applyBtn{
+    background: transparent;
+    border: 1px solid #046BFB;
+    color: #046BFB;
+    transition: all 0.5s;
+    padding: 16px 32px;
+    border-radius: 4px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+    outline: none;
+    cursor: pointer;
+}
+
+
 @media only screen and (max-width: 1149px) {
     .productTitle {
         font-size: 16px;
