@@ -8,7 +8,7 @@ import ReferAndEarn from "../../_components/profileEditCompo/referAndEarn/referA
 import Insights from "../../_components/profileEditCompo/insights/insights"
 import PromotProduct from "../../_components/profileEditCompo/myProduct/promotProduct/promotProduct"
 import PromotProductPayment from "../../_components/profileEditCompo/myProduct/promotProductPayment/promotProductPayment"
-import PlanPayment from "../../_components/profileEditCompo/myPlans/planPayment/planPayment"
+import PlanPayment from "../planPayment/page"
 import { useState } from "react";
 
 const Profile = () => {
