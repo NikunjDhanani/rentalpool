@@ -1,13 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styles from "./myPlans.module.css";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
-    const router = useRouter();
     const [planData, setPlanData] = useState([]);
     const [silverPlanData, setSilverPlanData] = useState([]);
     const authToken = localStorage.getItem("authToken");

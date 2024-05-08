@@ -20,6 +20,14 @@
     width: 100%;
 }
 
+.planProductName{
+    font-family: "Poppins";
+    font-size: 20px;
+    font-weight: 600;
+    color: #525252;
+    margin-bottom: 8px;
+}
+
 .productTitle {
     font-family: "Poppins";
     font-size: 18px;

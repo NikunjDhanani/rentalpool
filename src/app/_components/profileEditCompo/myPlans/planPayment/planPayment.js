@@ -75,7 +75,10 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
           <div className={styles.main_tab_content}>
             <div className={styles.edit_profile_tab_container}>
               <div className={styles.backBtnDiv}>
-                <button onClick={() => setShowPlanPayment(false)} className={styles.backBtn}>
+                <button
+                  onClick={() => setShowPlanPayment(false)}
+                  className={styles.backBtn}
+                >
                   <img src="/assets/profileEdit/back.png" />
                   Back
                 </button>
@@ -101,12 +104,14 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   <div className={styles.planPriceDiv}>
                     <div className={styles.planPriceDivContainer}>
                       <div className={styles.pricingDiv}>
-                        <p className={styles.pricingPercent}>25% off</p>
+                        <p className={styles.pricingPercent}>{((planPaymentData?.original_price - planPaymentData?.current_price) / planPaymentData?.original_price) * 100}% off</p>
                         <p className={styles.offerPricing}>
                           ₹ {planPaymentData.original_price}
                         </p>
                       </div>
-                      <p className={styles.price}>₹ {planPaymentData.current_price}</p>
+                      <p className={styles.price}>
+                        ₹ {planPaymentData.current_price}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -138,11 +143,11 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   <p className={styles.availableCoinTitle}>Total Amount</p>
                   <div className={styles.coinTotalTitleDiv}>
                     <p>Base Amount</p>
-                    <p>₹ {planPaymentData.original_price}</p>
+                    <p>₹ {planPaymentData.current_price}</p>
                   </div>
                   <div className={styles.coinTotalTitleDiv}>
                     <p>Discount</p>
-                    <p>-₹ 40</p>
+                    <p>0</p>
                   </div>
                   <div className={styles.coinTotalTitleDiv}>
                     <p>Coupon Discount</p>
@@ -154,7 +159,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   </div>
                   <div className={styles.coinTotalDiv}>
                     <p>Total</p>
-                    <p>₹ 160</p>
+                    <p>₹ {planPaymentData.current_price}</p>
                   </div>
                 </div>
                 <div style={{ textAlign: "center" }}>
@@ -162,7 +167,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                     className={styles.blue_btn}
                     onClick={() => handlePayment()}
                   >
-                    Pay ₹160
+                    Pay ₹{planPaymentData.original_price}
                   </button>
                 </div>
               </div>
