@@ -11,17 +11,17 @@ const PlanPayment = ({ planPaymentData }) => {
   const [openModal, setOpenModal] = useState(false);
 
   const handleOpenPromoModal = () => {
-    setOpenModal(true)
-  }
+    setOpenModal(true);
+  };
 
   const handleClose = () => setOpenModal(false);
 
   const loadRazorpay = async () => {
     if (!window.Razorpay) {
-      const script = document.createElement('script');
-      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
       document.body.appendChild(script);
-      await new Promise(resolve => {
+      await new Promise((resolve) => {
         script.onload = resolve;
       });
     }
@@ -29,18 +29,18 @@ const PlanPayment = ({ planPaymentData }) => {
   const handlePayment = async () => {
     await loadRazorpay();
     const razorpay = new window.Razorpay({
-      key: 'rzp_test_Q0RtnAxFtND64R',
+      key: "rzp_test_Q0RtnAxFtND64R",
       amount: 1000, // Example: 1000 is the amount in paisa (Rupees 10)
-      currency: 'INR',
-      name: 'Your Website Name',
-      description: 'Payment for your order',
+      currency: "INR",
+      name: "Your Website Name",
+      description: "Payment for your order",
       prefill: {
-        name: 'Customer Name',
-        email: 'customer@example.com',
-        contact: 'Customer Phone Number',
+        name: "Customer Name",
+        email: "customer@example.com",
+        contact: "Customer Phone Number",
       },
       theme: {
-        color: '#F37254',
+        color: "#F37254",
       },
       handler: function (response) {
         // Handle successful payment
@@ -51,7 +51,7 @@ const PlanPayment = ({ planPaymentData }) => {
     razorpay.open();
   };
 
-  console.log("planPaymentData",planPaymentData )
+  console.log("planPaymentData", planPaymentData);
   return (
     <>
       <div className={styles.my_account_tab_content_container}>
@@ -59,7 +59,10 @@ const PlanPayment = ({ planPaymentData }) => {
           <div className={styles.main_tab_content}>
             <div className={styles.edit_profile_tab_container}>
               <div className={styles.backBtnDiv}>
-                <button onClick={() => router.back()} className={styles.backBtn}>
+                <button
+                  onClick={() => router.back()}
+                  className={styles.backBtn}
+                >
                   <img src="/assets/profileEdit/back.png" />
                   Back
                 </button>
@@ -71,18 +74,26 @@ const PlanPayment = ({ planPaymentData }) => {
                   style={{ background: "#FFECDD" }}
                 >
                   <div className={styles.planTitleDescriptionDiv}>
-                    <h3 className={styles.mainTitleForPlan}>7 Days</h3>
+                    <h3 className={styles.mainTitleForPlan}>
+                      {planPaymentData.name} Plan
+                    </h3>
+                    <p className={styles.planProductName}>
+                      {planPaymentData.allowed_products} Product
+                    </p>
                     <p className={styles.planDescription}>
-                      Reach up to 2 times more customers
+                      You will rent {planPaymentData?.allowed_products} products
+                      in our {planPaymentData.name} plan.
                     </p>
                   </div>
                   <div className={styles.planPriceDiv}>
                     <div className={styles.planPriceDivContainer}>
                       <div className={styles.pricingDiv}>
-                        <p className={styles.pricingPercent}>40% off</p>
-                        <p className={styles.offerPricing}>₹ 200</p>
+                        <p className={styles.pricingPercent}>25% off</p>
+                        <p className={styles.offerPricing}>
+                          ₹ {planPaymentData.original_price}
+                        </p>
                       </div>
-                      <p className={styles.price}>₹ 120</p>
+                      <p className={styles.price}>₹ {planPaymentData.current_price}</p>
                     </div>
                   </div>
                 </div>
@@ -108,7 +119,7 @@ const PlanPayment = ({ planPaymentData }) => {
                   <p className={styles.availableCoinTitle}>Total Amount</p>
                   <div className={styles.coinTotalTitleDiv}>
                     <p>Base Amount</p>
-                    <p>₹ 200</p>
+                    <p>₹ {planPaymentData.original_price}</p>
                   </div>
                   <div className={styles.coinTotalTitleDiv}>
                     <p>Discount</p>
@@ -128,7 +139,12 @@ const PlanPayment = ({ planPaymentData }) => {
                   </div>
                 </div>
                 <div style={{ textAlign: "center" }}>
-                  <button className={styles.blue_btn} onClick={() => handlePayment()}>Pay ₹160</button>
+                  <button
+                    className={styles.blue_btn}
+                    onClick={() => handlePayment()}
+                  >
+                    Pay ₹160
+                  </button>
                 </div>
               </div>
             </div>
@@ -146,7 +162,9 @@ const PlanPayment = ({ planPaymentData }) => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div>
                     <p className={styles.promo_title}>SAVE50</p>
-                    <p className="mb-0">Get 50% discount on your all payments</p>
+                    <p className="mb-0">
+                      Get 50% discount on your all payments
+                    </p>
                   </div>
                   <div>
                     <button className={styles.applyBtn}>Apply</button>
@@ -154,7 +172,7 @@ const PlanPayment = ({ planPaymentData }) => {
                 </div>
                 {i !== 2 && <div className={styles.seprator} />}
               </div>
-            )
+            );
           })}
         </Modal.Body>
       </Modal>
