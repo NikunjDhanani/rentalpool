@@ -8,7 +8,8 @@ const ChatBox = () => {
             <div className="row mt-3">
                 <div className="contactus-container col-3 p-0">
                     <h5 className="chat-box-header-name">Chat Box</h5>
-                    <div className="message-sender-list d-flex justify-content-between align-items-center px-2 py-1">
+                    <div className="message-sender-list">
+                    <div className="message-sender d-flex justify-content-between align-items-center px-2 py-1">
                         <div className="d-flex align-items-center">
                             <img className="user-image" src="/assets/userImage.png" alt="User" />
                             <div className="px-2">
@@ -22,6 +23,7 @@ const ChatBox = () => {
                                 <div className="total-send-message d-flex justify-content-center align-items-center">99+</div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
                 <div className="contactus-container col-9 chat-box-side">
