@@ -1,8 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
 import styles from "./planPayment.module.css";
+import { useState } from "react";
+import { Modal } from "react-bootstrap";
 
-const PlanPayment = () => {
+const PlanPayment = ({ planPaymentData }) => {
   const router = useRouter();
   console.log(router, "datadatadatadatadata");
 
@@ -48,6 +50,8 @@ const PlanPayment = () => {
 
     razorpay.open();
   };
+
+  console.log("planPaymentData",planPaymentData )
   return (
     <>
       <div className={styles.my_account_tab_content_container}>
