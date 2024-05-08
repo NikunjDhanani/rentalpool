@@ -42,7 +42,7 @@ const Profile = () => {
                         {activeTab === 'myProducts' && <LiveProduct />}
                         {activeTab === 'myPlans' && <>
                             {!showPlanPayment && <MyPlans setPlanPaymentData={setPlanPaymentData} setShowPlanPayment={setShowPlanPayment} />}
-                            {showPlanPayment && <PlanPayment planPaymentData={planPaymentData}/>}
+                            {showPlanPayment && <PlanPayment planPaymentData={planPaymentData} setShowPlanPayment={setShowPlanPayment}/>}
                         </>}
                         {activeTab === 'referEarn' && <ReferAndEarn />}
                         {activeTab === 'insights' && <Insights />}

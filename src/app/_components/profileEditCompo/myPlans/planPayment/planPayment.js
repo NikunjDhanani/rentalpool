@@ -4,7 +4,7 @@ import styles from "./planPayment.module.css";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
 
-const PlanPayment = ({ planPaymentData }) => {
+const PlanPayment = ({ planPaymentData,setShowPlanPayment }) => {
   const router = useRouter();
   console.log(router, "datadatadatadatadata");
 
@@ -59,7 +59,7 @@ const PlanPayment = ({ planPaymentData }) => {
           <div className={styles.main_tab_content}>
             <div className={styles.edit_profile_tab_container}>
               <div className={styles.backBtnDiv}>
-                <button onClick={() => router.back()} className={styles.backBtn}>
+                <button onClick={() => setShowPlanPayment(false)} className={styles.backBtn}>
                   <img src="/assets/profileEdit/back.png" />
                   Back
                 </button>

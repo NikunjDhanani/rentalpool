@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styles from "./myPlans.module.css";
 import axios from "axios";
-import PlanPayment from "./planPayment/planPayment";
 
 const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
     const router = useRouter();
@@ -58,9 +57,10 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
             },
         })
             .then((response) => {
-                if (response.data.active_plan) {
+                if (!response.data.active_plan) {
                     setShowPlanPayment(true);
                     setPlanPaymentData(plan);
+                } else {
                 }
             })
             .catch((err) => {
@@ -139,7 +139,7 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
                                         <div className={styles.planPriceDiv}>
                                             <div className={styles.planPriceDivContainer}>
                                                 <div className={styles.pricingDiv}>
-                                                    <p className={styles.pricingPercent}>25% off</p>
+                                                    <p className={styles.pricingPercent}>{((plan?.original_price - plan?.current_price) / plan?.original_price) * 100}% off</p>
                                                     <p className={styles.offerPricing}>
                                                         ₹ {plan.original_price}
                                                     </p>
