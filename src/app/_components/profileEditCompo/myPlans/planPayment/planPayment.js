@@ -3,14 +3,18 @@ import { useRouter } from "next/navigation";
 import styles from "./planPayment.module.css";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
+import axios from "axios";
 
-const PlanPayment = ({ planPaymentData,setShowPlanPayment }) => {
+const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
   const router = useRouter();
-  console.log(router, "datadatadatadatadata");
 
   const [openModal, setOpenModal] = useState(false);
+  const [couponCodeList, setCouponCodeList] = useState(null);
+  const [selectedPromoCode, setSelectedPromoCode] = useState('');
+  const [userPromoCode, seUserPromoCode] = useState('')
 
-  const handleOpenPromoModal = () => {
+  const handleOpenPromoModal = async () => {
+    await getCouponCode()
     setOpenModal(true);
   };
 
@@ -26,6 +30,7 @@ const PlanPayment = ({ planPaymentData,setShowPlanPayment }) => {
       });
     }
   };
+
   const handlePayment = async () => {
     await loadRazorpay();
     const razorpay = new window.Razorpay({
@@ -51,7 +56,18 @@ const PlanPayment = ({ planPaymentData,setShowPlanPayment }) => {
     razorpay.open();
   };
 
-  console.log("planPaymentData", planPaymentData);
+  const getCouponCode = async () => axios({
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}products/listCoupons/`,
+    method: "GET",
+  })
+    .then((res) => {
+      setCouponCodeList(res.data)
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
   return (
     <>
       <div className={styles.my_account_tab_content_container}>
@@ -99,12 +115,18 @@ const PlanPayment = ({ planPaymentData,setShowPlanPayment }) => {
                     type="text"
                     placeholder="Enter Coupon Code"
                     className={styles.planApplyCouponInput}
+                    value={userPromoCode}
+                    onChange={(e) => seUserPromoCode(e.target.value)}
                   />
                   <input
                     type="submit"
                     name="Apply"
                     className={styles.planApplyCouponSubmit}
+                    disabled={selectedPromoCode}
                   />
+                  <div className={`d-flex justify-content-end ${styles.browseCode}`} onClick={() => handleOpenPromoModal()}>
+                    <p>Browse Coupon Codes</p>
+                  </div>
                   <div className={styles.couponInputCheckboxDiv}>
                     <input type="checkbox" />
                     <label>
@@ -153,24 +175,28 @@ const PlanPayment = ({ planPaymentData,setShowPlanPayment }) => {
           <Modal.Title className={styles.modal_title}>Promocodes</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {[...new Array(3)].map((_, i) => {
-            return (
-              <div key={i}>
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <p className={styles.promo_title}>SAVE50</p>
-                    <p className="mb-0">
-                      Get 50% discount on your all payments
-                    </p>
+          {couponCodeList ?
+            couponCodeList.map((promo, i) => {
+              return (
+                <div key={i}>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <p className={styles.promo_title}>{promo.name}</p>
+                      <p className="mb-0">
+                        {promo.description}
+                      </p>
+                    </div>
+                    <div>
+                      <button className={styles.applyBtn} onClick={() => { setSelectedPromoCode(promo); setOpenModal(false) }}>Apply</button>
+                    </div>
                   </div>
-                  <div>
-                    <button className={styles.applyBtn}>Apply</button>
-                  </div>
+                  {i === couponCodeList.legth - 1 && <div className={styles.seprator} />}
                 </div>
-                {i !== 2 && <div className={styles.seprator} />}
-              </div>
-            );
-          })}
+              );
+            })
+            :
+            <p>No PromoCode Available</p>
+          }
         </Modal.Body>
       </Modal>
     </>

@@ -58,7 +58,7 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
             },
         })
             .then((response) => {
-                if (!response.data.active_plan) {
+                if (response.data.active_plan) {
                     setShowPlanPayment(true);
                     setPlanPaymentData(plan);
                 } else {
