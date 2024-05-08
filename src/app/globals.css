@@ -2200,27 +2200,88 @@ p {
 } */
 
 /* Chat box page */
+.chat-box-header-name {
+  font-size: 24px;
+  font-weight: 700;
+  padding: 16px 10px;
+}
+
+.message-sender-list {
+  cursor: pointer;
+  border-bottom: 1px solid #E8E8ED;
+}
+
+.product-name-sender {
+  color: #757575;
+  font-size: 12px;
+}
+
+.message-time {
+  color: #757575;
+  font-size: 10px;
+}
+
+.total-send-message {
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  font-size: 9px;
+  background-color: #EF6239;
+  color: white;
+}
+
+.chat-box-side {
+  padding: 0 !important;
+  border-radius: 10px;
+}
+
 .chat-box {
   height: 550px;
   overflow-y: auto;
   position: relative;
   padding: 12px;
+  background-color: #E8E8ED;
 }
 
-.chat-part{
+.chat-part {
   position: absolute;
   bottom: 0;
 }
 
 .incomeing-message {
-  
+  max-width: 65%;
+  padding: 8px 12px;
+  background-color: white;
+  margin-bottom: 8px;
+  border-radius: 8px;
+}
+
+.bydefault-message {
+  max-width: 65%;
+  padding: 8px 12px;
+  background-color: #DCE8FF;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  margin-right: 12px;
+}
+
+.sending-message {
+  max-width: 65%;
+  padding: 8px 12px;
+  background-color: white;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  margin-right: 12px;
+}
+
+.chat-box-header {
+  padding: 12px;
 }
 
 .user-image {
   height: 44px;
   width: 44px;
   border-radius: 50%;
-  margin-left: 10px;
 }
 
 .user-name {
@@ -2228,6 +2289,12 @@ p {
   font-size: 20px;
   font-weight: 600;
   margin-left: 10px;
+}
+
+.user-name-sender {
+  color: #525252;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .product-name {
@@ -2248,6 +2315,36 @@ p {
   color: #046BFB !important;
   background-color: #F1F7FF !important;
   margin-left: 16px;
+}
+
+.chat-box-message-input {
+  color: #757575;
+  background-color: white;
+  margin-bottom: 16px;
+  margin-top: 8px;
+  border-radius: 30px;
+  border: none;
+  padding: 0px 24px;
+  height: 60px;
+  width: calc(100% - 84px);
+}
+
+.send-message {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: #046BFB;
+  position: relative;
+  margin-right: 12px;
+  margin-bottom: 16px;
+  margin-top: 8px;
+}
+
+.send-message-arrow {
+  position: absolute;
+  top: 18px;
+  left: 16px;
 }
 
 /* media queries */
