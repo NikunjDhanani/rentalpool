@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styles from "./myPlans.module.css";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
     const router = useRouter();
@@ -61,6 +62,7 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
                     setShowPlanPayment(true);
                     setPlanPaymentData(plan);
                 } else {
+                    toast.success('You have already Free plan');
                 }
             })
             .catch((err) => {

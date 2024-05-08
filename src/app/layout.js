@@ -9,6 +9,7 @@ import Header from "./_components/Header";
 import Footer from "./_components/Footer";
 import { store } from "@/store";
 import Providers from "@/reduxProvider";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
           {children}
           <BootstrapClient />
           <Footer />
+          <Toaster position="bottom-right" />
         </body>
       </html>
     </Providers>
