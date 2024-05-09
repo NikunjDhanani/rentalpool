@@ -20,6 +20,14 @@
     width: 100%;
 }
 
+.planProductName{
+    font-family: "Poppins";
+    font-size: 20px;
+    font-weight: 600;
+    color: #525252;
+    margin-bottom: 8px;
+}
+
 .productTitle {
     font-family: "Poppins";
     font-size: 18px;
@@ -213,20 +221,66 @@
     align-items: flex-start;
     padding-top: 15px;
 }
+
 .couponInputCheckboxDiv input[type=checkbox] {
     margin: 5px 8px 0px 0px;
     width: 15px;
     height: 15px;
 }
 
-.couponInputCheckboxDiv label{
+.couponInputCheckboxDiv label {
     font-size: 16px;
     color: #525252;
 }
-.couponInputCheckboxDiv p{
+
+.couponInputCheckboxDiv p {
     font-size: 13px;
     color: #046BFB;
     margin: 0px;
+}
+
+/* Modal */
+.modal_title {
+    color: #046BFB
+}
+
+.promo_title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.seprator {
+    background-color: #D9D9D9;
+    height: 1px;
+    width: 100%;
+    margin: 15px 0;
+}
+
+.applyBtn {
+    background: transparent;
+    border: 1px solid #046BFB;
+    color: #046BFB;
+    transition: all 0.5s;
+    padding: 16px 32px;
+    border-radius: 4px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+    outline: none;
+    cursor: pointer;
+}
+
+.browseCode {
+    color: #046BFB;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+.browseCode p {
+    font-weight: 600;
+    font-size: 14px;
 }
 
 @media only screen and (max-width: 1149px) {
@@ -297,12 +351,14 @@
         margin: 20px 0px;
     }
 
-    .couponInputCheckboxDiv label{
+    .couponInputCheckboxDiv label {
         font-size: 14px;
     }
-    .couponInputDiv{
+
+    .couponInputDiv {
         margin: 0px;
     }
+
     .coinTotalDetailDiv {
         padding: 15px 20px;
     }
@@ -392,18 +448,22 @@
         font-size: 10px;
         padding: 5px 15px;
     }
+
     .couponInputCheckboxDiv input[type=checkbox] {
         margin: 3px 4px 0px 0px;
         width: 12px;
         height: 12px;
     }
-    .blue_btn{
+
+    .blue_btn {
         font-size: 14px;
     }
+
     .planApplyCouponInput {
         padding: 8px 15px;
     }
-    .planApplyCouponSubmit{
+
+    .planApplyCouponSubmit {
         padding: 8px 15px;
     }
 }

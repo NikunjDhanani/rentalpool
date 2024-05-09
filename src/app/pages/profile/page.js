@@ -14,6 +14,8 @@ import { useState } from "react";
 const Profile = () => {
 
     const [activeTab, setActiveTab] = useState('editProfile');
+    const [showPlanPayment, setShowPlanPayment] = useState(false);
+    const [planPaymentData, setPlanPaymentData] = useState(null);
 
     return (
         <div className={styles.my_account_profile_container} style={{ margin: "40px 0px" }}>
@@ -24,7 +26,7 @@ const Profile = () => {
 
                 <div className={styles.my_account_tab_container}>
                     <div className={styles.my_account_tab_options_container}>
-                         <ul>
+                        <ul>
                             <li className={activeTab === 'editProfile' ? styles.active_main_tab : ''} onClick={() => setActiveTab('editProfile')}><a>Edit Profile</a></li>
                             <li className={activeTab === 'myProducts' ? styles.active_main_tab : ''} onClick={() => setActiveTab('myProducts')}><a>My Products</a></li>
                             <li className={activeTab === 'myPlans' ? styles.active_main_tab : ''} onClick={() => setActiveTab('myPlans')}><a>My Plans</a></li>
@@ -35,11 +37,13 @@ const Profile = () => {
                     <div className={styles.my_account_tab_content_container}>
                         {/* <PromotProduct /> */}
                         {/* <PromotProductPayment /> */}
-                        {/* <PlanPayment /> */}
                         {/* <InsightsTwo /> */}
                         {activeTab === 'editProfile' && <PersonalProfileEdit />}
                         {activeTab === 'myProducts' && <LiveProduct />}
-                        {activeTab === 'myPlans' && <MyPlans />}
+                        {activeTab === 'myPlans' && <>
+                            {!showPlanPayment && <MyPlans setPlanPaymentData={setPlanPaymentData} setShowPlanPayment={setShowPlanPayment} />}
+                            {showPlanPayment && <PlanPayment planPaymentData={planPaymentData} setShowPlanPayment={setShowPlanPayment}/>}
+                        </>}
                         {activeTab === 'referEarn' && <ReferAndEarn />}
                         {activeTab === 'insights' && <Insights />}
                     </div>
