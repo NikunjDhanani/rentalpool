@@ -2235,9 +2235,14 @@ p {
   color: white;
 }
 
+.message-sender-side {
+  width: 330px;
+}
+
 .chat-box-side {
   padding: 0 !important;
   border-radius: 10px;
+  width: calc(100% - 350px);
 }
 
 .chat-box {
@@ -2298,12 +2303,13 @@ p {
 
 .user-name-sender {
   color: #525252;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
 }
 
 .product-name {
   color: #525252;
+  font-size: medium;
 }
 
 .product-amount {
@@ -2314,12 +2320,14 @@ p {
 
 .rent-day {
   color: #046BFB;
+  font-size: medium;
 }
 
 .btn-request-review {
   color: #046BFB !important;
   background-color: #F1F7FF !important;
   margin-left: 16px;
+  font-size: 18px !important;
 }
 
 .chat-box-message-input {
@@ -2353,6 +2361,68 @@ p {
 }
 
 /* media queries */
+@media (max-width:992px) {
+  .message-sender-side {
+    width: 280px;
+  }
+
+  .chat-box-side {
+    width: calc(100% - 295px);
+  }
+
+  .user-name-sender {
+    font-size: 12px;
+  }
+
+  .user-image {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+  }
+
+  .user-name {
+    font-size: 14px;
+    margin-left: 6px;
+  }
+
+  .product-name {
+    font-size: 12px;
+  }
+
+  .product-amount {
+    font-size: 12px;
+  }
+
+  .rent-day {
+    font-size: 10px;
+  }
+
+  .btn-request-review {
+    font-size: 12px !important;
+    margin-left: 10px;
+  }
+
+  .message-sender-list {
+    height: 450px;
+  }
+
+  .chat-box {
+    height: 450px;
+    padding: 8px;
+  }
+
+}
+
+@media (max-width:768px) {
+  .message-sender-side {
+    width: 250px;
+  }
+
+  .chat-box-side {
+    width: calc(100% - 260px);
+  }
+}
+
 @media only screen and (max-width: 480px) {
   .homecategories {
     height: 153px;
