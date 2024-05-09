@@ -1,12 +1,16 @@
 "use client"
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { io } from "socket.io-client";
 
 const ChatBox = () => {
     const [senderMessageDetails, setSenderMessageDetails] = useState([]);
     const [senderUserDerails, setSenderUserDerails] = useState([]);
 
     const authToken = localStorage.getItem("authToken");
+
+    const socket = io.connect('wss://rentalspool.com/ws/chat/46/');
+    console.log("SOCKLET", socket)
 
     useEffect(() => {
         axios({
@@ -35,7 +39,7 @@ const ChatBox = () => {
         });
     };
 
-    const handleSenerMessageDetails = (data) => {
+    const handleSenderMessageDetails = (data) => {
         setSenderUserDerails(data);
     }
 
@@ -45,25 +49,29 @@ const ChatBox = () => {
                 <div className="contactus-container p-0 message-sender-side">
                     <h5 className="chat-box-header-name">Chat Box</h5>
                     <div className="message-sender-list">
-                        {senderMessageDetails && senderMessageDetails.map((data) => (
-                            <div key={data.id} className="message-sender d-flex justify-content-between align-items-center px-2 py-1" onClick={() => handleSenerMessageDetails(data)}>
-                                {console.log(data, 'datadatadata')}
-                                <div className="d-flex align-items-center">
-                                    <img className="user-image" src="/assets/userImage.png" alt="User" />
-                                    <div className="px-2">
-                                        <div className="user-name-sender">{data.buyer.name}</div>
-                                        <div className="product-name-sender">{data.product.title}</div>
+                        {senderMessageDetails && senderMessageDetails.map((data) => {
+                            let key;
+                            key = data.whoAmI === 'buyer' ? 'seller' : 'buyer'
+
+                            return (
+                                <div key={data.id} className="message-sender d-flex justify-content-between align-items-center px-2 py-1" onClick={() => handleSenderMessageDetails(data)}>
+                                    <div className="d-flex align-items-center">
+                                        <img className="user-image" src={data[key].image ? data[key].image : "/assets/userImage.png"} alt="User" />
+                                        <div className="px-2">
+                                            <div className="user-name-sender">{data[key].name}</div>
+                                            <div className="product-name-sender">{data.product.title}</div>
+                                        </div>
+                                    </div>
+                                    <div className="text-center">
+                                        <div className="message-time">{formatDateTime(data.updated_at)}</div>
+                                        {data.unread_messages !== 0 &&
+                                            <div>
+                                                <div className="total-send-message d-flex justify-content-center align-items-center">{data.unread_messages > 100 ? '99+' : data.unread_messages}</div>
+                                            </div>}
                                     </div>
                                 </div>
-                                <div className="text-center">
-                                    <div className="message-time">{formatDateTime(data.updated_at)}</div>
-                                    {data.unread_messages !== 0 &&
-                                        <div>
-                                            <div className="total-send-message d-flex justify-content-center align-items-center">{data.unread_messages > 100 ? '99+' : data.unread_messages}</div>
-                                        </div>}
-                                </div>
-                            </div>
-                        ))}
+                            )
+                        })}
                     </div>
                 </div>
                 <div className="contactus-container chat-box-side">
