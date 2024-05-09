@@ -11,17 +11,23 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
 
   const [openModal, setOpenModal] = useState(false);
   const [couponCodeList, setCouponCodeList] = useState(null);
-  const [selectedPromoCode, setSelectedPromoCode] = useState('');
-  const [userPromoCode, setUserPromoCode] = useState('');
+  const [selectedPromoCode, setSelectedPromoCode] = useState("");
+  const [userPromoCode, setUserPromoCode] = useState("");
   const [userPromoCodeAmount, setUserPromoCodeAmount] = useState(0);
   const [rpCoins, setRpCoins] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [rpCoinCheck, setRpCoinCheck] = useState(false);
 
   const authToken = localStorage.getItem("authToken");
-  const totalPayAmount = (planPaymentData.original_price - rpCoins - (planPaymentData.original_price - planPaymentData.current_price) - (selectedPromoCode.charge ?? userPromoCodeAmount)) * 100;
-
+  const totalPayAmount =
+    (planPaymentData.original_price -
+      (rpCoinCheck && rpCoins) -
+      (planPaymentData.original_price - planPaymentData.current_price) -
+      (selectedPromoCode.charge ?? userPromoCodeAmount)) *
+    100;
+  console.log(rpCoinCheck, "rpCoinCheck");
   const handleOpenPromoModal = async () => {
-    await getCouponCode()
+    await getCouponCode();
     setOpenModal(true);
   };
 
@@ -38,22 +44,31 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
     }
   };
 
-  const handlePayment = async () => {
+  const handlePayment = async (res) => {
     await loadRazorpay();
     const razorpay = new window.Razorpay({
-      key: "rzp_test_Q0RtnAxFtND64R",
-      amount: totalPayAmount,
-      currency: "INR",
+      key: "rzp_test_wWIFX3u8n8hlHy",
+      amount: res.amount,
+      currency: res.currency,
       name: "Rentals Pool",
       description: "Payment for your order",
+      order_id: res.order_id,
       prefill: {
         name: "Customer Name",
         email: "customer@example.com",
         contact: "Customer Phone Number",
       },
       handler: function (response) {
-        // Handle successful payment
-        console.log(response);
+        if (
+          response.razorpay_payment_id &&
+          response.razorpay_order_id &&
+          response.razorpay_signature
+        ) {
+          postVerifyRazorpayOrder(response);
+          razorpay.close();
+        } else {
+          errorNotification("Payment Unsuccessful");
+        }
       },
     });
     razorpay.open();
@@ -84,7 +99,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
       },
     })
       .then((res) => {
-        setRpCoins(res.data.coins)
+        setRpCoins(res.data.coins);
       })
       .catch((err) => {
         console.error(err);
@@ -97,20 +112,83 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
         url: `${process.env.NEXT_PUBLIC_BASE_URL}products/getCouponId/`,
         method: "POST",
         data: {
-          coupon_name: userPromoCode
-        }
+          coupon_name: userPromoCode,
+        },
       });
       if (response?.status === 200) {
         setUserPromoCodeAmount(response.data.charge);
       } else {
         setUserPromoCodeAmount(0);
-        toast.error('Your coupon code is not valid.');
+        toast.error("Your coupon code is not valid.");
       }
     } catch (error) {
       console.error(error);
     }
   };
 
+  const handlePaymentCreate = async (planPaymentData) => {
+    console.log(planPaymentData, "planPaymentData");
+    try {
+      const response = await axios({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}products/createRazorpayOrder/`,
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        data: {
+          package: planPaymentData.id,
+          coupon: "",
+          use_coins: rpCoinCheck,
+        },
+      });
+      if (response.data.amount > 0) {
+        handlePayment(response.data);
+      } else {
+        handlePaymentCreateZeroOrder(response.data);
+      }
+      console.log(response.data, "responseresponse");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const postVerifyRazorpayOrder = async (response) => {
+    try {
+      const responce = await axios({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}products/verifyRazorpayOrder/`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        data: {
+          razorpay_payment_id: response.razorpay_payment_id,
+          razorpay_order_id: response.razorpay_order_id,
+          razorpay_signature: response.razorpay_signature,
+        },
+      });
+      toast.success(responce.data.status);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handlePaymentCreateZeroOrder = async (responseData) => {
+    try {
+      const response = await axios({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}products/verifyRazorpayZeroOrder/`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        data: {
+          order_id: responseData.order_id,
+        },
+      });
+      toast.success(response.data.status);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -147,7 +225,13 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   <div className={styles.planPriceDiv}>
                     <div className={styles.planPriceDivContainer}>
                       <div className={styles.pricingDiv}>
-                        <p className={styles.pricingPercent}>{((planPaymentData?.original_price - planPaymentData?.current_price) / planPaymentData?.original_price) * 100}% off</p>
+                        <p className={styles.pricingPercent}>
+                          {((planPaymentData?.original_price -
+                            planPaymentData?.current_price) /
+                            planPaymentData?.original_price) *
+                            100}
+                          % off
+                        </p>
                         <p className={styles.offerPricing}>
                           ₹ {planPaymentData.original_price}
                         </p>
@@ -174,11 +258,17 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                     onClick={handleApplyCoupon}
                     value="Apply"
                   />
-                  <div className={`d-flex justify-content-end ${styles.browseCode}`} onClick={() => handleOpenPromoModal()}>
+                  <div
+                    className={`d-flex justify-content-end ${styles.browseCode}`}
+                    onClick={() => handleOpenPromoModal()}
+                  >
                     <span>Browse Coupon Codes</span>
                   </div>
                   <div className={styles.couponInputCheckboxDiv}>
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      onChange={(e) => setRpCoinCheck(e.target.checked)}
+                    />
                     <label>
                       Use my RP Coins<p>Available : {rpCoins}</p>
                     </label>
@@ -192,7 +282,10 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   </div>
                   <div className={styles.coinTotalTitleDiv}>
                     <p>Discount</p>
-                    <p>{planPaymentData.original_price - planPaymentData.current_price}</p>
+                    <p>
+                      {planPaymentData.original_price -
+                        planPaymentData.current_price}
+                    </p>
                   </div>
                   <div className={styles.coinTotalTitleDiv}>
                     <p>Coupon Discount</p>
@@ -200,7 +293,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   </div>
                   <div className={styles.coinTotalTitleDiv}>
                     <p>RP Coins</p>
-                    <p>{rpCoins}</p>
+                    <p>{rpCoinCheck ? rpCoins : 0}</p>
                   </div>
                   <div className={styles.coinTotalDiv}>
                     <p>Total</p>
@@ -208,7 +301,10 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   </div>
                 </div>
                 <div className="text-center">
-                  <button className={styles.blue_btn} onClick={() => handlePayment()}>
+                  <button
+                    className={styles.blue_btn}
+                    onClick={() => handlePaymentCreate(planPaymentData)}
+                  >
                     Pay ₹{totalPayAmount / 100}
                   </button>
                 </div>
@@ -223,28 +319,36 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
         </Modal.Header>
         <Modal.Body>
           {loading && <div className="text-center mt-4">Loading...</div>}
-          {couponCodeList && !loading ?
+          {couponCodeList && !loading ? (
             couponCodeList.map((promo, i) => {
               return (
                 <div key={i}>
                   <div className="d-flex justify-content-between align-items-center">
                     <div>
                       <p className={styles.promo_title}>{promo.name}</p>
-                      <p className="mb-0">
-                        {promo.description}
-                      </p>
+                      <p className="mb-0">{promo.description}</p>
                     </div>
                     <div>
-                      <button className={styles.applyBtn} onClick={() => { setSelectedPromoCode(promo); setOpenModal(false) }}>Apply</button>
+                      <button
+                        className={styles.applyBtn}
+                        onClick={() => {
+                          setSelectedPromoCode(promo);
+                          setOpenModal(false);
+                        }}
+                      >
+                        Apply
+                      </button>
                     </div>
                   </div>
-                  {i === couponCodeList.legth - 1 && <div className={styles.seprator} />}
+                  {i === couponCodeList.legth - 1 && (
+                    <div className={styles.seprator} />
+                  )}
                 </div>
               );
             })
-            :
+          ) : (
             <div className="text-center my-4">No PromoCode Available</div>
-          }
+          )}
         </Modal.Body>
       </Modal>
     </>
