@@ -2360,6 +2360,14 @@ p {
   left: 16px;
 }
 
+/* razorpay */
+.razorpay-container {
+  top: 0 !important;
+  left: 0 !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+
 /* media queries */
 @media (max-width:992px) {
   .message-sender-side {
@@ -5381,6 +5389,13 @@ p {
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
+  }
+
+  .razorpay-container {
+    top: 5% !important;
+    left: 5% !important;
+    height: 90% !important;
+    width: 90% !important;
   }
 }
 

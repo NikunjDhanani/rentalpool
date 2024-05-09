@@ -1,11 +1,8 @@
-// LoginPopup.js
-
-import React, { useState } from 'react';
-import { Form, Modal, Button } from "react-bootstrap";
-import Image from 'next/image';
-import popup_img from "../../../public/assets/popup_img.png";
-import PhoneInput from 'react-phone-number-input';
 import axios from 'axios';
+import Image from 'next/image';
+import { Button, Modal } from "react-bootstrap";
+import PhoneInput from 'react-phone-number-input';
+import popup_img from "../../../public/assets/popup_img.png";
 
 const LoginPopup = ({ show, onClose, onSignupClick, onSendOtpClick, loginFormData, setLoginformData }) => {
   const handleRegisterClick = () => {
@@ -23,7 +20,6 @@ const LoginPopup = ({ show, onClose, onSignupClick, onSendOtpClick, loginFormDat
       phoneNumber: value
     });
   };
-  const [phoneNumber, setPhoneNumber] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +29,7 @@ const LoginPopup = ({ show, onClose, onSignupClick, onSendOtpClick, loginFormDat
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-      data:{
+      data: {
         phoneNumber: loginFormData.phoneNumber
       }
     })
@@ -60,7 +56,7 @@ const LoginPopup = ({ show, onClose, onSignupClick, onSendOtpClick, loginFormDat
               <label className='text-start' htmlFor="phoneInput">Phone Number</label>
               <PhoneInput
                 id="phoneInput"
-                placeholder="Enter phone number" 
+                placeholder="Enter phone number"
                 value={loginFormData.phoneNumber}
                 onChange={handleChange}
                 required

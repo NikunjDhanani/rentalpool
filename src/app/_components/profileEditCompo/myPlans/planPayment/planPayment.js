@@ -1,9 +1,10 @@
 "use client";
-import { useRouter } from "next/navigation";
-import styles from "./planPayment.module.css";
-import { useState } from "react";
-import { Modal } from "react-bootstrap";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import { Modal } from "react-bootstrap";
+import toast from "react-hot-toast";
+import styles from "./planPayment.module.css";
 
 const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
   const router = useRouter();
@@ -11,7 +12,13 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
   const [openModal, setOpenModal] = useState(false);
   const [couponCodeList, setCouponCodeList] = useState(null);
   const [selectedPromoCode, setSelectedPromoCode] = useState('');
-  const [userPromoCode, seUserPromoCode] = useState('')
+  const [userPromoCode, setUserPromoCode] = useState('');
+  const [userPromoCodeAmount, setUserPromoCodeAmount] = useState(0);
+  const [rpCoins, setRpCoins] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  const authToken = localStorage.getItem("authToken");
+  const totalPayAmount = (planPaymentData.original_price - rpCoins - (planPaymentData.original_price - planPaymentData.current_price) - (selectedPromoCode.charge ?? userPromoCodeAmount)) * 100;
 
   const handleOpenPromoModal = async () => {
     await getCouponCode()
@@ -35,38 +42,75 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
     await loadRazorpay();
     const razorpay = new window.Razorpay({
       key: "rzp_test_Q0RtnAxFtND64R",
-      amount: 1000, // Example: 1000 is the amount in paisa (Rupees 10)
+      amount: totalPayAmount,
       currency: "INR",
-      name: "Your Website Name",
+      name: "Rentals Pool",
       description: "Payment for your order",
       prefill: {
         name: "Customer Name",
         email: "customer@example.com",
         contact: "Customer Phone Number",
       },
-      theme: {
-        color: "#F37254",
-      },
       handler: function (response) {
         // Handle successful payment
         console.log(response);
       },
     });
-
     razorpay.open();
   };
 
-  const getCouponCode = async () => axios({
-    url: `${process.env.NEXT_PUBLIC_BASE_URL}products/listCoupons/`,
-    method: "GET",
-  })
-    .then((res) => {
-      setCouponCodeList(res.data)
-      console.log(res.data);
+  const getCouponCode = async () => {
+    setLoading(true);
+    try {
+      const response = await axios({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}products/listCoupons/`,
+        method: "GET",
+      });
+      setCouponCodeList(response.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    axios({
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}users/checkCoins/`,
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Token ${authToken}`,
+      },
     })
-    .catch((err) => {
-      console.error(err);
-    });
+      .then((res) => {
+        setRpCoins(res.data.coins)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
+  const handleApplyCoupon = async () => {
+    try {
+      const response = await axios({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}products/getCouponId/`,
+        method: "POST",
+        data: {
+          coupon_name: userPromoCode
+        }
+      });
+      if (response?.status === 200) {
+        setUserPromoCodeAmount(response.data.charge);
+      } else {
+        setUserPromoCodeAmount(0);
+        toast.error('Your coupon code is not valid.');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   return (
     <>
@@ -83,7 +127,6 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   Back
                 </button>
               </div>
-
               <div>
                 <div
                   className={styles.planContainer}
@@ -120,22 +163,24 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                     type="text"
                     placeholder="Enter Coupon Code"
                     className={styles.planApplyCouponInput}
-                    value={userPromoCode}
-                    onChange={(e) => seUserPromoCode(e.target.value)}
+                    value={selectedPromoCode.name}
+                    onChange={(e) => setUserPromoCode(e.target.value)}
+                    disabled={selectedPromoCode.name}
                   />
                   <input
-                    type="submit"
-                    name="Apply"
+                    type="button"
                     className={styles.planApplyCouponSubmit}
-                    disabled={selectedPromoCode}
+                    disabled={selectedPromoCode.name}
+                    onClick={handleApplyCoupon}
+                    value="Apply"
                   />
                   <div className={`d-flex justify-content-end ${styles.browseCode}`} onClick={() => handleOpenPromoModal()}>
-                    <p>Browse Coupon Codes</p>
+                    <span>Browse Coupon Codes</span>
                   </div>
                   <div className={styles.couponInputCheckboxDiv}>
                     <input type="checkbox" />
                     <label>
-                      Use my RP Coins<p>Available : 20</p>
+                      Use my RP Coins<p>Available : {rpCoins}</p>
                     </label>
                   </div>
                 </div>
@@ -143,31 +188,28 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   <p className={styles.availableCoinTitle}>Total Amount</p>
                   <div className={styles.coinTotalTitleDiv}>
                     <p>Base Amount</p>
-                    <p>₹ {planPaymentData.current_price}</p>
+                    <p>₹ {planPaymentData.original_price}</p>
                   </div>
                   <div className={styles.coinTotalTitleDiv}>
                     <p>Discount</p>
-                    <p>0</p>
+                    <p>{planPaymentData.original_price - planPaymentData.current_price}</p>
                   </div>
                   <div className={styles.coinTotalTitleDiv}>
                     <p>Coupon Discount</p>
-                    <p>0</p>
+                    <p>{selectedPromoCode.charge ?? userPromoCodeAmount}</p>
                   </div>
                   <div className={styles.coinTotalTitleDiv}>
                     <p>RP Coins</p>
-                    <p>0</p>
+                    <p>{rpCoins}</p>
                   </div>
                   <div className={styles.coinTotalDiv}>
                     <p>Total</p>
-                    <p>₹ {planPaymentData.current_price}</p>
+                    <p>₹ {totalPayAmount / 100}</p>
                   </div>
                 </div>
-                <div style={{ textAlign: "center" }}>
-                  <button
-                    className={styles.blue_btn}
-                    onClick={() => handlePayment()}
-                  >
-                    Pay ₹{planPaymentData.original_price}
+                <div className="text-center">
+                  <button className={styles.blue_btn} onClick={() => handlePayment()}>
+                    Pay ₹{totalPayAmount / 100}
                   </button>
                 </div>
               </div>
@@ -180,7 +222,8 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
           <Modal.Title className={styles.modal_title}>Promocodes</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {couponCodeList ?
+          {loading && <div className="text-center mt-4">Loading...</div>}
+          {couponCodeList && !loading ?
             couponCodeList.map((promo, i) => {
               return (
                 <div key={i}>
@@ -200,7 +243,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
               );
             })
             :
-            <p>No PromoCode Available</p>
+            <div className="text-center my-4">No PromoCode Available</div>
           }
         </Modal.Body>
       </Modal>

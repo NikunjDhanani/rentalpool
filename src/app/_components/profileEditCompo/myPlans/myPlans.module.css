@@ -27,8 +27,9 @@
     padding: 15px 20px;
     border-radius: 8px;
 }
-.activatedPlanContainerDiv{
-     display: flex;
+
+.activatedPlanContainerDiv {
+    display: flex;
     justify-content: space-between;
     align-items: flex-start;
 }
@@ -47,12 +48,14 @@
     transition: all 0.5s;
     cursor: pointer;
 }
-.planUpgradeHeading{
-font-family: "Poppins";
-font-size: 18px;
-font-weight: 500;
-color: #525252;
+
+.planUpgradeHeading {
+    font-family: "Poppins";
+    font-size: 18px;
+    font-weight: 500;
+    color: #525252;
 }
+
 .productPlanDetailsDiv {
     text-align: center;
     padding-right: 10px;
@@ -92,9 +95,10 @@ color: #525252;
     font-size: 12px;
     font-weight: 500;
     color: #046BFB;
-margin: 0;
+    margin: 0;
 }
-.planContainer{
+
+.planContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -103,41 +107,47 @@ margin: 0;
     border-radius: 8px;
     margin: 17px 0px;
 }
+
 .offerPricing {
     font-family: "Poppins";
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     color: #757575;
     text-decoration-line: line-through;
 
 }
-.planPriceDivContainer{
+
+.planPriceDivContainer {
     display: flex;
     align-items: end;
     justify-content: space-between;
 }
-.planProductName{
+
+.planProductName {
     font-family: "Poppins";
     font-size: 20px;
     font-weight: 600;
     color: #525252;
     margin-bottom: 8px;
 }
-.planDescription{
+
+.planDescription {
     font-family: "Poppins";
     font-size: 14px;
     font-weight: 400;
     color: #525252;
     margin: 0;
 }
+
 .price {
     font-family: "Poppins";
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 700;
     color: #046BFB;
     margin-left: 12px;
 }
-.planPriceDiv{
+
+.planPriceDiv {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -162,123 +172,151 @@ margin: 0;
 }
 
 @media only screen and (max-width: 788px) {
-    .price{
+    .price {
         font-size: 20px;
         margin-bottom: 7px;
     }
-    .buyNowBtn{
+
+    .buyNowBtn {
         font-size: 12px;
         padding: 7px 20px;
     }
-    .activatedBtn{
+
+    .activatedBtn {
         font-size: 14px;
         padding: 7px 20px;
     }
-    .offerPricing{
+
+    .offerPricing {
         margin-bottom: 7px;
         font-size: 14px;
     }
-    .pricingPercent{
+
+    .pricingPercent {
         font-size: 10px;
     }
-    .mainTitleForPlan{
+
+    .mainTitleForPlan {
         font-size: 22px;
         padding-bottom: 0px;
     }
-    .planProductName{
+
+    .planProductName {
         font-size: 16px;
     }
-    .productNumber{
+
+    .productNumber {
         font-size: 16px;
     }
-    .planDescription{
+
+    .planDescription {
         font-size: 12px;
     }
 }
 
 @media only screen and (max-width: 520px) {
-    .buyNowBtn{
+    .buyNowBtn {
         font-size: 12px;
         padding: 7px 14px;
     }
-    .activatedBtn{
+
+    .activatedBtn {
         font-size: 12px;
         padding: 7px 14px;
     }
-    .mainTitleForPlan{
+
+    .mainTitleForPlan {
         font-size: 18px;
     }
-    .planPriceDivContainer{
+
+    .planPriceDivContainer {
         flex-direction: column;
     }
-    .planProductName{
+
+    .planProductName {
         font-size: 14px;
     }
-    .productNumber{
+
+    .productNumber {
         font-size: 14px;
     }
-    .planDescription{
+
+    .planDescription {
         font-size: 12px;
     }
-    .pricingPercent{
+
+    .pricingPercent {
         text-align: end;
     }
-    .price{
-        font-size: 17px;
+
+    .price {
+        font-size: 16px;
     }
-    .offerPricing{
+
+    .offerPricing {
         font-size: 12px;
     }
-    .planContainer{
+
+    .planContainer {
         padding: 15px;
     }
-    .productNumberTitle{
+
+    .productNumberTitle {
         font-size: 12px;
     }
-    .planPriceDivContainer{
+
+    .planPriceDivContainer {
         flex-direction: row;
     }
 }
 
-@media only screen and (max-width: 480px){
-    .planPriceDiv{
+@media only screen and (max-width: 480px) {
+    .planPriceDiv {
         width: 40%;
     }
-    .planTitleDescriptionDiv{
+
+    .planTitleDescriptionDiv {
         width: 60%;
     }
-    .activatedProductPlanMainDiv{
+
+    .activatedProductPlanMainDiv {
         justify-content: space-between;
     }
-    .productPlanDetailsDiv{
+
+    .productPlanDetailsDiv {
         padding: 0px;
     }
-    .activatedBtn{
+
+    .activatedBtn {
         margin-bottom: 10px;
     }
 }
 
 @media only screen and (max-width:380px) {
-    .activatedPlan_div{
+    .activatedPlan_div {
         flex-direction: column;
     }
- 
-    .price{
+
+    .price {
         font-size: 14px;
     }
+
     .planDescription {
         font-size: 10px;
     }
-    .productNumberTitle{
+
+    .productNumberTitle {
         font-size: 10px;
     }
 }
-@media only screen and (max-width: 350px){
-    .buyNowBtn{
+
+@media only screen and (max-width: 350px) {
+    .buyNowBtn {
         font-size: 12px;
         padding: 7px 8px;
     }
-    .price{
+
+    .price {
         margin-left: 0px;
     }
 }

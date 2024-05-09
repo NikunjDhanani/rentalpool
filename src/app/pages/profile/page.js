@@ -1,21 +1,60 @@
 
 "use client";
-import styles from "./profile.module.css"
-import PersonalProfileEdit from "../../_components/profileEditCompo/editProfile/personalProfile/personalProfileEdit";
-import LiveProduct from "../../_components/profileEditCompo/myProduct/liveProduct/liveProduct"
-import MyPlans from "../../_components/profileEditCompo/myPlans/myPlans";
-import ReferAndEarn from "../../_components/profileEditCompo/referAndEarn/referAndEarn"
-import Insights from "../../_components/profileEditCompo/insights/insights"
-import PromotProduct from "../../_components/profileEditCompo/myProduct/promotProduct/promotProduct"
-import PromotProductPayment from "../../_components/profileEditCompo/myProduct/promotProductPayment/promotProductPayment"
-import PlanPayment from "../../_components/profileEditCompo/myPlans/planPayment/planPayment"
 import { useState } from "react";
+import PersonalProfileEdit from "../../_components/profileEditCompo/editProfile/personalProfile/personalProfileEdit";
+import Insights from "../../_components/profileEditCompo/insights/insights";
+import MyPlans from "../../_components/profileEditCompo/myPlans/myPlans";
+import LiveProduct from "../../_components/profileEditCompo/myProduct/liveProduct/liveProduct";
+import ReferAndEarn from "../../_components/profileEditCompo/referAndEarn/referAndEarn";
+import LoginPopup from "../../_components/LoginPopup";
+import OtpPopup from "../../_components/OtpPopup";
+import SignupPopup from "../../_components/SignupPopup";
+import PlanPayment from "../../_components/profileEditCompo/myPlans/planPayment/planPayment";
+import styles from "./profile.module.css";
+// import PromotProduct from "../../_components/profileEditCompo/myProduct/promotProduct/promotProduct";
+// import PromotProductPayment from "../../_components/profileEditCompo/myProduct/promotProductPayment/promotProductPayment";
 
 const Profile = () => {
 
     const [activeTab, setActiveTab] = useState('editProfile');
     const [showPlanPayment, setShowPlanPayment] = useState(false);
     const [planPaymentData, setPlanPaymentData] = useState(null);
+    const [showLogin, setShowLogin] = useState(false);
+    const [showSignup, setShowSignup] = useState(false);
+    const [showOtp, setShowOtp] = useState(false);
+    const [loginFormData, setLoginformData] = useState({ phoneNumber: '' });
+    const [formData, setFormData] = useState({
+        fullName: '',
+        phoneNumber: '',
+        dateOfBirth: '',
+        gender: '',
+        agreeToTerms: false,
+        referralCode: '',
+    });
+
+    const localStorageData = localStorage.getItem('authToken');
+
+    const handleLoginButtonClick = () => {
+        setShowLogin(true);
+        setShowSignup(false);
+    };
+
+    const handleSignupButtonClick = () => {
+        setShowLogin(false);
+        setShowSignup(true);
+    };
+
+    const handleSendOtpButtonClick = () => {
+        setShowSignup(false);
+        setShowOtp(true);
+        setShowLogin(false);
+    };
+
+    const handleClose = () => {
+        setShowLogin(false);
+        setShowSignup(false);
+        setShowOtp(false);
+    };
 
     return (
         <div className={styles.my_account_profile_container} style={{ margin: "40px 0px" }}>
@@ -27,13 +66,55 @@ const Profile = () => {
                 <div className={styles.my_account_tab_container}>
                     <div className={styles.my_account_tab_options_container}>
                         <ul>
-                            <li className={activeTab === 'editProfile' ? styles.active_main_tab : ''} onClick={() => setActiveTab('editProfile')}><a>Edit Profile</a></li>
-                            <li className={activeTab === 'myProducts' ? styles.active_main_tab : ''} onClick={() => setActiveTab('myProducts')}><a>My Products</a></li>
-                            <li className={activeTab === 'myPlans' ? styles.active_main_tab : ''} onClick={() => setActiveTab('myPlans')}><a>My Plans</a></li>
-                            <li className={activeTab === 'referEarn' ? styles.active_main_tab : ''} onClick={() => setActiveTab('referEarn')}><a>Refer & Earn</a></li>
-                            <li className={activeTab === 'insights' ? styles.active_main_tab : ''} onClick={() => setActiveTab('insights')}><a>Insights</a></li>
-                        </ul >
-                    </div >
+                            {localStorageData !== undefined ? (
+                                <li className={activeTab === 'editProfile' ? styles.active_main_tab : ''} onClick={() => setActiveTab('editProfile')}><a>Edit Profile</a></li>
+                            ) : (
+                                <li onClick={handleLoginButtonClick}><a>Edit Profile</a></li>
+                            )}
+                            {localStorageData !== undefined ? (
+                                <li className={activeTab === 'myProducts' ? styles.active_main_tab : ''} onClick={() => setActiveTab('myProducts')}><a>My Products</a></li>
+                            ) : (
+                                <li onClick={handleLoginButtonClick}><a>My Products</a></li>
+                            )}
+                            {localStorageData !== undefined ? (
+                                <li className={activeTab === 'myPlans' ? styles.active_main_tab : ''} onClick={() => setActiveTab('myPlans')}><a>My Plans</a></li>
+                            ) : (
+                                <li onClick={handleLoginButtonClick}><a>My Plans</a></li>
+                            )}
+                            {localStorageData !== undefined ? (
+                                <li className={activeTab === 'referEarn' ? styles.active_main_tab : ''} onClick={() => setActiveTab('referEarn')}><a>Refer & Earn</a></li>
+                            ) : (
+                                <li onClick={handleLoginButtonClick}><a>Refer & Earn</a></li>
+                            )}
+                            {localStorageData !== undefined ? (
+                                <li className={activeTab === 'insights' ? styles.active_main_tab : ''} onClick={() => setActiveTab('insights')}><a>Insights</a></li>
+                            ) : (
+                                <li onClick={handleLoginButtonClick}><a>Insights</a></li>
+                            )}
+                        </ul>
+                    </div>
+                    <LoginPopup
+                        show={showLogin}
+                        onSignupClick={handleSignupButtonClick}
+                        onSendOtpClick={handleSendOtpButtonClick}
+                        onClose={handleClose}
+                        setLoginformData={setLoginformData}
+                        loginFormData={loginFormData}
+                    />
+                    <SignupPopup
+                        show={showSignup}
+                        onClose={handleClose}
+                        onSendOtpClick={handleSendOtpButtonClick}
+                        onLoginClick={handleLoginButtonClick}
+                        setFormData={setFormData}
+                        formData={formData}
+                    />
+                    <OtpPopup
+                        show={showOtp}
+                        onClose={handleClose}
+                        formData={formData}
+                        loginFormData={loginFormData}
+                    />
                     <div className={styles.my_account_tab_content_container}>
                         {/* <PromotProduct /> */}
                         {/* <PromotProductPayment /> */}
@@ -42,7 +123,7 @@ const Profile = () => {
                         {activeTab === 'myProducts' && <LiveProduct />}
                         {activeTab === 'myPlans' && <>
                             {!showPlanPayment && <MyPlans setPlanPaymentData={setPlanPaymentData} setShowPlanPayment={setShowPlanPayment} />}
-                            {showPlanPayment && <PlanPayment planPaymentData={planPaymentData} setShowPlanPayment={setShowPlanPayment}/>}
+                            {showPlanPayment && <PlanPayment planPaymentData={planPaymentData} setShowPlanPayment={setShowPlanPayment} />}
                         </>}
                         {activeTab === 'referEarn' && <ReferAndEarn />}
                         {activeTab === 'insights' && <Insights />}

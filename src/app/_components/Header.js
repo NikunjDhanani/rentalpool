@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import LoginPopup from "./LoginPopup";
-import SignupPopup from "./SignupPopup";
 import OtpPopup from "./OtpPopup";
-import HowItWork from "../pages/how-it-work/page"
+import SignupPopup from "./SignupPopup";
 
 const Header = () => {
   const router = useRouter();
@@ -22,10 +21,8 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(true);
-
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-
   const [formData, setFormData] = useState({
     fullName: '',
     phoneNumber: '',
@@ -34,14 +31,13 @@ const Header = () => {
     agreeToTerms: false,
     referralCode: '',
   });
-
   const [loginFormData, setLoginformData] = useState({
     phoneNumber: '',
   });
-
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
+  const localStorageData = localStorage.getItem('authToken');
 
   const handleLoginButtonClick = () => {
     setShowLogin(true);
@@ -293,6 +289,40 @@ const Header = () => {
     const query = encodeURIComponent(items);
     router.push(`/pages/product-page?query=${query}`);
   };
+
+  function ChatBoxIcon() {
+    return (
+      <div>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M17.3451 1.32061C16.4807 1.24999 15.4053 1.25 14.0336 1.25H9.96644C8.59472 1.25 7.51929 1.24999 6.65494 1.32061C5.77479 1.39252 5.04769 1.54138 4.38955 1.87671C3.30762 2.42798 2.42798 3.30762 1.87671 4.38955C1.54138 5.04769 1.39252 5.7748 1.32061 6.65494C1.24999 7.51929 1.25 8.59472 1.25 9.96644V14.2283C1.25 16.7256 3.27441 18.75 5.77166 18.75H6.37341C6.62191 18.75 6.79183 19.001 6.69954 19.2317C6.01288 20.9484 7.9899 22.5003 9.49441 21.4257L12.1051 19.5609L12.1543 19.5259C12.8632 19.0264 13.7079 18.7556 14.5751 18.7501L14.6354 18.75H15.3311C16.8797 18.7502 17.8244 18.7504 18.6179 18.5177C20.4971 17.9667 21.9667 16.4971 22.5177 14.6179C22.7504 13.8244 22.7502 12.8798 22.75 11.3312V9.96642C22.75 8.59473 22.75 7.51927 22.6794 6.65494C22.6075 5.77479 22.4586 5.04769 22.1233 4.38955C21.572 3.30762 20.6924 2.42798 19.6104 1.87671C18.9523 1.54138 18.2252 1.39252 17.3451 1.32061ZM5.07054 3.21322C5.48197 3.00359 5.9897 2.87996 6.77708 2.81563C7.57322 2.75058 8.58749 2.75 10 2.75H14C15.4125 2.75 16.4268 2.75058 17.2229 2.81563C18.0103 2.87996 18.518 3.00359 18.9295 3.21322C19.7291 3.62068 20.3793 4.27085 20.7868 5.07054C20.9964 5.48197 21.12 5.9897 21.1844 6.77708C21.2494 7.57322 21.25 8.58749 21.25 10V11.1842C21.25 12.9261 21.2424 13.6363 21.0783 14.1958C20.671 15.5848 19.5848 16.671 18.1958 17.0783C17.6363 17.2424 16.9261 17.25 15.1842 17.25H14.6354L14.5655 17.2501C13.3922 17.2576 12.2493 17.6239 11.2902 18.2997L8.62255 20.2051C8.33709 20.409 7.96197 20.1145 8.09226 19.7888C8.57867 18.5728 7.68311 17.25 6.37341 17.25H5.77166C4.10284 17.25 2.75 15.8972 2.75 14.2283V10C2.75 8.58749 2.75058 7.57322 2.81563 6.77708C2.87996 5.9897 3.00359 5.48197 3.21322 5.07054C3.62068 4.27085 4.27085 3.62068 5.07054 3.21322Z"
+            fill="#525252"
+          />
+          <path
+            d="M9 10C9 10.5523 8.55228 11 8 11C7.44772 11 7 10.5523 7 10C7 9.44772 7.44772 9 8 9C8.55228 9 9 9.44772 9 10Z"
+            fill="#525252"
+          />
+          <path
+            d="M13 10C13 10.5523 12.5523 11 12 11C11.4477 11 11 10.5523 11 10C11 9.44772 11.4477 9 12 9C12.5523 9 13 9.44772 13 10Z"
+            fill="#525252"
+          />
+          <path
+            d="M17 10C17 10.5523 16.5523 11 16 11C15.4477 11 15 10.5523 15 10C15 9.44772 15.4477 9 16 9C16.5523 9 17 9.44772 17 10Z"
+            fill="#525252"
+          />
+        </svg>
+        <p>ChatBox</p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -551,10 +581,10 @@ const Header = () => {
           </div>
 
           <div>
-            <div className="login_btn" id="login_btn">
-              <button onClick={handleLoginButtonClick}>Login</button>
-            </div>
-
+            {localStorageData === undefined &&
+              <div className="login_btn" id="login_btn">
+                <button onClick={handleLoginButtonClick}>Login</button>
+              </div>}
             <LoginPopup
               show={showLogin}
               onSignupClick={handleSignupButtonClick}
@@ -575,7 +605,7 @@ const Header = () => {
           </div>
 
           <div className="d-flex align-items-center gap-3 headerusericons">
-            <div className="headermenuicon" onClick={() => router.push('/pages/favourites')}>
+            <div className="headermenuicon" onClick={() => localStorageData === undefined ? handleLoginButtonClick() : router.push('/pages/favourites')}>
               <Image
                 src="/assets/icons/favourite.png"
                 width={24}
@@ -584,39 +614,14 @@ const Header = () => {
               />
               <p>Favourite</p>
             </div>
-
-            <div className="headermenuicon">
-              <Link href="/pages/chatbox">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M17.3451 1.32061C16.4807 1.24999 15.4053 1.25 14.0336 1.25H9.96644C8.59472 1.25 7.51929 1.24999 6.65494 1.32061C5.77479 1.39252 5.04769 1.54138 4.38955 1.87671C3.30762 2.42798 2.42798 3.30762 1.87671 4.38955C1.54138 5.04769 1.39252 5.7748 1.32061 6.65494C1.24999 7.51929 1.25 8.59472 1.25 9.96644V14.2283C1.25 16.7256 3.27441 18.75 5.77166 18.75H6.37341C6.62191 18.75 6.79183 19.001 6.69954 19.2317C6.01288 20.9484 7.9899 22.5003 9.49441 21.4257L12.1051 19.5609L12.1543 19.5259C12.8632 19.0264 13.7079 18.7556 14.5751 18.7501L14.6354 18.75H15.3311C16.8797 18.7502 17.8244 18.7504 18.6179 18.5177C20.4971 17.9667 21.9667 16.4971 22.5177 14.6179C22.7504 13.8244 22.7502 12.8798 22.75 11.3312V9.96642C22.75 8.59473 22.75 7.51927 22.6794 6.65494C22.6075 5.77479 22.4586 5.04769 22.1233 4.38955C21.572 3.30762 20.6924 2.42798 19.6104 1.87671C18.9523 1.54138 18.2252 1.39252 17.3451 1.32061ZM5.07054 3.21322C5.48197 3.00359 5.9897 2.87996 6.77708 2.81563C7.57322 2.75058 8.58749 2.75 10 2.75H14C15.4125 2.75 16.4268 2.75058 17.2229 2.81563C18.0103 2.87996 18.518 3.00359 18.9295 3.21322C19.7291 3.62068 20.3793 4.27085 20.7868 5.07054C20.9964 5.48197 21.12 5.9897 21.1844 6.77708C21.2494 7.57322 21.25 8.58749 21.25 10V11.1842C21.25 12.9261 21.2424 13.6363 21.0783 14.1958C20.671 15.5848 19.5848 16.671 18.1958 17.0783C17.6363 17.2424 16.9261 17.25 15.1842 17.25H14.6354L14.5655 17.2501C13.3922 17.2576 12.2493 17.6239 11.2902 18.2997L8.62255 20.2051C8.33709 20.409 7.96197 20.1145 8.09226 19.7888C8.57867 18.5728 7.68311 17.25 6.37341 17.25H5.77166C4.10284 17.25 2.75 15.8972 2.75 14.2283V10C2.75 8.58749 2.75058 7.57322 2.81563 6.77708C2.87996 5.9897 3.00359 5.48197 3.21322 5.07054C3.62068 4.27085 4.27085 3.62068 5.07054 3.21322Z"
-                    fill="#525252"
-                  />
-                  <path
-                    d="M9 10C9 10.5523 8.55228 11 8 11C7.44772 11 7 10.5523 7 10C7 9.44772 7.44772 9 8 9C8.55228 9 9 9.44772 9 10Z"
-                    fill="#525252"
-                  />
-                  <path
-                    d="M13 10C13 10.5523 12.5523 11 12 11C11.4477 11 11 10.5523 11 10C11 9.44772 11.4477 9 12 9C12.5523 9 13 9.44772 13 10Z"
-                    fill="#525252"
-                  />
-                  <path
-                    d="M17 10C17 10.5523 16.5523 11 16 11C15.4477 11 15 10.5523 15 10C15 9.44772 15.4477 9 16 9C16.5523 9 17 9.44772 17 10Z"
-                    fill="#525252"
-                  />
-                </svg>
-                <p>ChatBox</p>
-              </Link>
+            <div className="headermenuicon" onClick={() => localStorageData === undefined && handleLoginButtonClick()}>
+              {localStorageData === undefined ?
+                <ChatBoxIcon /> :
+                <Link href="/pages/chatbox">
+                  <ChatBoxIcon />
+                </Link>
+              }
             </div>
-
             <div className="user">
               <div className="user-2">
                 <svg
@@ -640,14 +645,12 @@ const Header = () => {
                     strokeWidth="1.5"
                   />
                 </svg>
-
                 <p>Profile</p>
               </div>
               <div className="user-menu">
                 <div id="profileborder"></div>
                 <ul>
-                  <li onClick={() => router.push('/pages/profile')}>
-                    {" "}
+                  <li onClick={() => localStorageData === undefined ? handleLoginButtonClick() : router.push('/pages/profile')}>
                     <span>
                       <Image
                         src="/assets/icons/edit.png"
@@ -658,8 +661,7 @@ const Header = () => {
                     </span>{" "}
                     Edit Profile
                   </li>
-                  <li onClick={() => router.push('/pages/profile')}>
-                    {" "}
+                  <li onClick={() => localStorageData === undefined ? handleLoginButtonClick() : router.push('/pages/profile')}>
                     <span>
                       <Image
                         src="/assets/icons/features.png"
@@ -670,8 +672,7 @@ const Header = () => {
                     </span>{" "}
                     My Products
                   </li>
-                  <li onClick={() => router.push('/pages/profile')}>
-                    {" "}
+                  <li onClick={() => localStorageData === undefined ? handleLoginButtonClick() : router.push('/pages/profile')}>
                     <span>
                       <Image
                         src="/assets/icons/plan.png"
@@ -682,8 +683,7 @@ const Header = () => {
                     </span>{" "}
                     My Plans
                   </li>
-                  <li onClick={() => router.push('/pages/profile')}>
-                    {" "}
+                  <li onClick={() => localStorageData === undefined ? handleLoginButtonClick() : router.push('/pages/profile')}>
                     <span>
                       <Image
                         src="/assets/icons/exchange-rate.png"
@@ -694,8 +694,7 @@ const Header = () => {
                     </span>{" "}
                     Refer & Earn
                   </li>
-                  <li onClick={() => router.push('/pages/profile')} x>
-                    {" "}
+                  <li onClick={() => localStorageData === undefined ? handleLoginButtonClick() : router.push('/pages/profile')} x>
                     <span>
                       <Image
                         src="/assets/icons/insight.png"
@@ -707,7 +706,7 @@ const Header = () => {
                     Insights
                   </li>
                 </ul>
-                <button>Log Out</button>
+                {localStorageData !== undefined && <button>Log Out</button>}
               </div>
             </div>
           </div>
