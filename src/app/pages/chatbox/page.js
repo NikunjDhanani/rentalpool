@@ -14,6 +14,8 @@ const ChatBox = () => {
     const [textValue, setTextValue] = useState('');
     const [textMessage, setTextMessage] = useState('');
 
+    const [chatMessage, setChatMessage] = useState('');
+
     const authToken = localStorage.getItem("authToken");
 
     const handleClose = () => setOpenModal(false);
@@ -49,6 +51,7 @@ const ChatBox = () => {
             console.error(error);
         }
     };
+
     const handleSendReview = async () => {
         try {
             const response = await axios({
@@ -71,14 +74,30 @@ const ChatBox = () => {
         }
     };
 
-    // const socket = io.connect('wss://rentalspool.com/ws/chat/46/');
+    const onConnect = () => {
+        console.log("Connect")
+    }
+
     useEffect(() => {
-        const socket = io.connect('wss://rentalspool.com/ws/chat/46/');
+        const socket = io('wss://rentalspool.com/ws/chat/43/', {
+            autoConnect: false
+        });
+
+        socket.connect();
+        socket.on('connect', onConnect);
+        socket.on('error', (error) => {
+            console.error('Socket connection error:', error);
+        });
 
         // Emit the message to the server
         socket.emit('fetch_old_chat', {
             command: 'fetch_old_chat',
-            user_id: 46
+            user_id: 43 
+        });
+
+        socket.on('fetchallchat', (data) => {
+            console.log("DATA", data)
+            setChatMessage(data.message);
         });
 
         // Clean up the socket connection when the component unmounts

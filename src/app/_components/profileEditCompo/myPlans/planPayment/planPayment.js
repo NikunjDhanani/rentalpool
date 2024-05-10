@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import toast from "react-hot-toast";
 import styles from "./planPayment.module.css";
 
@@ -11,13 +11,15 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
 
   const [openModal, setOpenModal] = useState(false);
   const [couponCodeList, setCouponCodeList] = useState(null);
-  const [selectedPromoCode, setSelectedPromoCode] = useState("");
+  const [selectedPromoCode, setSelectedPromoCode] = useState({});
   const [userPromoCode, setUserPromoCode] = useState("");
   const [userPromoCodeAmount, setUserPromoCodeAmount] = useState(0);
   const [userPromoCodeId, setUserPromoCodeId] = useState();
   const [rpCoins, setRpCoins] = useState(0);
   const [loading, setLoading] = useState(true);
   const [rpCoinCheck, setRpCoinCheck] = useState(false);
+  const [applyCodeLoading, setApplyCodeLoading] = useState(false);
+  const [payLoading, setPayLoading] = useState(false);
 
   const authToken = localStorage.getItem("authToken");
   const totalPayAmount =
@@ -28,8 +30,8 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
     100;
 
   const handleOpenPromoModal = async () => {
-    await getCouponCode();
     setOpenModal(true);
+    await getCouponCode();
   };
 
   const handleClose = () => setOpenModal(false);
@@ -108,6 +110,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
   }, []);
 
   const handleApplyCoupon = async () => {
+    setApplyCodeLoading(true);
     try {
       const response = await axios({
         url: `${process.env.NEXT_PUBLIC_BASE_URL}products/getCouponId/`,
@@ -121,7 +124,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
           setUserPromoCodeAmount(
             (planPaymentData.current_price * response.data.charge) / 100
           );
-        }else{
+        } else {
           setUserPromoCodeAmount(response.data.charge)
         }
         setUserPromoCodeId(response.data.id);
@@ -129,11 +132,17 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
         toast.error("Your coupon code is not valid.");
       }
     } catch (error) {
-      console.error(error);
+      if (error.response.data.id === -1) {
+        toast.error("Your coupon code is not valid.");
+      }
+    }
+    finally {
+      setApplyCodeLoading(false)
     }
   };
 
   const handlePaymentCreate = async (planPaymentData) => {
+    setPayLoading(true);
     try {
       const response = await axios({
         url: `${process.env.NEXT_PUBLIC_BASE_URL}products/createRazorpayOrder/`,
@@ -148,12 +157,15 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
         },
       });
       if (response.data.amount > 0) {
-        handlePayment(response.data);
+        await handlePayment(response.data);
       } else {
-        handlePaymentCreateZeroOrder(response.data);
+        await handlePaymentCreateZeroOrder(response.data);
       }
     } catch (error) {
       console.error(error);
+    }
+    finally {
+      setPayLoading(false);
     }
   };
 
@@ -195,12 +207,11 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
     }
   };
 
-  const handleApplyClick = (promo) =>{
+  const handleApplyClick = (promo) => {
     if (promo.charge_type === "Percentage") {
-      console.log(planPaymentData,'datadatadatadata')
       const data = promo.charge = (planPaymentData.current_price * promo.charge) / 100
       setSelectedPromoCode(promo);
-    }else{
+    } else {
       setSelectedPromoCode(promo)
     }
     setOpenModal(false);
@@ -270,7 +281,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   <input
                     type="button"
                     className={styles.planApplyCouponSubmit}
-                    disabled={selectedPromoCode.name}
+                    disabled={applyCodeLoading}
                     onClick={handleApplyCoupon}
                     value="Apply"
                   />
@@ -320,8 +331,9 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   <button
                     className={styles.blue_btn}
                     onClick={() => handlePaymentCreate(planPaymentData)}
+                    disabled={payLoading}
                   >
-                    Pay ₹{totalPayAmount / 100}
+                    {payLoading && <Spinner animation="border" size="sm" />}  Pay ₹{totalPayAmount / 100}
                   </button>
                 </div>
               </div>
@@ -334,36 +346,34 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
           <Modal.Title className={styles.modal_title}>Promocodes</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {loading && <div className="text-center mt-4">Loading...</div>}
-          {couponCodeList && !loading ? (
-            couponCodeList.map((promo, i) => {
-              return (
-                <div key={i}>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                      <p className={styles.promo_title}>{promo.name}</p>
-                      <p className="mb-0">{promo.description}</p>
+          {loading ? <div className="text-center my-4">Loading...</div>
+            : couponCodeList ? (
+              couponCodeList.map((promo, i) => {
+                return (
+                  <div key={i}>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <p className={styles.promo_title}>{promo.name}</p>
+                        <p className="mb-0">{promo.description}</p>
+                      </div>
+                      <div>
+                        <button
+                          className={styles.applyBtn}
+                          onClick={() => handleApplyClick(promo)}
+                        >
+                          Apply
+                        </button>
+                      </div>
                     </div>
-                    <div>
-                      <button
-                        className={styles.applyBtn}
-                        onClick={() => handleApplyClick(promo)
-                        
-                        }
-                      >
-                        Apply
-                      </button>
-                    </div>
+                    {i === couponCodeList.legth - 1 && (
+                      <div className={styles.seprator} />
+                    )}
                   </div>
-                  {i === couponCodeList.legth - 1 && (
-                    <div className={styles.seprator} />
-                  )}
-                </div>
-              );
-            })
-          ) : (
-            <div className="text-center my-4">No PromoCode Available</div>
-          )}
+                );
+              })
+            ) : (
+              <div className="text-center my-4">No PromoCode Available</div>
+            )}
         </Modal.Body>
       </Modal>
     </>

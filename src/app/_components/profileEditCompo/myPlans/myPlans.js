@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import styles from "./myPlans.module.css";
+import { Spinner } from "react-bootstrap";
 
 const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
     const [planData, setPlanData] = useState([]);
     const [silverPlanData, setSilverPlanData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isDetailsLoading, setIsDetailsLoading] = useState(false);
+    const [selectedPlan, setSelectedPlan] = useState(null);
 
     const authToken = localStorage.getItem("authToken");
 
@@ -46,8 +49,9 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
         );
     }, []);
 
-
     const handleDetalisPlan = (plan) => {
+        setSelectedPlan(plan)
+        setIsDetailsLoading(true);
         axios({
             url: `${process.env.NEXT_PUBLIC_BASE_URL}users/isActivePackage/`,
             method: "GET",
@@ -66,7 +70,8 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
             })
             .catch((err) => {
                 console.error("Error updating profile:", err);
-            });
+            })
+            .finally(() => setIsDetailsLoading(false));
     };
 
     return (
@@ -148,7 +153,9 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
                                                     </div>
                                                     <p className={styles.price}>₹ {plan.current_price}</p>
                                                 </div>
-                                                <button className={styles.buyNowBtn} onClick={() => handleDetalisPlan(plan)}>Buy Now</button>
+                                                <button className={styles.buyNowBtn} disabled={isDetailsLoading} onClick={() => handleDetalisPlan(plan)}>
+                                                    {isDetailsLoading && selectedPlan.id === plan.id && <Spinner animation="border" size="sm" />} Buy Now
+                                                </button>
                                             </div>
                                         </div>
                                     );

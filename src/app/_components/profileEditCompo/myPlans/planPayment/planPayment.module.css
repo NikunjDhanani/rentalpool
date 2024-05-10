@@ -192,6 +192,9 @@
     border: 1px solid #046BFB;
     transition: all 0.5s;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .couponInputDiv {
