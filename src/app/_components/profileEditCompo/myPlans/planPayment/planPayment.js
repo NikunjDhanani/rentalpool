@@ -327,7 +327,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                     <p>₹ {totalPayAmount / 100}</p>
                   </div>
                 </div>
-                <div className="text-center">
+                <div className="text-center d-flex justify-content-center">
                   <button
                     className={styles.blue_btn}
                     onClick={() => handlePaymentCreate(planPaymentData)}
