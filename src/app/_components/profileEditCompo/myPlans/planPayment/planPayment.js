@@ -117,10 +117,15 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
         },
       });
       if (response?.status === 200) {
-        setUserPromoCodeAmount(response.data.charge);
+        if (response.data.charge_type === "Percentage") {
+          setUserPromoCodeAmount(
+            (planPaymentData.current_price * response.data.charge) / 100
+          );
+        }else{
+          setUserPromoCodeAmount(response.data.charge)
+        }
         setUserPromoCodeId(response.data.id);
       } else {
-        setUserPromoCodeAmount(0);
         toast.error("Your coupon code is not valid.");
       }
     } catch (error) {
@@ -189,6 +194,17 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
       console.error(error);
     }
   };
+
+  const handleApplyClick = (promo) =>{
+    if (promo.charge_type === "Percentage") {
+      console.log(planPaymentData,'datadatadatadata')
+      const data = promo.charge = (planPaymentData.current_price * promo.charge) / 100
+      setSelectedPromoCode(promo);
+    }else{
+      setSelectedPromoCode(promo)
+    }
+    setOpenModal(false);
+  }
 
   return (
     <>
@@ -331,10 +347,9 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                     <div>
                       <button
                         className={styles.applyBtn}
-                        onClick={() => {
-                          setSelectedPromoCode(promo);
-                          setOpenModal(false);
-                        }}
+                        onClick={() => handleApplyClick(promo)
+                        
+                        }
                       >
                         Apply
                       </button>
