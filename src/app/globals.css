@@ -2328,6 +2328,7 @@ p {
   background-color: #F1F7FF !important;
   margin-left: 16px;
   font-size: 18px !important;
+  border: 1px solid #046BFB !important;
 }
 
 .chat-box-message-input {
@@ -2358,6 +2359,37 @@ p {
   position: absolute;
   top: 18px;
   left: 16px;
+}
+
+.rate_your_experience {
+ color: #525252;
+ font-size: 18px;
+}
+
+.write_a_review{
+  color: #333333;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.max_2000_characters {
+  color: #AAAAAA;
+  font-size: 12px;
+}
+
+.star-rating-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.submit_review_btn {
+  background-color: #046BFB;
+  color: white;
+  font-size: 16px;
+  border: none !important;
+  padding: 10px 30px;
+  border-radius: 8px;
 }
 
 /* razorpay */

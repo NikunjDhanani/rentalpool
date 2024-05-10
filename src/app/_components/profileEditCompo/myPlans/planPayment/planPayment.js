@@ -14,6 +14,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
   const [selectedPromoCode, setSelectedPromoCode] = useState("");
   const [userPromoCode, setUserPromoCode] = useState("");
   const [userPromoCodeAmount, setUserPromoCodeAmount] = useState(0);
+  const [userPromoCodeId, setUserPromoCodeId] = useState();
   const [rpCoins, setRpCoins] = useState(0);
   const [loading, setLoading] = useState(true);
   const [rpCoinCheck, setRpCoinCheck] = useState(false);
@@ -25,7 +26,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
       (planPaymentData.original_price - planPaymentData.current_price) -
       (selectedPromoCode.charge ?? userPromoCodeAmount)) *
     100;
-  console.log(rpCoinCheck, "rpCoinCheck");
+
   const handleOpenPromoModal = async () => {
     await getCouponCode();
     setOpenModal(true);
@@ -117,6 +118,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
       });
       if (response?.status === 200) {
         setUserPromoCodeAmount(response.data.charge);
+        setUserPromoCodeId(response.data.id);
       } else {
         setUserPromoCodeAmount(0);
         toast.error("Your coupon code is not valid.");
@@ -127,7 +129,6 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
   };
 
   const handlePaymentCreate = async (planPaymentData) => {
-    console.log(planPaymentData, "planPaymentData");
     try {
       const response = await axios({
         url: `${process.env.NEXT_PUBLIC_BASE_URL}products/createRazorpayOrder/`,
@@ -137,7 +138,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
         },
         data: {
           package: planPaymentData.id,
-          coupon: "",
+          coupon: selectedPromoCode?.id ?? userPromoCodeId,
           use_coins: rpCoinCheck,
         },
       });
@@ -146,7 +147,6 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
       } else {
         handlePaymentCreateZeroOrder(response.data);
       }
-      console.log(response.data, "responseresponse");
     } catch (error) {
       console.error(error);
     }
