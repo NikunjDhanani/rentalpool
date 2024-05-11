@@ -1,21 +1,18 @@
-// SendOtpPopup.js
-
-import React, { useState, useRef, useEffect } from 'react';
-import { Form, Modal, Button } from "react-bootstrap";
-import Image from 'next/image';
-import popup_img from "../../../public/assets/popup_img.png"
 import axios from 'axios';
+import Image from 'next/image';
 import { useRouter } from "next/navigation";
+import { useRef, useState } from 'react';
+import { Button, Form, Modal } from "react-bootstrap";
+import popup_img from "../../../public/assets/popup_img.png";
 
-const OtpPopup = ({ show, onClose, onVerifyOtp, onResendOtp, formData,loginFormData}) => {
+const OtpPopup = ({ show, onClose, setShowLogin, setShowSignup, setShowOtp, formData, loginFormData }) => {
 
   const router = useRouter();
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const refs = useRef(Array(6).fill(null));
-  const [token, setToken] = useState(null);
 
   const handleOtpChange = (e, index) => {
-    const value = e.target.value.replace(/\D/, ''); 
+    const value = e.target.value.replace(/\D/, '');
     const updatedOtp = [...otp];
     updatedOtp[index] = value;
     setOtp(updatedOtp);
@@ -24,8 +21,6 @@ const OtpPopup = ({ show, onClose, onVerifyOtp, onResendOtp, formData,loginFormD
       refs.current[index + 1].focus();
     }
   };
-
-  const phoneNumber = formData.phoneNumber || loginFormData.phoneNumber;
 
   const handleVerifyOtpClick = async (e) => {
     e.preventDefault();
@@ -37,7 +32,7 @@ const OtpPopup = ({ show, onClose, onVerifyOtp, onResendOtp, formData,loginFormD
         'Content-Type': 'multipart/form-data',
       },
       data: {
-        phoneNumber: phoneNumber,
+        phoneNumber: loginFormData.phoneNumber,
         otp: enteredOtp,
       }
     })
@@ -45,10 +40,13 @@ const OtpPopup = ({ show, onClose, onVerifyOtp, onResendOtp, formData,loginFormD
         if (response.status === 200) {
           router.push('/')
           const token = response.data.token;
-          setToken(token);
           localStorage.setItem('authToken', token);
-          onVerifyOtp(true);
-        } else {
+          setShowLogin(false);
+          setShowSignup(false);
+          setShowOtp(false);
+          setOtp(['', '', '', '', '', '']);
+          setPhoneNumber('');
+        } else {  
           console.error('OTP verification failed');
         }
       })
@@ -58,24 +56,24 @@ const OtpPopup = ({ show, onClose, onVerifyOtp, onResendOtp, formData,loginFormD
   };
 
   const handleResendOtp = async () => {
-
-    const response = await axios({
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}users/resendOTP/`,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      data: {
-        phoneNumber: formData.phoneNumber
-      }
-    }).then((res) => {
-
-    }).catch((err) => {
-
-    })
+    try {
+      const response = await axios({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}users/resendOTP/`,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        data: {
+          phoneNumber: loginFormData.phoneNumber,
+        }
+      });
+    } catch (err) {
+      console.error('Error:', err);
+    }
   };
 
-    // Set token in headers of Axios requests
+
+  // Set token in headers of Axios requests
   axios.interceptors.request.use(config => {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
@@ -96,7 +94,7 @@ const OtpPopup = ({ show, onClose, onVerifyOtp, onResendOtp, formData,loginFormD
                 <Form.Label>Enter the verification code we just sent on your mobile number:</Form.Label>
                 <span className='mobile_no'>{formData.phoneNumber}</span>
                 <div className="otp-input-container">
-                  {otp.map((digit, index) => (
+                  {otp && otp.map((digit, index) => (
                     <input
                       key={index}
                       type="text"
@@ -104,7 +102,7 @@ const OtpPopup = ({ show, onClose, onVerifyOtp, onResendOtp, formData,loginFormD
                       value={digit}
                       onChange={(e) => handleOtpChange(e, index)}
                       className="otp-input"
-                      ref={(input) => (refs.current[index] = input)} // Set ref for each input box
+                      ref={(input) => (refs.current[index] = input)}
                     />
                   ))}
                 </div>
@@ -113,9 +111,7 @@ const OtpPopup = ({ show, onClose, onVerifyOtp, onResendOtp, formData,loginFormD
               <h5>Didn’t received code? <span variant="secondary" onClick={handleResendOtp}>Resend</span></h5>
             </Form>
           </div>
-          <div className='col-md-1 p-0 order-2'>
-
-          </div>
+          <div className='col-md-1 p-0 order-2'></div>
           <div className='col-md-6 p-0 order-md-3 order-1 text-center d-sm-block d-none'>
             <Image className='popup_img mb-md-0 mb-4' src={popup_img} />
           </div>

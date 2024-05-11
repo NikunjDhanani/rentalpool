@@ -112,6 +112,9 @@ const Profile = () => {
                     <OtpPopup
                         show={showOtp}
                         onClose={handleClose}
+                        setShowLogin={setShowLogin}
+                        setShowSignup={setShowSignup}
+                        setShowOtp={setShowOtp}
                         formData={formData}
                         loginFormData={loginFormData}
                     />

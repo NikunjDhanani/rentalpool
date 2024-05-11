@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -7,6 +6,7 @@ import { useRouter } from "next/navigation";
 import LoginPopup from "./LoginPopup";
 import OtpPopup from "./OtpPopup";
 import SignupPopup from "./SignupPopup";
+import { usePathname } from 'next/navigation';
 
 const Header = () => {
   const router = useRouter();
@@ -37,7 +37,10 @@ const Header = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
+  const pathname = usePathname();
   const localStorageData = localStorage.getItem('authToken');
+
+  console.log(pathname, 'usePathname')
 
   const handleLoginButtonClick = () => {
     setShowLogin(true);
@@ -581,7 +584,7 @@ const Header = () => {
           </div>
 
           <div>
-            {localStorageData === undefined &&
+            {localStorageData === null &&
               <div className="login_btn" id="login_btn">
                 <button onClick={handleLoginButtonClick}>Login</button>
               </div>}
@@ -601,11 +604,19 @@ const Header = () => {
               setFormData={setFormData}
               formData={formData}
             />
-            <OtpPopup show={showOtp} onClose={handleClose} formData={formData} loginFormData={loginFormData} />
+            <OtpPopup
+              show={showOtp}
+              onClose={handleClose}
+              setShowLogin={setShowLogin}
+              setShowSignup={setShowSignup}
+              setShowOtp={setShowOtp}
+              formData={formData}
+              loginFormData={loginFormData}
+            />
           </div>
 
           <div className="d-flex align-items-center gap-3 headerusericons">
-            <div className="headermenuicon" onClick={() => localStorageData === undefined ? handleLoginButtonClick() : router.push('/pages/favourites')}>
+            <div className="headermenuicon" onClick={() => localStorageData === null ? handleLoginButtonClick() : router.push('/pages/favourites')}>
               <Image
                 src="/assets/icons/favourite.png"
                 width={24}
@@ -614,8 +625,8 @@ const Header = () => {
               />
               <p>Favourite</p>
             </div>
-            <div className="headermenuicon" onClick={() => localStorageData === undefined && handleLoginButtonClick()}>
-              {localStorageData === undefined ?
+            <div className="headermenuicon" onClick={() => localStorageData === null && handleLoginButtonClick()}>
+              {localStorageData === null ?
                 <ChatBoxIcon /> :
                 <Link href="/pages/chatbox">
                   <ChatBoxIcon />
@@ -650,7 +661,7 @@ const Header = () => {
               <div className="user-menu">
                 <div id="profileborder"></div>
                 <ul>
-                  <li onClick={() => localStorageData === undefined ? handleLoginButtonClick() : router.push('/pages/profile')}>
+                  <li onClick={() => localStorageData === null ? handleLoginButtonClick() : router.push('/pages/profile')}>
                     <span>
                       <Image
                         src="/assets/icons/edit.png"
@@ -661,7 +672,7 @@ const Header = () => {
                     </span>{" "}
                     Edit Profile
                   </li>
-                  <li onClick={() => localStorageData === undefined ? handleLoginButtonClick() : router.push('/pages/profile')}>
+                  <li onClick={() => localStorageData === null ? handleLoginButtonClick() : router.push('/pages/profile')}>
                     <span>
                       <Image
                         src="/assets/icons/features.png"
@@ -672,7 +683,7 @@ const Header = () => {
                     </span>{" "}
                     My Products
                   </li>
-                  <li onClick={() => localStorageData === undefined ? handleLoginButtonClick() : router.push('/pages/profile')}>
+                  <li onClick={() => localStorageData === null ? handleLoginButtonClick() : router.push('/pages/profile')}>
                     <span>
                       <Image
                         src="/assets/icons/plan.png"
@@ -683,7 +694,7 @@ const Header = () => {
                     </span>{" "}
                     My Plans
                   </li>
-                  <li onClick={() => localStorageData === undefined ? handleLoginButtonClick() : router.push('/pages/profile')}>
+                  <li onClick={() => localStorageData === null ? handleLoginButtonClick() : router.push('/pages/profile')}>
                     <span>
                       <Image
                         src="/assets/icons/exchange-rate.png"
@@ -694,7 +705,7 @@ const Header = () => {
                     </span>{" "}
                     Refer & Earn
                   </li>
-                  <li onClick={() => localStorageData === undefined ? handleLoginButtonClick() : router.push('/pages/profile')} x>
+                  <li onClick={() => localStorageData === null ? handleLoginButtonClick() : router.push('/pages/profile')} x>
                     <span>
                       <Image
                         src="/assets/icons/insight.png"
@@ -706,7 +717,7 @@ const Header = () => {
                     Insights
                   </li>
                 </ul>
-                {localStorageData !== undefined && <button>Log Out</button>}
+                {localStorageData !== null && <button onClick={() => localStorage.clear()}>Log Out</button>}
               </div>
             </div>
           </div>

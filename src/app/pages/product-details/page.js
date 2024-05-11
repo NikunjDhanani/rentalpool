@@ -1,24 +1,50 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import SubHeader from "@/app/_components/SubHeader";
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Image from "next/image";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useRouter } from "next/navigation";
 import Swiper from "swiper";
+import * as Yup from 'yup';
 import DefaultImg from "../../../../public/assets/product/defaultimg.png";
 
 const ProductDetailPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const ProductId = searchParams.get("query");
-  const [selectedDate, setSelectedDate] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [product, setProduct] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const owner="Owner's Profile"
+  const owner = "Owner's Profile";
+  const pathname = usePathname()
+  console.log(ProductId, 'idididid')
+
+  const validationSchema = Yup.object().shape({
+    fullName: Yup.string().required('Full Name is required.'),
+    phoneNumber: Yup.string().required('Phone Number is required.'),
+    flatBuilding: Yup.string().required('Flat No./Building Name is required.'),
+    pincode: Yup.string().required('Pincode is required.'),
+    city: Yup.string().required('City is require.'),
+    state: Yup.string().required('State is required.'),
+    date: Yup.date().required('Select Date is required.'),
+    additionalNotes: Yup.string().max(2000, 'Max 2000 characters allowed.')
+  });
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
+
+  const handleSubmit = (values, { setSubmitting }) => {
+    console.log(formatDate(values?.date), 'valuesvalues');
+    setSubmitting(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,11 +117,6 @@ const ProductDetailPage = () => {
     fetchFilteredProducts();
   }, [product]); // Only 'product' is used as a dependency
 
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
-
   const productImg = product && product.primary_image;
 
   // Check if product.images is an array before mapping over it
@@ -167,11 +188,11 @@ const ProductDetailPage = () => {
   const getHeartFillColor = (favId) => {
     return selectedProducts.includes(favId) ? "red" : "currentColor";
   };
+
   return (
     <main>
       <div>
         <SubHeader />
-
         <div className="product-detail container">
           <div className="product-detail-container">
             <div className="product-image-column">
@@ -269,7 +290,6 @@ const ProductDetailPage = () => {
                     >
                       <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
                     </svg>
-
                     <svg
                       width="24"
                       height="24"
@@ -538,7 +558,6 @@ const ProductDetailPage = () => {
                                 </clipPath>
                               </defs>
                             </svg>
-
                             <svg
                               width="16"
                               height="16"
@@ -562,7 +581,6 @@ const ProductDetailPage = () => {
                                 </clipPath>
                               </defs>
                             </svg>
-
                             <svg
                               width="16"
                               height="16"
@@ -586,7 +604,6 @@ const ProductDetailPage = () => {
                                 </clipPath>
                               </defs>
                             </svg>
-
                             <svg
                               width="16"
                               height="16"
@@ -610,7 +627,6 @@ const ProductDetailPage = () => {
                                 </clipPath>
                               </defs>
                             </svg>
-
                             <svg
                               width="16"
                               height="16"
@@ -692,19 +708,19 @@ const ProductDetailPage = () => {
         >
           Send Inquiry
         </div>
-       <div className="heartforinquiry">
-       <svg
-                      className="product-like-share-icon"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="30"
-                      height="30"
-                      fill="#717171"
-                      class="bi bi-heart"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-       </div>
+        <div className="heartforinquiry">
+          <svg
+            className="product-like-share-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            fill="#717171"
+            class="bi bi-heart"
+            viewBox="0 0 16 16"
+          >
+            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+          </svg>
+        </div>
       </div>
 
       <div className="related-imagediv">
@@ -813,64 +829,87 @@ const ProductDetailPage = () => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              ></button>
+              />
             </div>
-            <div className="modal-body">
-              <div className="modal-inquiry-input">
-                <p>Full Name</p>
-                <input type="text"></input>
-              </div>
+            <Formik
+              initialValues={{
+                fullName: '',
+                phoneNumber: '',
+                flatBuilding: '',
+                pincode: '',
+                city: '',
+                state: '',
+                date: null,
+                additionalNotes: ''
+              }}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ isSubmitting }) => (
+                <Form>
+                  <div className="modal-body">
+                    <div className="modal-inquiry-input">
+                      <p>Full Name</p>
+                      <Field type="text" name="fullName" />
+                      <ErrorMessage name="fullName" component="div" className="error-message" />
+                    </div>
+                    <div className="modal-inquiry-input">
+                      <p>Phone Number</p>
+                      <Field type="text" name="phoneNumber" />
+                      <ErrorMessage name="phoneNumber" component="div" className="error-message" />
+                    </div>
+                    <div className="modal-inquiry-input">
+                      <p>Flat No./ Building Name</p>
+                      <Field type="text" name="flatBuilding" />
+                      <ErrorMessage name="flatBuilding" component="div" className="error-message" />
+                    </div>
+                    <div className="d-flex gap-4 w-100">
+                      <div className="modal-inquiry-input w-100">
+                        <p>Pincode</p>
+                        <Field type="text" name="pincode" />
+                        <ErrorMessage name="pincode" component="div" className="error-message" />
+                      </div>
+                      <div className="modal-inquiry-input w-100">
+                        <p>City</p>
+                        <Field type="text" name="city" />
+                        <ErrorMessage name="city" component="div" className="error-message" />
+                      </div>
+                    </div>
+                    <div className="modal-inquiry-input">
+                      <p>State</p>
+                      <Field type="text" name="state" />
+                      <ErrorMessage name="state" component="div" className="error-message" />
+                    </div>
+                    <div className="modal-inquiry-input calender">
+                      <p>Select Date</p>
+                      <div className="inquiry-calender">
+                        <Field name="date">
+                          {({ field, form, meta }) => (
+                            <DatePicker
+                              selected={field.value}
+                              onChange={val => form.setFieldValue(field.name, val)}
+                              dateFormat="dd/MM/yyyy"
+                              inline
+                            />
+                          )}
+                        </Field>
+                        <ErrorMessage name="date" component="div" className="error-message" />
+                      </div>
+                    </div>
+                    <div className="modal-inquiry-input">
+                      <p>Additional Notes</p>
+                      <Field as="textarea" name="additionalNotes" placeholder="Add Notes" rows="5" />
+                      <span>Max. 2000 characters</span>
+                      <ErrorMessage name="additionalNotes" component="div" className="error-message" />
+                    </div>
+                    <div className="submit-inquiry">
+                      <button type="submit" disabled={isSubmitting}>Send Inquiry</button>
+                    </div>
+                  </div>
+                </Form>
+              )}
+            </Formik>
 
-              <div className="modal-inquiry-input">
-                <p>Phone Number</p>
-                <input type="text"></input>
-              </div>
-
-              <div className="modal-inquiry-input">
-                <p>Flat No./ Building Name</p>
-                <input type="text"></input>
-              </div>
-
-              <div className="d-flex gap-4 w-100">
-                <div className="modal-inquiry-input w-100">
-                  <p>Pincode</p>
-                  <input type="text"></input>
-                </div>
-                <div className="modal-inquiry-input w-100">
-                  <p>City</p>
-                  <input type="text"></input>
-                </div>
-              </div>
-
-              <div className="modal-inquiry-input">
-                <p>State</p>
-                <input type="text"></input>
-              </div>
-
-              <div className="modal-inquiry-input calender">
-                <p>Select Date</p>
-
-                <div className="inquiry-calender">
-                  <DatePicker
-                    selected={selectedDate}
-                    onChange={handleDateChange}
-                    dateFormat="dd/MM/yyyy"
-                    inline
-                  />
-                </div>
-              </div>
-
-              <div className="modal-inquiry-input">
-                <p>Additional Notes</p>
-                <textarea type="text" placeholder="Add Notes"></textarea>
-                <span>Max. 2000 characters</span>
-              </div>
-
-              <div className="submit-inquiry">
-                <button data-bs-target="#exampleModalToggle"
-                    data-bs-toggle="modal">Send Inquiry</button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -883,10 +922,10 @@ const ProductDetailPage = () => {
 
 const ProductDetailPageWithSuspense = () => {
   return (
-     <Suspense fallback={<div>Loading...</div>}>
-       <ProductDetailPage />
-     </Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProductDetailPage />
+    </Suspense>
   );
- };
- 
- export default ProductDetailPageWithSuspense;
+};
+
+export default ProductDetailPageWithSuspense;
