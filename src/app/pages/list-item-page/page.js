@@ -33,7 +33,7 @@ const ListItemPage = () => {
                 <p><span>Upload</span>your product for rent.</p>
             </div>
           </div>
-          <Link href='/pages/bussiness_details'><button>Join Us</button></Link>
+          <Link href='/pages/business_details'><button>Join Us</button></Link>
         </div>
       </div>
     </main>

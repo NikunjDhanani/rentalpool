@@ -122,8 +122,8 @@
 .cancel_img_btn , .cancel_img_btn img 
 {
   position: absolute;
-  top: -1px;
-  right: -1px;
+  top: -3px;
+  right: -4px;
   border: none !important;
   border-radius: 50%;
   width: 16px;

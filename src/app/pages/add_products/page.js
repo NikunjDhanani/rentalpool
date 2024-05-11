@@ -6,14 +6,25 @@ import Image from "next/image";
 import right_arrow from "../../../../public/assets/icons/Right_arrow.svg";
 import add_image from "../../../../public/assets/icons/add_image.svg";
 import cancel_img_btn from "../../../../public/assets/icons/cancel_img_btn.svg";
-import downArrow from "../../../../public/assets/icons/down-arrow.svg";
-import upArrow from "../../../../public/assets/icons/up-arrow.svg";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-const AddProduct = () => {
-  const [images, setImages] = useState([]);
+const errorSvg = <svg
+  width="14"
+  height="12"
+  viewBox="0 0 14 12"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M13.1601 8.50833L8.68597 1.08833C8.50506 0.805304 8.25579 0.572383 7.96117 0.411042C7.66655 0.2497 7.33605 0.165131 7.00014 0.165131C6.66423 0.165131 6.33373 0.2497 6.03911 0.411042C5.74448 0.572383 5.49522 0.805304 5.31431 1.08833L0.84014 8.50833C0.682088 8.77179 0.596183 9.07223 0.591063 9.37942C0.585943 9.68661 0.661789 9.98974 0.810973 10.2583C0.983453 10.5606 1.23311 10.8118 1.53442 10.986C1.83574 11.1602 2.17791 11.2513 2.52597 11.25H11.4743C11.8201 11.2537 12.1607 11.1661 12.4618 10.9961C12.7629 10.8261 13.0139 10.5796 13.1893 10.2817C13.3429 10.0103 13.4211 9.7028 13.416 9.39103C13.4109 9.07925 13.3225 8.77451 13.1601 8.50833ZM7.00014 8.91666C6.88477 8.91666 6.77199 8.88245 6.67606 8.81835C6.58013 8.75426 6.50536 8.66315 6.46121 8.55656C6.41706 8.44997 6.40551 8.33268 6.42801 8.21953C6.45052 8.10637 6.50608 8.00243 6.58766 7.92085C6.66924 7.83927 6.77318 7.78371 6.88634 7.7612C6.99949 7.7387 7.11678 7.75025 7.22337 7.7944C7.32996 7.83855 7.42107 7.91332 7.48516 8.00925C7.54926 8.10517 7.58347 8.21796 7.58347 8.33333C7.58347 8.48804 7.52201 8.63641 7.41262 8.74581C7.30322 8.8552 7.15485 8.91666 7.00014 8.91666ZM7.58347 6.58333C7.58347 6.73804 7.52201 6.88641 7.41262 6.99581C7.30322 7.1052 7.15485 7.16666 7.00014 7.16666C6.84543 7.16666 6.69706 7.1052 6.58766 6.99581C6.47826 6.88641 6.41681 6.73804 6.41681 6.58333V4.24999C6.41681 4.09528 6.47826 3.94691 6.58766 3.83752C6.69706 3.72812 6.84543 3.66666 7.00014 3.66666C7.15485 3.66666 7.30322 3.72812 7.41262 3.83752C7.52201 3.94691 7.58347 4.09528 7.58347 4.24999V6.58333Z"
+    fill="#D44848"
+  />
+</svg>
 
+const AddProduct = () => {
+  const authToken = localStorage.getItem("authToken");
+  const [images, setImages] = useState([]);
   // Function to handle file selection
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
@@ -39,37 +50,48 @@ const AddProduct = () => {
     setImages(newImages);
   };
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [getCategoryList, setgetCategoryList] = useState([]);
+  const [getSubCategoryList, setgetSubCategoryList] = useState([]);
 
-  const options = [
-    { value: "Label1", label: "Label1" },
-    { value: "Label2", label: "Label2" },
-    { value: "Label3", label: "Label3" },
-    { value: "Label4", label: "Label4" },
-    { value: "Label5", label: "Label5" },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}products/listCategories/`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+        console.log(data, "sdbjfhdfjhdsfhjdsf");
+        setgetCategoryList(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  const handleSelect = (option) => {
-    setSelectedOption(option);
-    setIsOpen(false);
-  };
+    fetchData();
+  }, []);
 
-  const [isSelected, setIsSelected] = useState(false);
-  const [selectedCat, setlectedCat] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}products/listSubcategories/`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+        console.log(data, "sdbjfhdfjhdsfhjdsf");
+        setgetSubCategoryList(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  const category = [
-    { value: "Label1", label: "Label1" },
-    { value: "Label2", label: "Label2" },
-    { value: "Label3", label: "Label3" },
-    { value: "Label4", label: "Label4" },
-    { value: "Label5", label: "Label5" },
-  ];
-
-  const handleCategory = (category) => {
-    setlectedCat(category);
-    setIsSelected(false);
-  };
+    fetchData();
+  }, []);
 
   const handlePriceChange = (e) => {
     let keyvalue = e.target.value;
@@ -77,13 +99,13 @@ const AddProduct = () => {
     formik.setFieldValue("productPrice", numericValue);
   };
 
-  const validateImageSize = (file) => {
-    const maxSizeInBytes = 10 * 1024 * 1024; // 10MB
-    if (file && file.size > maxSizeInBytes) {
-      return "File size is too large. Maximum size allowed is 10MB.";
-    }
-    return null;
-  };
+  // const validateImageSize = (file) => {
+  //   const maxSizeInBytes = 10 * 1024 * 1024; // 10MB
+  //   if (file && file.size > maxSizeInBytes) {
+  //     return "File size is too large. Maximum size allowed is 10MB.";
+  //   }
+  //   return null;
+  // };
 
   const formik = useFormik({
     initialValues: {
@@ -92,23 +114,26 @@ const AddProduct = () => {
       productDes: "",
       productPrice: "",
       category: "",
+      subCategory: "",
       rentalRules: "",
     },
     validationSchema: Yup.object().shape({
-      productTitle: Yup.string().required("Error Message"),
-      productDes: Yup.string().required("Error Message"),
-      productPrice: Yup.number().required("Error Message"),
-      category: Yup.string().required("Error Message"),
-      rentalRules: Yup.string().required("Error Message"),
+      productTitle: Yup.string().required("Product Title is required."),
+      productDes: Yup.string().required("Product Description is required."),
+      productPrice: Yup.number().required("Price per Day is required."),
+      category: Yup.string().required("Category is required."),
+      rentalRules: Yup.string().required("Rental rules is required."),
     }),
-    onSubmit: async (values, { resetForm }) => {
-      console.log("values", values);
-      console.log("iamages", images);
-      if (images.length === 0) {
-        setImgFlag(true);
-      }
+    onSubmit: (values, { resetForm }) => {
+      console.log("values====>", values);
+      // console.log("iamages", images);
+      // if (images.length === 0) {
+      //   setImgFlag(true);
+      // }
     },
   });
+
+  console.log("getCategoryList", getCategoryList)
 
   return (
     <main>
@@ -141,7 +166,7 @@ const AddProduct = () => {
                 <div className={`${styles.add_products_form_heading}`}>
                   <h4 className="text-center mb-0">Add Product</h4>
                 </div>
-                <form>
+                <form onSubmit={formik.handleSubmit}>
                   <div
                     className={`position-relative ${styles.product_image_section}`}
                   >
@@ -174,12 +199,17 @@ const AddProduct = () => {
                       </div>
                     </div>
                     {/* Image preview */}
-                    <div className={`d-flex ${styles.image_preview_wrap}`}>
+                    <div
+                      className={`d-flex ${styles.image_preview_wrap}`}
+                      style={{ width: "100%", overflow: "auto" }}
+                    >
                       {images.map((image, index) => (
                         <div key={index} className={`${styles.image_preview}`}>
                           <Image
                             src={URL.createObjectURL(image)}
                             alt={`Preview ${index}`}
+                            width="150"
+                            height="150"
                           />
                           <button
                             type="button"
@@ -191,16 +221,6 @@ const AddProduct = () => {
                         </div>
                       ))}
                     </div>
-                    {/* {
-                                        images.length === 0 ? <p
-                                                style={{ fontSize: 15, color: "#D44848", marginLeft: "1%" ,marginTop:"1%"}}
-                                            >
-                                                <><svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M13.1601 8.50833L8.68597 1.08833C8.50506 0.805304 8.25579 0.572383 7.96117 0.411042C7.66655 0.2497 7.33605 0.165131 7.00014 0.165131C6.66423 0.165131 6.33373 0.2497 6.03911 0.411042C5.74448 0.572383 5.49522 0.805304 5.31431 1.08833L0.84014 8.50833C0.682088 8.77179 0.596183 9.07223 0.591063 9.37942C0.585943 9.68661 0.661789 9.98974 0.810973 10.2583C0.983453 10.5606 1.23311 10.8118 1.53442 10.986C1.83574 11.1602 2.17791 11.2513 2.52597 11.25H11.4743C11.8201 11.2537 12.1607 11.1661 12.4618 10.9961C12.7629 10.8261 13.0139 10.5796 13.1893 10.2817C13.3429 10.0103 13.4211 9.7028 13.416 9.39103C13.4109 9.07925 13.3225 8.77451 13.1601 8.50833ZM7.00014 8.91666C6.88477 8.91666 6.77199 8.88245 6.67606 8.81835C6.58013 8.75426 6.50536 8.66315 6.46121 8.55656C6.41706 8.44997 6.40551 8.33268 6.42801 8.21953C6.45052 8.10637 6.50608 8.00243 6.58766 7.92085C6.66924 7.83927 6.77318 7.78371 6.88634 7.7612C6.99949 7.7387 7.11678 7.75025 7.22337 7.7944C7.32996 7.83855 7.42107 7.91332 7.48516 8.00925C7.54926 8.10517 7.58347 8.21796 7.58347 8.33333C7.58347 8.48804 7.52201 8.63641 7.41262 8.74581C7.30322 8.8552 7.15485 8.91666 7.00014 8.91666ZM7.58347 6.58333C7.58347 6.73804 7.52201 6.88641 7.41262 6.99581C7.30322 7.1052 7.15485 7.16666 7.00014 7.16666C6.84543 7.16666 6.69706 7.1052 6.58766 6.99581C6.47826 6.88641 6.41681 6.73804 6.41681 6.58333V4.24999C6.41681 4.09528 6.47826 3.94691 6.58766 3.83752C6.69706 3.72812 6.84543 3.66666 7.00014 3.66666C7.15485 3.66666 7.30322 3.72812 7.41262 3.83752C7.52201 3.94691 7.58347 4.09528 7.58347 4.24999V6.58333Z" fill="#D44848" />
-                                                </svg> {"Error Message"}
-                                                </>
-                                        </p> : null
-                                    } */}
                   </div>
                   <div className={`${styles.about_product_section}`}>
                     <Form.Group>
@@ -212,7 +232,7 @@ const AddProduct = () => {
                         name="productTitle"
                         className={
                           formik.errors.productTitle &&
-                          formik.touched.productTitle
+                            formik.touched.productTitle
                             ? "border-danger mb-0"
                             : ""
                         }
@@ -221,29 +241,18 @@ const AddProduct = () => {
                         placeholder="Product Title"
                       />
                       {formik.errors.productTitle &&
-                      formik.touched.productTitle ? (
+                        formik.touched.productTitle ? (
                         <Form.Text
                           className="text-danger"
                           style={{ marginTop: "1%" }}
                         >
-                          <svg
-                            width="14"
-                            height="12"
-                            viewBox="0 0 14 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M13.1601 8.50833L8.68597 1.08833C8.50506 0.805304 8.25579 0.572383 7.96117 0.411042C7.66655 0.2497 7.33605 0.165131 7.00014 0.165131C6.66423 0.165131 6.33373 0.2497 6.03911 0.411042C5.74448 0.572383 5.49522 0.805304 5.31431 1.08833L0.84014 8.50833C0.682088 8.77179 0.596183 9.07223 0.591063 9.37942C0.585943 9.68661 0.661789 9.98974 0.810973 10.2583C0.983453 10.5606 1.23311 10.8118 1.53442 10.986C1.83574 11.1602 2.17791 11.2513 2.52597 11.25H11.4743C11.8201 11.2537 12.1607 11.1661 12.4618 10.9961C12.7629 10.8261 13.0139 10.5796 13.1893 10.2817C13.3429 10.0103 13.4211 9.7028 13.416 9.39103C13.4109 9.07925 13.3225 8.77451 13.1601 8.50833ZM7.00014 8.91666C6.88477 8.91666 6.77199 8.88245 6.67606 8.81835C6.58013 8.75426 6.50536 8.66315 6.46121 8.55656C6.41706 8.44997 6.40551 8.33268 6.42801 8.21953C6.45052 8.10637 6.50608 8.00243 6.58766 7.92085C6.66924 7.83927 6.77318 7.78371 6.88634 7.7612C6.99949 7.7387 7.11678 7.75025 7.22337 7.7944C7.32996 7.83855 7.42107 7.91332 7.48516 8.00925C7.54926 8.10517 7.58347 8.21796 7.58347 8.33333C7.58347 8.48804 7.52201 8.63641 7.41262 8.74581C7.30322 8.8552 7.15485 8.91666 7.00014 8.91666ZM7.58347 6.58333C7.58347 6.73804 7.52201 6.88641 7.41262 6.99581C7.30322 7.1052 7.15485 7.16666 7.00014 7.16666C6.84543 7.16666 6.69706 7.1052 6.58766 6.99581C6.47826 6.88641 6.41681 6.73804 6.41681 6.58333V4.24999C6.41681 4.09528 6.47826 3.94691 6.58766 3.83752C6.69706 3.72812 6.84543 3.66666 7.00014 3.66666C7.15485 3.66666 7.30322 3.72812 7.41262 3.83752C7.52201 3.94691 7.58347 4.09528 7.58347 4.24999V6.58333Z"
-                              fill="#D44848"
-                            />
-                          </svg>{" "}
+                          {errorSvg}
                           {formik.errors.productTitle}
                         </Form.Text>
                       ) : null}
                     </Form.Group>
                     <Form.Group>
-                      <Form.Label className={`${styles.section_heading}`}>
+                      <Form.Label className={`${styles.section_heading} mt-3`}>
                         Product Description
                       </Form.Label>
                       <Form.Control
@@ -262,41 +271,16 @@ const AddProduct = () => {
                       {formik.errors.productDes &&
                         formik.touched.productDes && (
                           <Form.Text className="text-danger">
-                            <svg
-                              width="14"
-                              height="12"
-                              viewBox="0 0 14 12"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M13.1601 8.50833L8.68597 1.08833C8.50506 0.805304 8.25579 0.572383 7.96117 0.411042C7.66655 0.2497 7.33605 0.165131 7.00014 0.165131C6.66423 0.165131 6.33373 0.2497 6.03911 0.411042C5.74448 0.572383 5.49522 0.805304 5.31431 1.08833L0.84014 8.50833C0.682088 8.77179 0.596183 9.07223 0.591063 9.37942C0.585943 9.68661 0.661789 9.98974 0.810973 10.2583C0.983453 10.5606 1.23311 10.8118 1.53442 10.986C1.83574 11.1602 2.17791 11.2513 2.52597 11.25H11.4743C11.8201 11.2537 12.1607 11.1661 12.4618 10.9961C12.7629 10.8261 13.0139 10.5796 13.1893 10.2817C13.3429 10.0103 13.4211 9.7028 13.416 9.39103C13.4109 9.07925 13.3225 8.77451 13.1601 8.50833ZM7.00014 8.91666C6.88477 8.91666 6.77199 8.88245 6.67606 8.81835C6.58013 8.75426 6.50536 8.66315 6.46121 8.55656C6.41706 8.44997 6.40551 8.33268 6.42801 8.21953C6.45052 8.10637 6.50608 8.00243 6.58766 7.92085C6.66924 7.83927 6.77318 7.78371 6.88634 7.7612C6.99949 7.7387 7.11678 7.75025 7.22337 7.7944C7.32996 7.83855 7.42107 7.91332 7.48516 8.00925C7.54926 8.10517 7.58347 8.21796 7.58347 8.33333C7.58347 8.48804 7.52201 8.63641 7.41262 8.74581C7.30322 8.8552 7.15485 8.91666 7.00014 8.91666ZM7.58347 6.58333C7.58347 6.73804 7.52201 6.88641 7.41262 6.99581C7.30322 7.1052 7.15485 7.16666 7.00014 7.16666C6.84543 7.16666 6.69706 7.1052 6.58766 6.99581C6.47826 6.88641 6.41681 6.73804 6.41681 6.58333V4.24999C6.41681 4.09528 6.47826 3.94691 6.58766 3.83752C6.69706 3.72812 6.84543 3.66666 7.00014 3.66666C7.15485 3.66666 7.30322 3.72812 7.41262 3.83752C7.52201 3.94691 7.58347 4.09528 7.58347 4.24999V6.58333Z"
-                                fill="#D44848"
-                              />
-                            </svg>{" "}
+                            {errorSvg}
                             {formik.errors.productDes}
                           </Form.Text>
                         )}
                     </Form.Group>
                     <Form.Group>
-                      <Form.Label className={`${styles.section_heading}`}>
+                      <Form.Label className={`${styles.section_heading} mt-3`}>
                         Price per Day
                       </Form.Label>
                       <div className="flex-nowrap input-group mb-0">
-                        <span
-                          className="input-group-text"
-                          style={{
-                            fontFamily: "sans-serif",
-                            padding: "8px 0 11px 15px",
-                            borderRadius: "8px 0 0 8px",
-                            border: "1px solid #D9D9D9",
-                            height: "39.6px",
-                            borderRight: "0",
-                            background: "none",
-                          }}
-                        >
-                          &#x20B9;
-                        </span>
                         <Form.Control
                           type="text"
                           name="productPrice"
@@ -304,76 +288,63 @@ const AddProduct = () => {
                           onChange={(e) => handlePriceChange(e)}
                           className={
                             formik.errors.productDes &&
-                            formik.touched.productDes
+                              formik.touched.productDes
                               ? "border-danger"
                               : "mb-0"
                           }
-                          placeholder="Product Price"
+                          placeholder="₹  Product Price"
                           style={{
                             borderLeft: "none !important",
                             borderRadius: "0 8px 8px 0 !important",
+                            marginBottom: 0,
                           }}
                         />
                       </div>
                       {formik.errors.productPrice &&
                         formik.touched.productPrice && (
                           <Form.Text className="text-danger">
-                            <svg
-                              width="14"
-                              height="12"
-                              viewBox="0 0 14 12"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M13.1601 8.50833L8.68597 1.08833C8.50506 0.805304 8.25579 0.572383 7.96117 0.411042C7.66655 0.2497 7.33605 0.165131 7.00014 0.165131C6.66423 0.165131 6.33373 0.2497 6.03911 0.411042C5.74448 0.572383 5.49522 0.805304 5.31431 1.08833L0.84014 8.50833C0.682088 8.77179 0.596183 9.07223 0.591063 9.37942C0.585943 9.68661 0.661789 9.98974 0.810973 10.2583C0.983453 10.5606 1.23311 10.8118 1.53442 10.986C1.83574 11.1602 2.17791 11.2513 2.52597 11.25H11.4743C11.8201 11.2537 12.1607 11.1661 12.4618 10.9961C12.7629 10.8261 13.0139 10.5796 13.1893 10.2817C13.3429 10.0103 13.4211 9.7028 13.416 9.39103C13.4109 9.07925 13.3225 8.77451 13.1601 8.50833ZM7.00014 8.91666C6.88477 8.91666 6.77199 8.88245 6.67606 8.81835C6.58013 8.75426 6.50536 8.66315 6.46121 8.55656C6.41706 8.44997 6.40551 8.33268 6.42801 8.21953C6.45052 8.10637 6.50608 8.00243 6.58766 7.92085C6.66924 7.83927 6.77318 7.78371 6.88634 7.7612C6.99949 7.7387 7.11678 7.75025 7.22337 7.7944C7.32996 7.83855 7.42107 7.91332 7.48516 8.00925C7.54926 8.10517 7.58347 8.21796 7.58347 8.33333C7.58347 8.48804 7.52201 8.63641 7.41262 8.74581C7.30322 8.8552 7.15485 8.91666 7.00014 8.91666ZM7.58347 6.58333C7.58347 6.73804 7.52201 6.88641 7.41262 6.99581C7.30322 7.1052 7.15485 7.16666 7.00014 7.16666C6.84543 7.16666 6.69706 7.1052 6.58766 6.99581C6.47826 6.88641 6.41681 6.73804 6.41681 6.58333V4.24999C6.41681 4.09528 6.47826 3.94691 6.58766 3.83752C6.69706 3.72812 6.84543 3.66666 7.00014 3.66666C7.15485 3.66666 7.30322 3.72812 7.41262 3.83752C7.52201 3.94691 7.58347 4.09528 7.58347 4.24999V6.58333Z"
-                                fill="#D44848"
-                              />
-                            </svg>{" "}
+                            {errorSvg}
                             {formik.errors.productPrice}
                           </Form.Text>
                         )}
                     </Form.Group>
-                    <h4 className={`${styles.section_heading}`}>Category</h4>
-                    <div className={styles.customSelect}>
-                      <div
-                        className={styles.selectedCat}
-                        onClick={() => setIsSelected(!isSelected)}
-                        style={{ marginBottom: "15px" }}
-                      >
-                        <p className="mb-0">
-                          {selectedCat ? selectedCat.label : "Select option"}
-                        </p>
-                        <Image
-                          src={isSelected ? upArrow : downArrow}
-                          alt="arrow"
-                          className={styles.arrowIcon}
-                        />
-                      </div>
-                      {isSelected && (
-                        <ul className={styles.options}>
-                          {category.map((category) => (
-                            <li
-                              key={category.value}
-                              onClick={() => handleCategory(category)}
-                            >
-                              {category.label}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                    <h4 className={`${styles.section_heading}`}>
-                      Sub Category
-                    </h4>
-                    <div className={styles.customSelect}>
+                    <Form.Group>
+                      <Form.Label className={`${styles.section_heading} mt-3`}>
+                        Category
+                      </Form.Label>
+                      <Form.Select name="category" value={formik.values.category} onChange={formik.handleChange}>
+                        <option value="">Select Category</option>
+                        {getCategoryList.map((opt, i) => (
+                          <option value={opt.id} key={i}>{opt.title}</option>
+                        ))}
+                      </Form.Select>
+                      {formik.errors.category &&
+                        formik.touched.category && (
+                          <Form.Text className="text-danger">
+                            {errorSvg}
+                            {formik.errors.category}
+                          </Form.Text>
+                        )}
+                    </Form.Group>
+                    <Form.Group>
+                      <Form.Label className={`${styles.section_heading} mt-3`}>
+                        Sub Category
+                      </Form.Label>
+                      <Form.Select name="subCategory" value={formik.values.subCategory} onChange={formik.handleChange}>
+                        <option value="">Select Sub Category</option>
+                        {getSubCategoryList.map((opt, i) => (
+                          <option key={i} value={opt.id}>{opt.title}</option>
+                        ))}
+                      </Form.Select>
+                    </Form.Group>
+                    {/* <div className={styles.customSelect}>
                       <div
                         className={styles.selectedOption}
                         onClick={() => setIsOpen(!isOpen)}
                       >
                         <p className="mb-0">
                           {selectedOption
-                            ? selectedOption.label
+                            ? selectedOption.title
                             : "Select option"}
                         </p>
                         <Image
@@ -383,18 +354,21 @@ const AddProduct = () => {
                         />
                       </div>
                       {isOpen && (
-                        <ul className={styles.options}>
-                          {options.map((option) => (
+                        <ul
+                          className={styles.options}
+                          style={{ height: "300px", overflow: "auto" }}
+                        >
+                          {getSubCategoryList.map((option) => (
                             <li
                               key={option.value}
                               onClick={() => handleSelect(option)}
                             >
-                              {option.label}
+                              {option.title}
                             </li>
                           ))}
                         </ul>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                   <div className={`${styles.location_section}`}>
                     <h4 className={`${styles.section_heading}`}>Location</h4>
@@ -474,7 +448,7 @@ const AddProduct = () => {
                         value={formik.values.rentalRules}
                         className={
                           formik.errors.rentalRules &&
-                          formik.touched.rentalRules
+                            formik.touched.rentalRules
                             ? "border-danger mb-0"
                             : ""
                         }
@@ -484,18 +458,7 @@ const AddProduct = () => {
                       {formik.errors.rentalRules &&
                         formik.touched.rentalRules && (
                           <Form.Text className="text-danger">
-                            <svg
-                              width="14"
-                              height="12"
-                              viewBox="0 0 14 12"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M13.1601 8.50833L8.68597 1.08833C8.50506 0.805304 8.25579 0.572383 7.96117 0.411042C7.66655 0.2497 7.33605 0.165131 7.00014 0.165131C6.66423 0.165131 6.33373 0.2497 6.03911 0.411042C5.74448 0.572383 5.49522 0.805304 5.31431 1.08833L0.84014 8.50833C0.682088 8.77179 0.596183 9.07223 0.591063 9.37942C0.585943 9.68661 0.661789 9.98974 0.810973 10.2583C0.983453 10.5606 1.23311 10.8118 1.53442 10.986C1.83574 11.1602 2.17791 11.2513 2.52597 11.25H11.4743C11.8201 11.2537 12.1607 11.1661 12.4618 10.9961C12.7629 10.8261 13.0139 10.5796 13.1893 10.2817C13.3429 10.0103 13.4211 9.7028 13.416 9.39103C13.4109 9.07925 13.3225 8.77451 13.1601 8.50833ZM7.00014 8.91666C6.88477 8.91666 6.77199 8.88245 6.67606 8.81835C6.58013 8.75426 6.50536 8.66315 6.46121 8.55656C6.41706 8.44997 6.40551 8.33268 6.42801 8.21953C6.45052 8.10637 6.50608 8.00243 6.58766 7.92085C6.66924 7.83927 6.77318 7.78371 6.88634 7.7612C6.99949 7.7387 7.11678 7.75025 7.22337 7.7944C7.32996 7.83855 7.42107 7.91332 7.48516 8.00925C7.54926 8.10517 7.58347 8.21796 7.58347 8.33333C7.58347 8.48804 7.52201 8.63641 7.41262 8.74581C7.30322 8.8552 7.15485 8.91666 7.00014 8.91666ZM7.58347 6.58333C7.58347 6.73804 7.52201 6.88641 7.41262 6.99581C7.30322 7.1052 7.15485 7.16666 7.00014 7.16666C6.84543 7.16666 6.69706 7.1052 6.58766 6.99581C6.47826 6.88641 6.41681 6.73804 6.41681 6.58333V4.24999C6.41681 4.09528 6.47826 3.94691 6.58766 3.83752C6.69706 3.72812 6.84543 3.66666 7.00014 3.66666C7.15485 3.66666 7.30322 3.72812 7.41262 3.83752C7.52201 3.94691 7.58347 4.09528 7.58347 4.24999V6.58333Z"
-                                fill="#D44848"
-                              />
-                            </svg>{" "}
+                            {errorSvg}
                             {formik.errors.rentalRules}
                           </Form.Text>
                         )}
@@ -506,12 +469,12 @@ const AddProduct = () => {
                       type="submit"
                       className={`${styles.review_product_btn}`}
                     >
-                      ReviewProduct
+                      Review product
                     </button>
                     <br />
-                    <a href="" className={`${styles.save_to_draft_btn}`}>
+                    <p className={`${styles.save_to_draft_btn}`}>
                       or <span> Save to draft</span>
-                    </a>
+                    </p>
                   </div>
                 </form>
               </div>
