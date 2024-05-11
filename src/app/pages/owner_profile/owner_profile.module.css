@@ -16,6 +16,20 @@
     font-size: 28px;
 }
 
+.menu {
+  position: absolute; /* Or use your preferred positioning */
+  top: 100%; /* Position the menu below the button */
+  right: 0; /* Align the menu with the button's right side */
+  background-color: white; /* Set the background color */
+  border: 1px solid #ccc; /* Add a border */
+  padding: 10px; /* Add padding */
+  display: none; /* Initially hide the menu */
+}
+
+.menu:hover {
+  display: block; /* Show the menu when hovering over it */
+}
+
 .follower_count 
 {
     font-weight: 600;

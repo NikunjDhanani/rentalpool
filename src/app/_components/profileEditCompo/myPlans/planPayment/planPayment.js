@@ -11,8 +11,8 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
 
   const [openModal, setOpenModal] = useState(false);
   const [couponCodeList, setCouponCodeList] = useState(null);
-  const [selectedPromoCode, setSelectedPromoCode] = useState({});
-  const [userPromoCode, setUserPromoCode] = useState("");
+  const [selectedPromoCode, setSelectedPromoCode] = useState({ name: "" });
+  const [isApisCouponCode, setIsApisCouponCode] = useState(false);
   const [userPromoCodeAmount, setUserPromoCodeAmount] = useState(0);
   const [userPromoCodeId, setUserPromoCodeId] = useState();
   const [rpCoins, setRpCoins] = useState(0);
@@ -31,6 +31,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
 
   const handleOpenPromoModal = async () => {
     setOpenModal(true);
+    setIsApisCouponCode(false);
     await getCouponCode();
   };
 
@@ -69,6 +70,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
         ) {
           postVerifyRazorpayOrder(response);
           razorpay.close();
+          router.push("/");
         } else {
           errorNotification("Payment Unsuccessful");
         }
@@ -116,16 +118,16 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
         url: `${process.env.NEXT_PUBLIC_BASE_URL}products/getCouponId/`,
         method: "POST",
         data: {
-          coupon_name: userPromoCode,
+          coupon_name: selectedPromoCode?.name,
         },
       });
       if (response?.status === 200) {
         if (response.data.charge_type === "Percentage") {
           setUserPromoCodeAmount(
-            (planPaymentData.current_price * response.data.charge) / 100
+            (planPaymentData.original_price * response.data.charge) / 100
           );
         } else {
-          setUserPromoCodeAmount(response.data.charge)
+          setUserPromoCodeAmount(response.data.charge);
         }
         setUserPromoCodeId(response.data.id);
       } else {
@@ -135,9 +137,8 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
       if (error.response.data.id === -1) {
         toast.error("Your coupon code is not valid.");
       }
-    }
-    finally {
-      setApplyCodeLoading(false)
+    } finally {
+      setApplyCodeLoading(false);
     }
   };
 
@@ -163,8 +164,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
       }
     } catch (error) {
       console.error(error);
-    }
-    finally {
+    } finally {
       setPayLoading(false);
     }
   };
@@ -209,13 +209,14 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
 
   const handleApplyClick = (promo) => {
     if (promo.charge_type === "Percentage") {
-      const data = promo.charge = (planPaymentData.current_price * promo.charge) / 100
+      promo.charge = (planPaymentData.original_price * promo.charge) / 100;
       setSelectedPromoCode(promo);
     } else {
-      setSelectedPromoCode(promo)
+      setSelectedPromoCode(promo);
     }
+    setIsApisCouponCode(true);
     setOpenModal(false);
-  }
+  };
 
   return (
     <>
@@ -271,17 +272,23 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                 </div>
                 <div className={styles.couponInputDiv}>
                   <input
-                    type="text"
+                    type="search"
                     placeholder="Enter Coupon Code"
                     className={styles.planApplyCouponInput}
                     value={selectedPromoCode.name}
-                    onChange={(e) => setUserPromoCode(e.target.value)}
-                    disabled={selectedPromoCode.name}
+                    onChange={(e) => {
+                      setIsApisCouponCode(false);
+                      setSelectedPromoCode({ name: e.target.value });
+                    }}
                   />
                   <input
                     type="button"
                     className={styles.planApplyCouponSubmit}
-                    disabled={applyCodeLoading}
+                    disabled={
+                      applyCodeLoading ||
+                      !selectedPromoCode.name.trim() ||
+                      isApisCouponCode
+                    }
                     onClick={handleApplyCoupon}
                     value="Apply"
                   />
@@ -333,7 +340,8 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                     onClick={() => handlePaymentCreate(planPaymentData)}
                     disabled={payLoading}
                   >
-                    {payLoading && <Spinner animation="border" size="sm" />}  Pay ₹{totalPayAmount / 100}
+                    {payLoading && <Spinner animation="border" size="sm" />} Pay
+                    ₹{totalPayAmount / 100}
                   </button>
                 </div>
               </div>
@@ -346,34 +354,35 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
           <Modal.Title className={styles.modal_title}>Promocodes</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {loading ? <div className="text-center my-4">Loading...</div>
-            : couponCodeList ? (
-              couponCodeList.map((promo, i) => {
-                return (
-                  <div key={i}>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <div>
-                        <p className={styles.promo_title}>{promo.name}</p>
-                        <p className="mb-0">{promo.description}</p>
-                      </div>
-                      <div>
-                        <button
-                          className={styles.applyBtn}
-                          onClick={() => handleApplyClick(promo)}
-                        >
-                          Apply
-                        </button>
-                      </div>
+          {loading ? (
+            <div className="text-center my-4">Loading...</div>
+          ) : couponCodeList ? (
+            couponCodeList.map((promo, i) => {
+              return (
+                <div key={i}>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <p className={styles.promo_title}>{promo.name}</p>
+                      <p className="mb-0">{promo.description}</p>
                     </div>
-                    {i === couponCodeList.legth - 1 && (
-                      <div className={styles.seprator} />
-                    )}
+                    <div>
+                      <button
+                        className={styles.applyBtn}
+                        onClick={() => handleApplyClick(promo)}
+                      >
+                        Apply
+                      </button>
+                    </div>
                   </div>
-                );
-              })
-            ) : (
-              <div className="text-center my-4">No PromoCode Available</div>
-            )}
+                  {i === couponCodeList.legth - 1 && (
+                    <div className={styles.seprator} />
+                  )}
+                </div>
+              );
+            })
+          ) : (
+            <div className="text-center my-4">No PromoCode Available</div>
+          )}
         </Modal.Body>
       </Modal>
     </>

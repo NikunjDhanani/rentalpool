@@ -67,27 +67,27 @@ const Profile = () => {
                     <div className={styles.my_account_tab_options_container}>
                         <ul>
                             {localStorageData !== undefined ? (
-                                <li className={activeTab === 'editProfile' ? styles.active_main_tab : ''} onClick={() => { setActiveTab('editProfile'); setPlanPaymentData(false) }}><a>Edit Profile</a></li>
+                                <li className={activeTab === 'editProfile' ? styles.active_main_tab : ''} onClick={() => { setActiveTab('editProfile'); setShowPlanPayment(false) }}><a>Edit Profile</a></li>
                             ) : (
                                 <li onClick={handleLoginButtonClick}><a>Edit Profile</a></li>
                             )}
                             {localStorageData !== undefined ? (
-                                <li className={activeTab === 'myProducts' ? styles.active_main_tab : ''} onClick={() => { setActiveTab('myProducts'); setPlanPaymentData(false) }}><a>My Products</a></li>
+                                <li className={activeTab === 'myProducts' ? styles.active_main_tab : ''} onClick={() => { setActiveTab('myProducts'); setShowPlanPayment(false) }}><a>My Products</a></li>
                             ) : (
                                 <li onClick={handleLoginButtonClick}><a>My Products</a></li>
                             )}
                             {localStorageData !== undefined ? (
-                                <li className={activeTab === 'myPlans' ? styles.active_main_tab : ''} onClick={() => { setActiveTab('myPlans'); setPlanPaymentData(false) }}><a>My Plans</a></li>
+                                <li className={activeTab === 'myPlans' ? styles.active_main_tab : ''} onClick={() => { setActiveTab('myPlans'); setShowPlanPayment(false) }}><a>My Plans</a></li>
                             ) : (
                                 <li onClick={handleLoginButtonClick}><a>My Plans</a></li>
                             )}
                             {localStorageData !== undefined ? (
-                                <li className={activeTab === 'referEarn' ? styles.active_main_tab : ''} onClick={() => { setActiveTab('referEarn'); setPlanPaymentData(false) }}><a>Refer & Earn</a></li>
+                                <li className={activeTab === 'referEarn' ? styles.active_main_tab : ''} onClick={() => { setActiveTab('referEarn'); setShowPlanPayment(false) }}><a>Refer & Earn</a></li>
                             ) : (
                                 <li onClick={handleLoginButtonClick}><a>Refer & Earn</a></li>
                             )}
                             {localStorageData !== undefined ? (
-                                <li className={activeTab === 'insights' ? styles.active_main_tab : ''} onClick={() => { setActiveTab('insights'); setPlanPaymentData(false) }}><a>Insights</a></li>
+                                <li className={activeTab === 'insights' ? styles.active_main_tab : ''} onClick={() => { setActiveTab('insights'); setShowPlanPayment(false) }}><a>Insights</a></li>
                             ) : (
                                 <li onClick={handleLoginButtonClick}><a>Insights</a></li>
                             )}

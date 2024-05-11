@@ -218,6 +218,7 @@
     border: none;
     width: 25%;
     padding: 12px 15px;
+    cursor: pointer;
 }
 
 .couponInputCheckboxDiv {

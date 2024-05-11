@@ -12,12 +12,13 @@ import { Pagination } from "react-bootstrap";
 import { useMediaQuery } from "../../_components/MediaQueryHook";
 import OwnerProfileService from "@/service/owener_profile.service";
 import DefaultImg from "../../../../public/assets/product/defaultimg.png";
+import axios from "axios";
 
 const Oprofile = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const ownerId = searchParams.get("query");
-
+  const authToken = localStorage.getItem("authToken");
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -57,7 +58,6 @@ const Oprofile = () => {
     return paginationItems;
   };
 
-
   const getHeartFillColor = (productId) => {
     return selectedProducts.includes(productId) ? "red" : "currentColor";
   };
@@ -81,7 +81,7 @@ const Oprofile = () => {
     fetchProducts();
   }, [fetchSellerDetails, fetchProducts]);
 
-  let callProductHandler = true; 
+  let callProductHandler = true;
 
   const toggleHeartColor = (productId) => {
     if (selectedProducts.includes(productId)) {
@@ -93,15 +93,60 @@ const Oprofile = () => {
   };
 
   const productHandler = (item) => {
-    if(callProductHandler){
+    if (callProductHandler) {
       const id = encodeURIComponent(item);
-    router.push(`/pages/product-details?query=${id}`);
+      router.push(`/pages/product-details?query=${id}`);
     }
   };
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsMenuOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsMenuOpen(false);
+  };
+
+  const handleFollowRequest = async () => {
+    console.log('fngjsfdfgksdfsdf')
+    try {
+        const response = await axios({
+            url: `${process.env.NEXT_PUBLIC_BASE_URL}users/sendFollowRequest/`,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${authToken}`,
+            },
+            data: {
+              followed_user:96
+            },
+        });
+       console.log(response,'response')
+    } catch (error) {
+        console.error(error);
+    }
+};
+  const handleUnFollowRequest = async () => {
+    console.log('fngjsfdfgksdfsdf')
+    try {
+         await axios({
+            url: `${process.env.NEXT_PUBLIC_BASE_URL}users/sendUnfollowRequest/${sellerDetails.id}/`,
+            method: "GET",
+            // headers: {
+            //     "Content-Type": "application/json",
+            //     Authorization: `Token ${authToken}`,
+            // },
+        });
+    } catch (error) {
+        console.error(error);
+    }
+};
+console.log(sellerDetails,'sellerDetails')
+
   return (
     <main>
-      
       <div className="owner_profile">
         <div className={`container ${styles.main_container}`}>
           <div className="row pt-3 pb-5">
@@ -110,12 +155,18 @@ const Oprofile = () => {
                 <div
                   className={`d-flex justify-content-end ${styles.more_share_btns}`}
                 >
-                  <button className="d-sm-none d-block me-3 bg-white p-0 border-0">
-                    {/* <Image src={share_btn} alt='Share' /> */}
+                  <button
+                    className="bg-white p-0 border-0"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <Image src={more_btn} alt="More" />
                   </button>
-                  <button className="bg-white p-0 border-0">
-                    <Image src={more_btn} alt='More' />
-                  </button>
+                  {isMenuOpen && (
+                    <div className={styles.menu}>
+                      sdkfsdjfsdkf {/* Your menu items go here */}
+                    </div>
+                  )}
                 </div>
                 <div className={`text-center ${styles.user_image}`}>
                   <Image
@@ -139,7 +190,7 @@ const Oprofile = () => {
                   <div
                     className={`d-flex justify-content-center ${styles.user_followers}`}
                   >
-                    <Image className='me-3' src={followers} alt="Followers" />
+                    <Image className="me-3" src={followers} alt="Followers" />
                     <h4 className={`${styles.follower_count}`}>
                       {sellerDetails.followers}
                     </h4>
@@ -166,11 +217,22 @@ const Oprofile = () => {
                 <div
                   className={`d-lg-flex d-block ${styles.follower_share_btn}`}
                 >
-                  <button
-                    className={`text-center text-white border-0 w-100  mb-lg-0 mb-3 ${styles.follower_btn}`}
-                  >
-                    Follow
-                  </button>
+                  {sellerDetails.iFollowed ? (
+                    <button
+                    onClick={() => handleUnFollowRequest()}
+                      className={`text-center w-100 d-sm-block d-none mb-lg-0 mb-3 ${styles.share_btn}`}
+                    >
+                      Follow
+                    </button>
+                  ) : (
+                    <button
+                    type="button"
+                    onClick={() => handleFollowRequest()}
+                      className={`text-center text-white border-0 w-100  mb-lg-0 mb-3 ${styles.follower_btn}`}
+                    >
+                      Following
+                    </button>
+                  )}
                   <button
                     className={`text-center w-100 d-sm-block d-none ${styles.share_btn}`}
                   >
@@ -315,10 +377,10 @@ const Oprofile = () => {
 
 const OprofileWithSuspense = () => {
   return (
-     <Suspense fallback={<div>Loading...</div>}>
-       <Oprofile />
-     </Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Oprofile />
+    </Suspense>
   );
- };
- 
- export default OprofileWithSuspense;
+};
+
+export default OprofileWithSuspense;

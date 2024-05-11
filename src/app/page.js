@@ -188,7 +188,6 @@ const Page = () => {
             </svg>
           </button>
         </div>
-
         <div className="categoriesitems d-flex align-items-center overflow-scroll" >
           {categories?.map((category) => (
             <div key={category?.id} className="items" onClick={() => handleCategoryClick(category.id)}>
