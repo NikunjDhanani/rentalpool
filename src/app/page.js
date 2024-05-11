@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import axios from "axios";
 
 const Page = () => {
   const router = useRouter();
@@ -12,7 +13,6 @@ const Page = () => {
   const [activeButton, setActiveButton] = useState(1);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [displayedProductsCount, setDisplayedProductsCount] = useState(8);
-
 
   const handleButtonClick = (buttonNumber) => {
     setActiveButton(buttonNumber);
@@ -123,6 +123,28 @@ const Page = () => {
     router.push(`/pages/product-page?categoryId=${categoryId}`);
   };
 
+  const handleProfile = async () => {
+    const authToken = localStorage.getItem("authToken");
+    axios({
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}users/myProfile/`,
+      method: "GET",
+      headers: {
+        Authorization: `Token ${authToken}`,
+      },
+    })
+      .then((response) => {
+        localStorage.setItem("profile", JSON.stringify(response.data));
+      })
+      .catch((err) => {
+        console.error("Error updating profile:", err);
+        setError("Failed to update profile. Please try again later.");
+      });
+  };
+
+  useEffect(() => {
+    handleProfile();
+  }, []);
+
   return (
     <main>
       <div className=" slide">
@@ -188,9 +210,13 @@ const Page = () => {
             </svg>
           </button>
         </div>
-        <div className="categoriesitems d-flex align-items-center overflow-scroll" >
+        <div className="categoriesitems d-flex align-items-center overflow-scroll">
           {categories?.map((category) => (
-            <div key={category?.id} className="items" onClick={() => handleCategoryClick(category.id)}>
+            <div
+              key={category?.id}
+              className="items"
+              onClick={() => handleCategoryClick(category.id)}
+            >
               <Image
                 src={category?.icon}
                 alt="categoriesicon"
@@ -762,7 +788,11 @@ const Page = () => {
             <div class="modal-body">
               <div className="categoriesitems d-flex align-items-center overflow-scroll">
                 {categories?.map((category) => (
-                  <div key={category?.id} className="items" onClick={() => handleCategoryClick(category.id)}>
+                  <div
+                    key={category?.id}
+                    className="items"
+                    onClick={() => handleCategoryClick(category.id)}
+                  >
                     <Image
                       src={category?.icon}
                       alt="categoriesicon"
