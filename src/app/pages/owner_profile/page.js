@@ -1,5 +1,11 @@
 "use client";
-import React, { useState, useEffect, useCallback, Suspense } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  Suspense,
+  useRef,
+} from "react";
 import styles from "./owner_profile.module.css";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -8,7 +14,7 @@ import more_btn from "../../../../public/assets/icons/More.svg";
 // import share_btn from "../../assets/Share.svg";
 // import user_image from "/assets/product/defaultimg.png";
 import followers from "../../../../public/assets/icons/Users.svg";
-import { Pagination } from "react-bootstrap";
+import { Button, Modal, Pagination } from "react-bootstrap";
 import { useMediaQuery } from "../../_components/MediaQueryHook";
 import OwnerProfileService from "@/service/owener_profile.service";
 import DefaultImg from "../../../../public/assets/product/defaultimg.png";
@@ -19,6 +25,7 @@ const Oprofile = () => {
   const searchParams = useSearchParams();
   const ownerId = searchParams.get("query");
   const authToken = localStorage.getItem("authToken");
+  const profile = localStorage.getItem("profile");
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -84,6 +91,7 @@ const Oprofile = () => {
   let callProductHandler = true;
 
   const toggleHeartColor = (productId) => {
+    console.log(productId, "productId");
     if (selectedProducts.includes(productId)) {
       setSelectedProducts(selectedProducts.filter((id) => id !== productId));
     } else {
@@ -99,54 +107,75 @@ const Oprofile = () => {
     }
   };
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsMenuOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsMenuOpen(false);
-  };
-
   const handleFollowRequest = async () => {
-    console.log('fngjsfdfgksdfsdf')
+    console.log(JSON.parse(profile), "fngjsfdfgksdfsdf");
     try {
-        const response = await axios({
-            url: `${process.env.NEXT_PUBLIC_BASE_URL}users/sendFollowRequest/`,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Token ${authToken}`,
-            },
-            data: {
-              followed_user:96
-            },
+      const response = await axios({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}users/sendFollowRequest/`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${authToken}`,
+        },
+        data: {
+          followed_user: JSON.parse(profile).id,
+        },
+      });
+      if (response.status === 201) {
+        setSellerDetails({
+          ...sellerDetails,
+          iFollowed: true,
+          followers: sellerDetails.followers + 1,
         });
-       console.log(response,'response')
+      }
+      console.log(response, "response");
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-};
+  };
   const handleUnFollowRequest = async () => {
-    console.log('fngjsfdfgksdfsdf')
     try {
-         await axios({
-            url: `${process.env.NEXT_PUBLIC_BASE_URL}users/sendUnfollowRequest/${sellerDetails.id}/`,
-            method: "GET",
-            // headers: {
-            //     "Content-Type": "application/json",
-            //     Authorization: `Token ${authToken}`,
-            // },
-        });
+      await axios({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}users/sendUnfollowRequest/${sellerDetails.id}/`,
+        method: "GET",
+      });
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-};
-console.log(sellerDetails,'sellerDetails')
+  };
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleButtonClick = () => {
+    setModalOpen(true);
+  };
+
+  const currentUrl = window.location.href;
+  const handleCopyToClipboard = () => {
+    navigator.clipboard
+      .writeText(currentUrl)
+      .then(() => {
+        // Clipboard successfully copied
+        setModalOpen(false); // Close the modal
+      })
+      .catch((error) => {
+        console.error("Error copying to clipboard:", error);
+      });
+  };
 
   return (
     <main>
+      <Modal show={modalOpen}>
+        <div className="p-4">
+          <p>URL: {currentUrl}</p>
+          <button
+            className={`text-center w-100 d-sm-block mb-lg-0 mb-3 d-none ${styles.share_btn}`}
+            onClick={handleCopyToClipboard}
+          >
+            Copy URL
+          </button>
+        </div>
+      </Modal>
       <div className="owner_profile">
         <div className={`container ${styles.main_container}`}>
           <div className="row pt-3 pb-5">
@@ -155,18 +184,47 @@ console.log(sellerDetails,'sellerDetails')
                 <div
                   className={`d-flex justify-content-end ${styles.more_share_btns}`}
                 >
-                  <button
-                    className="bg-white p-0 border-0"
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                  >
-                    <Image src={more_btn} alt="More" />
-                  </button>
-                  {isMenuOpen && (
-                    <div className={styles.menu}>
-                      sdkfsdjfsdkf {/* Your menu items go here */}
-                    </div>
-                  )}
+                  <Image
+                    class=" dropdown-toggle"
+                    type="button"
+                    id="dropdownMenu2"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    src={more_btn}
+                    alt="More"
+                  />
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li>
+                      <button class="dropdown-item" type="button">
+                        <svg
+                          width="26"
+                          height="26"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          style={{ marginRight: "5PX" }}
+                        >
+                          <path d="M24 23h-24l12-22 12 22zm-22.315-1h20.63l-10.315-18.912-10.315 18.912zm10.315-2c.466 0 .845-.378.845-.845 0-.466-.379-.844-.845-.844-.466 0-.845.378-.845.844 0 .467.379.845.845.845zm.5-11v8h-1v-8h1z" />
+                        </svg>
+                        Report Owner
+                      </button>
+                    </li>
+                    <li>
+                      <button class="dropdown-item" type="button">
+                        <svg
+                          width="26"
+                          height="26"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          style={{ marginRight: "5PX" }}
+                        >
+                          <path d="M24 23h-24l12-22 12 22zm-22.315-1h20.63l-10.315-18.912-10.315 18.912zm10.315-2c.466 0 .845-.378.845-.845 0-.466-.379-.844-.845-.844-.466 0-.845.378-.845.844 0 .467.379.845.845.845zm.5-11v8h-1v-8h1z" />
+                        </svg>
+                        Block Owner
+                      </button>
+                    </li>
+                  </ul>
                 </div>
                 <div className={`text-center ${styles.user_image}`}>
                   <Image
@@ -217,24 +275,25 @@ console.log(sellerDetails,'sellerDetails')
                 <div
                   className={`d-lg-flex d-block ${styles.follower_share_btn}`}
                 >
-                  {sellerDetails.iFollowed ? (
+                  {!sellerDetails.iFollowed ? (
                     <button
-                    onClick={() => handleUnFollowRequest()}
-                      className={`text-center w-100 d-sm-block d-none mb-lg-0 mb-3 ${styles.share_btn}`}
+                      onClick={() => handleFollowRequest()}
+                      className={`text-center text-white border-0 w-100  mb-lg-0 mb-3 ${styles.follower_btn}`}
                     >
                       Follow
                     </button>
                   ) : (
                     <button
-                    type="button"
-                    onClick={() => handleFollowRequest()}
-                      className={`text-center text-white border-0 w-100  mb-lg-0 mb-3 ${styles.follower_btn}`}
+                      type="button"
+                      onClick={() => handleUnFollowRequest()}
+                      className={`text-center w-100 d-sm-block mb-lg-0 mb-3 d-none ${styles.share_btn}`}
                     >
                       Following
                     </button>
                   )}
                   <button
                     className={`text-center w-100 d-sm-block d-none ${styles.share_btn}`}
+                    onClick={handleButtonClick}
                   >
                     Share Profile
                   </button>
