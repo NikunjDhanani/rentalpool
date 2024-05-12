@@ -92,14 +92,23 @@ const ProductDetailPage = () => {
             throw new Error("Failed to fetch data");
           }
           const anyProductsData = await anyProductsResponse.json();
-          setFilteredProducts(anyProductsData.results.slice(0, 4)); // Get only the first 4 products
+          console.log("ABCD", anyProductsData);
+          setFilteredProducts(
+            anyProductsData.results
+              .filter((res) => +res.id !== +ProductId)
+              .slice(0, 4)
+          ); // Get only the first 4 products
         } else {
           // Filter out the current product and get other matching products
           const otherMatchingProducts = data.results.filter(
             (result) => result.title !== product.title
           );
           if (otherMatchingProducts.length > 0) {
-            setFilteredProducts(otherMatchingProducts.slice(0, 4)); // Get only the first 4 other matching products
+            setFilteredProducts(
+              otherMatchingProducts
+                .filter((res) => +res.id !== +ProductId)
+                .slice(0, 4)
+            ); // Get only the first 4 other matching products
           } else {
             // If no other matching products, fetch any 4 products
             const anyProductsResponse = await fetch(
@@ -109,7 +118,11 @@ const ProductDetailPage = () => {
               throw new Error("Failed to fetch data");
             }
             const anyProductsData = await anyProductsResponse.json();
-            setFilteredProducts(anyProductsData.results.slice(0, 4)); // Get only the first 4 products
+            setFilteredProducts(
+              anyProductsData.results
+                .filter((res) => +res.id !== +ProductId)
+                .slice(0, 4)
+            ); // Get only the first 4 products
           }
         }
       } catch (error) {

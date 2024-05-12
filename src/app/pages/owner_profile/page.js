@@ -162,7 +162,7 @@ const Oprofile = () => {
 
   return (
     <main>
-      <Modal show={modalOpen}>
+      <Modal show={modalOpen} onHide={() => setModalOpen(false)}>
         <div className="p-4">
           <p>URL: {currentUrl}</p>
           <button

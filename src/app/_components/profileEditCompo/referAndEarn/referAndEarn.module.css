@@ -28,7 +28,9 @@
     text-align: center;
     margin: 20px 0px;
 }
-.vectorImgOne, .vectorImgTwo {
+
+.vectorImgOne,
+.vectorImgTwo {
     max-width: 160px;
     height: 190px;
     display: flex;
@@ -36,12 +38,13 @@
     align-items: center;
 }
 
-.vectorImgOne img, .vectorImgTwo img {
-    width: 100%; 
-    height: auto; 
+.vectorImgOne img,
+.vectorImgTwo img {
+    width: 100%;
+    height: auto;
 }
 
-.coinDetailDiv{
+.coinDetailDiv {
     width: 50%;
 }
 
@@ -59,16 +62,19 @@
     font-size: 14px;
     font-weight: 400;
 }
-.coinDetainMainDiv{
+
+.coinDetainMainDiv {
     display: flex;
     justify-content: space-between;
 }
-.coinDetainMainDiv{
+
+.coinDetainMainDiv {
     border: 1px solid #D9D9D9;
     padding: 30px 15px 30px 15px;
     position: relative;
 }
-.codeDiv{
+
+.codeDiv {
     border: 1px solid #E8E8ED;
     background: #F7F8F9;
     padding: 10px 15px;
@@ -80,59 +86,72 @@
     position: relative;
     z-index: 1;
 }
-.codeTitle{
+
+.codeTitle {
     font-family: "Poppins";
     font-size: 12px;
     font-weight: 400;
     color: #757575;
     margin: 0;
 }
-.code{
-font-family: "Poppins";
-font-size: 18px;
-font-weight: 500;
-color: #525252;
-margin: 0;
+
+.code {
+    font-family: "Poppins";
+    font-size: 18px;
+    font-weight: 500;
+    color: #525252;
+    margin: 0;
 }
-.copyBtn{
-width: 20px;
+
+.copyBtn {
+    width: 20px;
+    cursor: copy;
 }
-.shareBtn{
+
+.shareBtn {
     width: 20px;
 }
-.availableCoinTitle{
+
+.availableCoinTitle {
     color: #046BFB;
     font-family: "Poppins";
     font-size: 18px;
     font-weight: 500;
 }
-.coinTotalDetailDiv{
+
+.coinTotalDetailDiv {
     border: 1px solid #E8E8ED;
     padding: 15px 15px;
     margin-top: 20px;
 }
-.coinTotalTitleDiv, .coinTotalDiv{
+
+.coinTotalTitleDiv,
+.coinTotalDiv {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.coinTotalTitleDiv{
+
+.coinTotalTitleDiv {
     border-bottom: 1px solid #D9D9D9;
 }
-.coinTotalTitleDiv p{
+
+.coinTotalTitleDiv p {
     font-family: "Poppins";
     font-size: 18px;
     font-weight: 400;
     color: #525252;
     margin-top: 7px;
 }
-.coinTotalDiv p{
+
+.coinTotalDiv p {
     font-family: "Poppins";
     font-size: 18px;
     font-weight: 500;
     color: #525252;
     margin-top: 7px;
 }
+
 @media only screen and (max-width: 1149px) {
 
     .edit_profile_heading_container h2 {
@@ -141,65 +160,79 @@ width: 20px;
 }
 
 @media only screen and (max-width: 768px) {
-    .coinDetailDiv{
+    .coinDetailDiv {
         margin: 10px;
     }
-    .referAndEarnTitle{
+
+    .referAndEarnTitle {
         font-size: 20px;
     }
-    .CoinTitle{
+
+    .CoinTitle {
         font-size: 16PX;
     }
-    .code{
+
+    .code {
         font-size: 16PX;
     }
-    .coinTotalDiv p{
+
+    .coinTotalDiv p {
         font-size: 16PX;
     }
-    .coinTotalTitleDiv p{
+
+    .coinTotalTitleDiv p {
         font-size: 16PX;
     }
 }
 
 @media only screen and (max-width: 520px) {
+
     /* .coinDetailDiv{
         width: 100%;
     }
     .coinDetainMainDiv{
         flex-direction: column;
     } */
-    .vectorImgOne, .vectorImgTwo {
+    .vectorImgOne,
+    .vectorImgTwo {
         max-width: 100px;
         height: 120px;
     }
-    .coinDescription{
+
+    .coinDescription {
         font-size: 12px;
     }
-    .code{
+
+    .code {
         font-size: 12px;
     }
-    .coinTitle{
+
+    .coinTitle {
         font-size: 16px;
     }
 }
 
 @media only screen and (max-width: 480px) {
-    .codeDiv{
+    .codeDiv {
         max-width: 300px;
     }
-    .coinTotalTitleDiv p{
+
+    .coinTotalTitleDiv p {
         font-size: 12px;
     }
-    .coinTotalDiv p{
+
+    .coinTotalDiv p {
         font-size: 14px;
     }
 }
 
 @media only screen and (max-width:374px) {
-    .coinTitle{
+    .coinTitle {
         font-size: 14px;
     }
-    .vectorImgOne, .vectorImgTwo {
+
+    .vectorImgOne,
+    .vectorImgTwo {
         max-width: 80px;
         height: 100px;
     }

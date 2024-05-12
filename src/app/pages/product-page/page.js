@@ -69,31 +69,31 @@ const ProductPage = () => {
   };
 
   //  productlist
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}products/listProducts/?limit=${displayedProductsCount}&page=${currentPage}`
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setProducts(data.results);
-        setTotalPages(Math.ceil(data.count / displayedProductsCount));
-        setNextPageUrl(data.next);
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_BASE_URL}products/listProducts/?limit=${displayedProductsCount}&page=${currentPage}`
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       const data = await response.json();
+  //       setProducts(data.results);
+  //       setTotalPages(Math.ceil(data.count / displayedProductsCount));
+  //       setNextPageUrl(data.next);
 
-        // Calculate total pages
-        const totalCount = data.count;
-        const pages = Math.ceil(totalCount / displayedProductsCount);
-        setTotalPages(pages);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  //       // Calculate total pages
+  //       const totalCount = data.count;
+  //       const pages = Math.ceil(totalCount / displayedProductsCount);
+  //       setTotalPages(pages);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchProducts();
-  }, [currentPage, displayedProductsCount]);
+  //   fetchProducts();
+  // }, [currentPage, displayedProductsCount]);
 
   useEffect(() => {
     const fetchProducts = async () => {
