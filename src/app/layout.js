@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <Providers>
       <html lang="en">
-        <body >
+        <body>
           <Header />
           {children}
           <BootstrapClient />

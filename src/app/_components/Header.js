@@ -40,8 +40,6 @@ const Header = () => {
   const pathname = usePathname();
   const localStorageData = localStorage.getItem('authToken');
 
-  console.log(pathname, 'usePathname')
-
   const handleLoginButtonClick = () => {
     setShowLogin(true);
     setShowSignup(false);
@@ -97,8 +95,6 @@ const Header = () => {
         // Get latitude and longitude
         const lat = place.geometry.location.lat();
         const lng = place.geometry.location.lng();
-        console.log("Latitude:", lat);
-        console.log("Longitude:", lng);
         localStorage.setItem("latitude", lat);
         localStorage.setItem("longitude", lng);
 
@@ -195,7 +191,6 @@ const Header = () => {
     localStorage.setItem("latitude", latitude);
     localStorage.setItem("longitude", longitude);
 
-    console.log(latitude, longitude, "latlong");
     const apiKey = "AIzaSyCo6hADtCP66Co3u3RSb9YMuaS6dF0uB0o"; // Replace with your API key
 
     try {

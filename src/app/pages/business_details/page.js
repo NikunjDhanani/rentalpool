@@ -62,8 +62,6 @@ const BussinessDetails = () => {
         .required("GST No is Required"),
     }),
     onSubmit: async (values, { resetForm }) => {
-      console.log("values", values);
-
       const formData = new FormData();
       formData.append("business_email ", values.email);
       formData.append("gst_no", values.gstno);
@@ -73,11 +71,9 @@ const BussinessDetails = () => {
       formData.append("business_city ", values.city);
       formData.append("business_state ", values.state);
       formData.append("business_pincode ", values.pincode);
-      console.log("formdata", formData);
 
       try {
         const response = await BussinessService.AddBussinessDetails(formData);
-        console.log("response", response);
         if (response.status === 201) {
           setModalShow(true);
           // open po/pup

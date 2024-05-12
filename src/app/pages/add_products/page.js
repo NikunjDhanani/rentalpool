@@ -67,7 +67,6 @@ const AddProduct = () => {
           throw new Error("Failed to fetch data");
         }
         const data = await response.json();
-        console.log(data, "sdbjfhdfjhdsfhjdsf");
         setgetCategoryList(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -87,7 +86,6 @@ const AddProduct = () => {
           throw new Error("Failed to fetch data");
         }
         const data = await response.json();
-        console.log(data, "sdbjfhdfjhdsfhjdsf");
         setgetSubCategoryList(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -149,8 +147,6 @@ const AddProduct = () => {
       // }
     },
   });
-
-  console.log("getCategoryList", getCategoryList);
 
   return (
     <main>
@@ -272,7 +268,7 @@ const AddProduct = () => {
                           className="text-danger"
                           style={{ marginTop: "1%" }}
                         >
-                          {errorSvg}
+                          {errorSvg}&nbsp;
                           {formik.errors.productTitle}
                         </Form.Text>
                       ) : null}
@@ -297,7 +293,7 @@ const AddProduct = () => {
                       {formik.errors.productDes &&
                         formik.touched.productDes && (
                           <Form.Text className="text-danger">
-                            {errorSvg}
+                            {errorSvg}&nbsp;
                             {formik.errors.productDes}
                           </Form.Text>
                         )}
@@ -329,7 +325,7 @@ const AddProduct = () => {
                       {formik.errors.productPrice &&
                         formik.touched.productPrice && (
                           <Form.Text className="text-danger">
-                            {errorSvg}
+                            {errorSvg}&nbsp;
                             {formik.errors.productPrice}
                           </Form.Text>
                         )}
@@ -350,12 +346,13 @@ const AddProduct = () => {
                           </option>
                         ))}
                       </Form.Select>
-                      {formik.errors.category && formik.touched.category && (
-                        <Form.Text className="text-danger">
-                          {errorSvg}
-                          {formik.errors.category}
-                        </Form.Text>
-                      )}
+                      {formik.errors.category &&
+                        formik.touched.category && (
+                          <Form.Text className="text-danger">
+                            {errorSvg}&nbsp;
+                            {formik.errors.category}
+                          </Form.Text>
+                        )}
                     </Form.Group>
                     <Form.Group>
                       <Form.Label className={`${styles.section_heading} mt-3`}>
@@ -495,7 +492,7 @@ const AddProduct = () => {
                       {formik.errors.rentalRules &&
                         formik.touched.rentalRules && (
                           <Form.Text className="text-danger">
-                            {errorSvg}
+                            {errorSvg}&nbsp;
                             {formik.errors.rentalRules}
                           </Form.Text>
                         )}

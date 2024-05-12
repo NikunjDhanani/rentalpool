@@ -120,6 +120,8 @@ const Page = () => {
   };
 
   const handleCategoryClick = (categoryId) => {
+    let myModalEl = document.querySelector(".modal-backdrop");
+    myModalEl && myModalEl.remove();
     router.push(`/pages/product-page?categoryId=${categoryId}`);
   };
 

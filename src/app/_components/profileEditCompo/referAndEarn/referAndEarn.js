@@ -14,7 +14,6 @@ const ReferAndEarn = () => {
             method: "GET",
         })
             .then((res) => {
-                console.log(res.data);
                 setCoins(res.data)
             })
             .catch((err) => {

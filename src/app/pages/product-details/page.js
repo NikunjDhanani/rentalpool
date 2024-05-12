@@ -24,6 +24,7 @@ const ProductDetailPage = () => {
   const profile = localStorage.getItem("profile");
   const authToken = localStorage.getItem("authToken");
   const owner = "Owner's Profile";
+  const pathname = usePathname()
 
   const validationSchema = Yup.object().shape({
     fullName: Yup.string().required('Full Name is required.'),
@@ -45,63 +46,7 @@ const ProductDetailPage = () => {
     return `${year}-${month}-${day}`;
   }
 
-  // Prefix message for
-  const textMessage = `
-  Hello, ${product?.seller?.first_name} ${product?.seller?.last_name}, I am ${sendInquryDetails?.fullName}.<br/>
-  I want to rent ${product?.title} on date(S):<br/>
-  [${formatDate(sendInquryDetails?.date)}].<br/><br/>
-  My contact details are:<br/>
-  Name: ${sendInquryDetails?.fullName}<br/>
-  Address: ${sendInquryDetails?.flatBuilding}, ${sendInquryDetails?.city}, ${sendInquryDetails?.state}, ${sendInquryDetails?.pincode}<br/>
-  Phone no: ${sendInquryDetails?.phoneNumber}
-`;
-
-  // Prefix message send for
-  const handleSendMessage = async ({ data }) => {
-    try {
-      const response = await axios({
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}products/sendMessage/`,
-        method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        data: {
-          message: textMessage,
-          inquiry_id: data?.id,
-          receiver_user_id: JSON.parse(profile)?.id
-        },
-      });
-      if (response) {
-        router.push('/pages/chatbox');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // Send inquiry for 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    setSendInquryDetails(values);
-    try {
-      const response = await axios({
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}products/createInquiry/`,
-        method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Token ${authToken}`,
-        },
-        data: {
-          last_date: formatDate(values?.date),
-          product: ProductId,
-          buyer: JSON.parse(profile)?.id,
-        },
-      });
-      if (response) {
-        handleSendMessage(response);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+  const handleSubmit = (values, { setSubmitting }) => {
     setSubmitting(false);
   };
 
