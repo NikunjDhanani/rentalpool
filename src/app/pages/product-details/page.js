@@ -1,8 +1,9 @@
 "use client";
 import SubHeader from "@/app/_components/SubHeader";
+import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -18,9 +19,11 @@ const ProductDetailPage = () => {
   const [product, setProduct] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [sendInquryDetails, setSendInquryDetails] = useState({});
+
+  const profile = localStorage.getItem("profile");
+  const authToken = localStorage.getItem("authToken");
   const owner = "Owner's Profile";
-  const pathname = usePathname()
-  console.log(ProductId, 'idididid')
 
   const validationSchema = Yup.object().shape({
     fullName: Yup.string().required('Full Name is required.'),
@@ -33,6 +36,7 @@ const ProductDetailPage = () => {
     additionalNotes: Yup.string().max(2000, 'Max 2000 characters allowed.')
   });
 
+  // yyyy/MM/dd formate in convert for
   function formatDate(dateString) {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -41,8 +45,63 @@ const ProductDetailPage = () => {
     return `${year}-${month}-${day}`;
   }
 
-  const handleSubmit = (values, { setSubmitting }) => {
-    console.log(formatDate(values?.date), 'valuesvalues');
+  // Prefix message for
+  const textMessage = `
+  Hello, ${product?.seller?.first_name} ${product?.seller?.last_name}, I am ${sendInquryDetails?.fullName}.<br/>
+  I want to rent ${product?.title} on date(S):<br/>
+  [${formatDate(sendInquryDetails?.date)}].<br/><br/>
+  My contact details are:<br/>
+  Name: ${sendInquryDetails?.fullName}<br/>
+  Address: ${sendInquryDetails?.flatBuilding}, ${sendInquryDetails?.city}, ${sendInquryDetails?.state}, ${sendInquryDetails?.pincode}<br/>
+  Phone no: ${sendInquryDetails?.phoneNumber}
+`;
+
+  // Prefix message send for
+  const handleSendMessage = async ({ data }) => {
+    try {
+      const response = await axios({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}products/sendMessage/`,
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        data: {
+          message: textMessage,
+          inquiry_id: data?.id,
+          receiver_user_id: JSON.parse(profile)?.id
+        },
+      });
+      if (response) {
+        router.push('/pages/chatbox');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Send inquiry for 
+  const handleSubmit = async (values, { setSubmitting }) => {
+    setSendInquryDetails(values);
+    try {
+      const response = await axios({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}products/createInquiry/`,
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Token ${authToken}`,
+        },
+        data: {
+          last_date: formatDate(values?.date),
+          product: ProductId,
+          buyer: JSON.parse(profile)?.id,
+        },
+      });
+      if (response) {
+        handleSendMessage(response);
+      }
+    } catch (error) {
+      console.error(error);
+    }
     setSubmitting(false);
   };
 
@@ -909,7 +968,6 @@ const ProductDetailPage = () => {
                 </Form>
               )}
             </Formik>
-
           </div>
         </div>
       </div>

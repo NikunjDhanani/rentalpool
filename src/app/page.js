@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 import axios from "axios";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 const Page = () => {
   const router = useRouter();
@@ -17,6 +17,7 @@ const Page = () => {
   const handleButtonClick = (buttonNumber) => {
     setActiveButton(buttonNumber);
   };
+  
   //  categories list
   useEffect(() => {
     async function fetchData() {
@@ -51,7 +52,6 @@ const Page = () => {
         }
         const data = await response.json();
         const firstEightProducts = data.results;
-        console.log(firstEightProducts, "firstEightProducts");
         setProducts(firstEightProducts);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -137,7 +137,6 @@ const Page = () => {
       })
       .catch((err) => {
         console.error("Error updating profile:", err);
-        setError("Failed to update profile. Please try again later.");
       });
   };
 
