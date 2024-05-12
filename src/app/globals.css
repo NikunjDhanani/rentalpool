@@ -189,6 +189,10 @@ a {
   text-align: right;
 }
 
+.whychooseussection {
+  flex-wrap: wrap;
+}
+
 .item-active {
   width: 190px;
   height: 45px;
@@ -330,7 +334,6 @@ a {
 
 .categoriesheader button:hover svg path {
   stroke: white;
-  /* Change SVG color on hover */
 }
 
 .product1 button:hover {
@@ -528,6 +531,48 @@ a {
 }
 
 /* home page */
+.start_now_page {
+  background: rgba(241, 247, 255, 1);
+}
+
+.rent_text_main_page {
+  color: #046BFB;
+  font-weight: 700;
+  font-size: 64px;
+}
+
+.book_text_main_page {
+  font-family: Schoolbell;
+  font-size: 64px;
+  font-weight: 400;
+  color: rgba(239, 98, 57, 1);
+}
+
+.start_now_btn {
+  padding: 16px 32px 16px 32px;
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 1);
+  border: none;
+  font-family: Inter;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.rentalspool_details_main_page {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: left;
+  margin-top: 14px;
+}
+
+.first_page_poster {
+  width: 80%;
+  height: 80%;
+}
 
 .slide {
   background: rgba(241, 247, 255, 1);
@@ -580,12 +625,12 @@ a {
 }
 
 /* categories */
-.homecategories {
-  height: 300px;
-}
 
-.categoriesheader {
-  margin-top: 30px;
+.top_categories_header {
+  color: rgba(4, 107, 251, 1);
+  font-size: 20px;
+  font-weight: 600;
+  text-align: left;
 }
 
 .categoriesheader h4 {
@@ -617,19 +662,50 @@ a {
   margin-left: 8px;
 }
 
+.category_modal_card {
+  margin-top: 30px;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .categoriesitems {
   margin-top: 30px;
   gap: 47px;
 }
 
+.categories_icon_modal {
+  height: 100px;
+  width: 100px;
+}
+
+.category_modal {
+  border: 1.5px solid rgba(232, 232, 237, 1);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  height: 190px;
+  width: 175px !important;
+}
+
+.category_modal:hover {
+  border: 1.5px solid rgba(4, 107, 251, 1);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  height: 190px;
+  width: 175px !important;
+}
+
 .categoriesitems .items {
   border: 1.5px solid rgba(232, 232, 237, 1);
-  width: 250px;
-  height: 229px;
   padding: 30px 49px 30px 49px;
   border-radius: 10px;
   text-align: center;
   cursor: pointer;
+  height: 230px;
 }
 
 .categoriesitems .items:hover {
@@ -653,8 +729,6 @@ a {
 }
 
 .popularproduct {
-  border-top: 1px solid #d9d9d9;
-  border-bottom: 1px solid #d9d9d9;
   padding-bottom: 20px;
 }
 
@@ -1038,7 +1112,6 @@ a {
 
 /* why choose us */
 .whychooseus {
-  height: 392px;
   background: rgba(255, 255, 255, 1);
   display: flex;
   align-items: center;
@@ -1052,17 +1125,14 @@ a {
   line-height: 36px;
   text-align: center;
   color: rgba(4, 107, 251, 1);
-  margin-bottom: 28px;
 }
 
 .whychooseus p {
-  max-width: 700px;
   text-align: center;
   margin-bottom: 0;
   font-size: 18px;
   font-weight: 400;
   line-height: 28px;
-  color: rgba(0, 0, 0, 1);
 }
 
 .why1 {
@@ -1108,21 +1178,14 @@ a {
   margin-top: 12px;
 }
 
-.whychooseussection {
-  margin-top: 50px;
-}
-
 .appinstall {
   position: relative;
-  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   border-radius: 10px;
-  margin-top: 54px;
   background: rgba(4, 107, 251, 1);
-  margin-bottom: 54px;
 }
 
 .app-1 {
@@ -1171,10 +1234,6 @@ a {
 
 .mobilenav {
   display: none;
-}
-
-.mobilenav {
-  /* padding: 13px; */
 }
 
 .mobilenav .toggle {
@@ -2366,11 +2425,11 @@ p {
 }
 
 .rate_your_experience {
- color: #525252;
- font-size: 18px;
+  color: #525252;
+  font-size: 18px;
 }
 
-.write_a_review{
+.write_a_review {
   color: #333333;
   font-weight: 500;
   font-size: 16px;
@@ -2406,6 +2465,56 @@ p {
 
 /* media queries */
 @media (max-width:992px) {
+
+  .book_text_main_page,
+  .rent_text_main_page {
+    font-size: 48px;
+  }
+
+  .first_page_poster {
+    margin-bottom: 24px;
+    width: 60%;
+    height: 60%;
+  }
+
+  .start_now_btn {
+    height: 56px;
+    padding: 16px 32px 16px 32px;
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 1);
+    border: none;
+    font-family: Inter;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .rentalspool_details_main_page {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    text-align: left;
+    margin-top: 14px;
+  }
+
+  .categories_icon_modal {
+    height: 64px;
+    width: 64px;
+  }
+
+  .category_modal {
+    padding: 14px;
+    height: 150px;
+    width: 123px !important;
+  }
+
+  .category_modal_card {
+    margin-top: 30px;
+    gap: 20px;
+  }
+
   .message-sender-side {
     width: 280px;
   }
@@ -2455,9 +2564,23 @@ p {
     padding: 8px;
   }
 
+  .mainwhy h6 {
+    font-size: 14px;
+  }
+
 }
 
 @media (max-width:768px) {
+  .app-1 {
+    background: rgba(48, 131, 255, 1);
+    padding-left: 24px;
+  }
+
+  .app-1 p {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
   .message-sender-side {
     width: 250px;
   }
@@ -2473,28 +2596,6 @@ p {
     padding: 0 15px;
   }
 
-  .categoriesheader h4 {
-    font-size: 12px;
-  }
-
-  .categoriesheader {
-    margin-top: 10px;
-  }
-
-  .categoriesheader button {
-    color: rgba(82, 82, 82, 1);
-    font-size: 12px;
-    font-weight: 500;
-    border: none;
-    width: 60px;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .categoriesheader button svg {
-    display: none;
-  }
-
   .categoriesitems {
     margin-top: 10px;
     gap: 10px;
@@ -2502,10 +2603,8 @@ p {
   }
 
   .categoriesitems .items {
-    width: 100px !important;
-    height: 100px;
-    padding: 9px 20px;
-    text-align: center;
+    padding: 28px 40px 28px 40px;
+    height: 150px;
   }
 
   .categoriesitems .items img {
@@ -2519,14 +2618,6 @@ p {
     font-weight: 600;
     line-height: 13px;
     text-align: center;
-  }
-
-  .categoriesheader h4 {
-    margin-bottom: 0;
-  }
-
-  .popularproduct {
-    border: none;
   }
 
   .productmain .product1 {
@@ -2580,13 +2671,6 @@ p {
     flex-direction: row;
   }
 
-  /* .homeads,
-  .howitswork,
-  .whychooseus,
-  .appinstall {
-    display: none;
-  } */
-
   .homeads {
     flex-direction: column;
   }
@@ -2636,7 +2720,7 @@ p {
   }
 
   .whychooseus p {
-    font-size: 15px;
+    font-size: 14px;
     line-height: 20px;
   }
 
@@ -2645,10 +2729,6 @@ p {
     width: 100%;
     height: 100%;
     max-height: 173px;
-  }
-
-  .mainwhy h6 {
-    font-size: 14px;
   }
 
   .appinstall {
@@ -2682,11 +2762,6 @@ p {
 
   .whychooseussection {
     flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .whychooseus {
-    height: 100%;
   }
 
   .footer {
@@ -4341,16 +4416,10 @@ p {
 }
 
 .no-product-found {
-  font-size: 18px;
-  text-align: center;
-  margin: 50px 0;
   color: rgba(82, 82, 82, 1);
-}
-
-.no-product-found {
-  font-size: 16px;
-  max-width: 500px;
-  height: 100px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 28px;
 }
 
 #exampleModalToggleLabel {
@@ -4371,10 +4440,7 @@ p {
 }
 
 .modalcategories .categoriesitems .items {
-  height: 140px;
-  width: 140px !important;
   padding: 0px;
-  padding-top: 20px;
 }
 
 .modalcategories .categoriesitems .items img {
@@ -4761,28 +4827,6 @@ p {
     padding: 0 15px;
   }
 
-  .categoriesheader h4 {
-    font-size: 12px;
-  }
-
-  .categoriesheader {
-    margin-top: 10px;
-  }
-
-  .categoriesheader button {
-    color: rgba(82, 82, 82, 1);
-    font-size: 12px;
-    font-weight: 500;
-    border: none;
-    width: 60px;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .categoriesheader button svg {
-    display: none;
-  }
-
   .categoriesitems {
     margin-top: 10px;
     gap: 10px;
@@ -4790,10 +4834,8 @@ p {
   }
 
   .categoriesitems .items {
-    width: 100px !important;
-    height: 100px;
-    padding: 9px 20px;
-    text-align: center;
+    padding: 28px 40px 28px 40px;
+    height: 150px;
   }
 
   .categoriesitems .items img {
@@ -4807,14 +4849,6 @@ p {
     font-weight: 600;
     line-height: 13px;
     text-align: center;
-  }
-
-  .categoriesheader h4 {
-    margin-bottom: 0;
-  }
-
-  .popularproduct {
-    border: none;
   }
 
   .productmain .product1 {

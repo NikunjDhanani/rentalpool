@@ -17,7 +17,11 @@ const Page = () => {
   const handleButtonClick = (buttonNumber) => {
     setActiveButton(buttonNumber);
   };
-  
+
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   //  categories list
   useEffect(() => {
     async function fetchData() {
@@ -146,51 +150,53 @@ const Page = () => {
 
   return (
     <main>
-      <div className=" slide">
-        <div className="d-flex align-items-center justify-content-center slidersdiv">
-          <div className="slidecontent">
-            <h1>
-              Rent <span> Books</span>
-              <br />
-              with RentalsPool
-            </h1>
-            <p>
-              Get what you need, Rent what you have, All through Rentalspool!
-            </p>
-            <button className="bg-primary">
-              Start Now{" "}
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16 16L19.2929 12.7071C19.6834 12.3166 19.6834 11.6834 19.2929 11.2929L16 8M19 12L5 12"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </button>
+      {/* Section Start Now */}
+      <div className="start_now_page">
+        <div className="container-lg">
+          <div className="row d-flex align-items-center justify-content-center py-5">
+            <div className="col-lg-6 col-12 order-lg-1 order-2">
+              <div className="rent_text_main_page">
+                Rent <span className="book_text_main_page"> Books</span>
+                <br />
+                with RentalsPool
+              </div>
+              <div className="rentalspool_details_main_page">Get what you need, Rent what you have, All through Rentalspool!</div>
+              <button className="start_now_btn bg-primary">
+                Start Now{" "}
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16 16L19.2929 12.7071C19.6834 12.3166 19.6834 11.6834 19.2929 11.2929L16 8M19 12L5 12"
+                    stroke="white"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className="col-lg-6 col-12 text-center order-lg-2 order-1">
+              <img
+                src="/assets/Home/slider1.png"
+                alt="img"
+                className="first_page_poster"
+              />
+            </div>
           </div>
-          <Image
-            src="/assets/Home/slider1.png"
-            alt="img"
-            height={289}
-            width={470}
-          />
         </div>
       </div>
-
-      <div className="homecategories container">
+      {/* Section top Categories */}
+      <div className="container-lg mt-5">
         <div
           className="d-flex align-items-center justify-content-between categoriesheader"
           data-bs-target="#exampleModalToggle"
           data-bs-toggle="modal"
         >
-          <h4>Top Categories</h4>
+          <span className="top_categories_header">Top Categories</span>
           <button>
             View all{" "}
             <svg
@@ -214,135 +220,128 @@ const Page = () => {
             <div
               key={category?.id}
               className="items"
-              onClick={() => handleCategoryClick(category.id)}
+              onClick={() => handleCategoryClick(category?.id)}
             >
-              <Image
+              <img
                 src={category?.icon}
                 alt="categoriesicon"
-                height={100}
-                width={100}
               />
               <p key={category?.id}>{category?.title}</p>
             </div>
           ))}
         </div>
       </div>
+      {/* Section Popular Products */}
+      <div className="container-lg mt-5">
+        <div className="d-flex align-items-center justify-content-between categoriesheader">
+          <span className="top_categories_header">Popular Products</span>
+          <Link href="/pages/product-page">
+            {" "}
+            <button>
+              View all{" "}
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.2502 11.0002L13.7199 8.53045C14.0129 8.23755 14.0129 7.76266 13.7199 7.46976L11.2502 5.00003M13.5003 8.0001L2.5 8.00011"
+                  stroke="#046BFB"
+                  strokeWidth="1.1"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          </Link>
+        </div>
+        {console.log(displayedProductsCount, 'displayedProductsCount')}
+        <div className="productmain d-flex align-items-center justify-content-left flex-wrap">
+          {products.length === 0 ? (
+            <p className="no-product-found">
+              Oops! It seems we couldn't find a matching product near by your
+              location. Please stay connected with RentalsPool to make it
+              better.
+            </p>
+          ) : (
+            products && products.slice(0, displayedProductsCount).map((data) => (
+              <div
+                key={data.id}
+                className="product1"
+                onClick={() => productHandler(data.id)}
+              >
+                <img
+                  src={data.primary_image}
+                  alt="product"
+                  className="product_image_for_popular_products"
+                />
 
-      <div className="popularproduct">
-        <div className="container">
-          <div className="d-flex align-items-center justify-content-between categoriesheader">
-            <h4>Popular Products</h4>
-            <Link href="/pages/product-page">
-              {" "}
-              <button>
-                View all{" "}
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.2502 11.0002L13.7199 8.53045C14.0129 8.23755 14.0129 7.76266 13.7199 7.46976L11.2502 5.00003M13.5003 8.0001L2.5 8.00011"
-                    stroke="#046BFB"
-                    strokeWidth="1.1"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </button>
-            </Link>
-          </div>
-
-          <div className="productmain d-flex align-items-center justify-content-left flex-wrap">
-            {products.length === 0 ? (
-              <p className="no-product-found">
-                Oops! It seems we couldn't find a matching product near by your
-                location. Please stay connected with RentalsPool to make it
-                better.
-              </p>
-            ) : (
-              products.slice(0, displayedProductsCount).map((data) => (
                 <div
-                  key={data.id}
-                  className="product1"
-                  onClick={() => productHandler(data.id)}
+                  className="favoutite"
+                  onClick={() => toggleHeartColor(data.id)}
                 >
-                  <Image
-                    id="productimg"
-                    src={data.primary_image}
-                    alt="product"
-                    width={300}
-                    height={200}
-                  />
-
-                  <div
-                    className="favoutite"
-                    onClick={() => toggleHeartColor(data.id)}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill={getHeartFillColor(data.id)}
+                    className="bi bi-heart-fill"
+                    viewBox="0 0 16 16"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill={getHeartFillColor(data.id)}
-                      className="bi bi-heart-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
-                      />
-                    </svg>
-                  </div>
-                  <div className="product-description">
-                    <p>{data.title}</p>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div className="prices">
-                        <h5>
-                          <span>Rs {data.rent_per_day}</span>/day
-                        </h5>
-                        <h6>
-                          {" "}
-                          <svg
-                            width="12"
-                            height="12"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M20 10.4167C20 15.8445 13.6 21.5 12 21.5C10.4 21.5 4 15.8445 4 10.4167C4 6.04441 7.58172 2.5 12 2.5C16.4183 2.5 20 6.04441 20 10.4167Z"
-                              stroke="#717171"
-                              strokeWidth="1.5"
-                            />
-                            <circle
-                              cx="3"
-                              cy="3"
-                              r="3"
-                              transform="matrix(-1 0 0 1 15 7)"
-                              stroke="#717171"
-                              strokeWidth="1.5"
-                            />
-                          </svg>
-                          {data.seller.address}
-                        </h6>
-                      </div>
-                      <button>Rent</button>
+                    <path
+                      fillRule="evenodd"
+                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
+                    />
+                  </svg>
+                </div>
+                <div className="product-description">
+                  <p>{capitalizeFirstLetter(data.title)}</p>
+                  <div className="d-flex align-items-center justify-content-between">
+                    <div className="prices">
+                      <h5>
+                        <span>Rs {data.rent_per_day}</span>/day
+                      </h5>
+                      <h6>
+                        {" "}
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M20 10.4167C20 15.8445 13.6 21.5 12 21.5C10.4 21.5 4 15.8445 4 10.4167C4 6.04441 7.58172 2.5 12 2.5C16.4183 2.5 20 6.04441 20 10.4167Z"
+                            stroke="#717171"
+                            strokeWidth="1.5"
+                          />
+                          <circle
+                            cx="3"
+                            cy="3"
+                            r="3"
+                            transform="matrix(-1 0 0 1 15 7)"
+                            stroke="#717171"
+                            strokeWidth="1.5"
+                          />
+                        </svg>
+                        {data.seller.address}
+                      </h6>
                     </div>
+                    <button>Rent</button>
                   </div>
                 </div>
-              ))
-            )}
-          </div>
-
-          {window.innerWidth < 768 && (
-            <div className="loadmore">
-              {!allProductsDisplayed && (
-                <button onClick={loadMoreProducts}>Load more</button>
-              )}
-            </div>
+              </div>
+            ))
           )}
         </div>
+        {window.innerWidth < 768 && (
+          <div className="loadmore">
+            {!allProductsDisplayed && (
+              <button onClick={loadMoreProducts}>Load more</button>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="container">
@@ -684,17 +683,14 @@ const Page = () => {
           </div>
         </div>
       </div>
-
-      <div className="whychooseus container">
-        <h1>Why choose us?</h1>
+      {/* Section why choose us */}
+      <div className="whychooseus container-lg">
+        <h1 className="mb-3">Why choose us?</h1>
         <p>Ready to experience the future of renting?</p>
-        <p>
-          {" "}
-          Download the RentalsPool and embark on a journey of convenience,
-          sustainability, and community empowerment.
-        </p>
+        <p>Download the RentalsPool and embark on a journey of convenience,</p>
+        <p>sustainability, and community empowerment.</p>
 
-        <div className="d-flex align-items-center justify-content-around w-100 whychooseussection">
+        <div className="d-flex align-items-center justify-content-around w-100 mt-4 whychooseussection">
           <div className="mainwhy">
             <div className="why1">
               <div className="why11">
@@ -737,8 +733,8 @@ const Page = () => {
           </div>
         </div>
       </div>
-
-      <div className="container">
+      {/* Section Download Application */}
+      <div className="container-lg my-5">
         <div className="appinstall">
           <div className="app-1">
             <p>For better experience,</p>
@@ -763,7 +759,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-
+      {/* Modal Top Categories */}
       <div
         class="modal modalcategories fade"
         id="exampleModalToggle"
@@ -774,31 +770,28 @@ const Page = () => {
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
-                Top Categories
-              </h1>
+              <span class="top_categories_header">Top Categories</span>
               <button
                 type="button"
                 class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              ></button>
+              />
             </div>
             <div class="modal-body">
-              <div className="categoriesitems d-flex align-items-center overflow-scroll">
+              <div className="d-flex category_modal_card px-3">
                 {categories?.map((category) => (
                   <div
                     key={category?.id}
-                    className="items"
+                    className="category_modal"
                     onClick={() => handleCategoryClick(category.id)}
                   >
-                    <Image
+                    <img
                       src={category?.icon}
                       alt="categoriesicon"
-                      height={100}
-                      width={100}
+                      className="categories_icon_modal"
                     />
-                    <p key={category?.id}>{category?.title}</p>
+                    <span key={category?.id}>{category?.title}</span>
                   </div>
                 ))}
               </div>
