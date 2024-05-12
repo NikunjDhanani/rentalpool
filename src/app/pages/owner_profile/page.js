@@ -91,7 +91,6 @@ const Oprofile = () => {
   let callProductHandler = true;
 
   const toggleHeartColor = (productId) => {
-    console.log(productId, "productId");
     if (selectedProducts.includes(productId)) {
       setSelectedProducts(selectedProducts.filter((id) => id !== productId));
     } else {
@@ -108,7 +107,6 @@ const Oprofile = () => {
   };
 
   const handleFollowRequest = async () => {
-    console.log(JSON.parse(profile), "fngjsfdfgksdfsdf");
     try {
       const response = await axios({
         url: `${process.env.NEXT_PUBLIC_BASE_URL}users/sendFollowRequest/`,
@@ -128,7 +126,6 @@ const Oprofile = () => {
           followers: sellerDetails.followers + 1,
         });
       }
-      console.log(response, "response");
     } catch (error) {
       console.error(error);
     }
@@ -165,7 +162,7 @@ const Oprofile = () => {
 
   return (
     <main>
-      <Modal show={modalOpen}>
+      <Modal show={modalOpen} onHide={() => setModalOpen(false)}>
         <div className="p-4">
           <p>URL: {currentUrl}</p>
           <button

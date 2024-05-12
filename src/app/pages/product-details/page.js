@@ -1,14 +1,14 @@
 "use client";
 import SubHeader from "@/app/_components/SubHeader";
 import axios from "axios";
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swiper from "swiper";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 import DefaultImg from "../../../../public/assets/product/defaultimg.png";
 
 const ProductDetailPage = () => {
@@ -26,14 +26,14 @@ const ProductDetailPage = () => {
   const owner = "Owner's Profile";
 
   const validationSchema = Yup.object().shape({
-    fullName: Yup.string().required('Full Name is required.'),
-    phoneNumber: Yup.string().required('Phone Number is required.'),
-    flatBuilding: Yup.string().required('Flat No./Building Name is required.'),
-    pincode: Yup.string().required('Pincode is required.'),
-    city: Yup.string().required('City is require.'),
-    state: Yup.string().required('State is required.'),
-    date: Yup.date().required('Select Date is required.'),
-    additionalNotes: Yup.string().max(2000, 'Max 2000 characters allowed.')
+    fullName: Yup.string().required("Full Name is required."),
+    phoneNumber: Yup.string().required("Phone Number is required."),
+    flatBuilding: Yup.string().required("Flat No./Building Name is required."),
+    pincode: Yup.string().required("Pincode is required."),
+    city: Yup.string().required("City is require."),
+    state: Yup.string().required("State is required."),
+    date: Yup.date().required("Select Date is required."),
+    additionalNotes: Yup.string().max(2000, "Max 2000 characters allowed."),
   });
 
   // yyyy/MM/dd formate in convert for
@@ -45,63 +45,7 @@ const ProductDetailPage = () => {
     return `${year}-${month}-${day}`;
   }
 
-  // Prefix message for
-  const textMessage = `
-  Hello, ${product?.seller?.first_name} ${product?.seller?.last_name}, I am ${sendInquryDetails?.fullName}.<br/>
-  I want to rent ${product?.title} on date(S):<br/>
-  [${formatDate(sendInquryDetails?.date)}].<br/><br/>
-  My contact details are:<br/>
-  Name: ${sendInquryDetails?.fullName}<br/>
-  Address: ${sendInquryDetails?.flatBuilding}, ${sendInquryDetails?.city}, ${sendInquryDetails?.state}, ${sendInquryDetails?.pincode}<br/>
-  Phone no: ${sendInquryDetails?.phoneNumber}
-`;
-
-  // Prefix message send for
-  const handleSendMessage = async ({ data }) => {
-    try {
-      const response = await axios({
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}products/sendMessage/`,
-        method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        data: {
-          message: textMessage,
-          inquiry_id: data?.id,
-          receiver_user_id: JSON.parse(profile)?.id
-        },
-      });
-      if (response) {
-        router.push('/pages/chatbox');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // Send inquiry for 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    setSendInquryDetails(values);
-    try {
-      const response = await axios({
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}products/createInquiry/`,
-        method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Token ${authToken}`,
-        },
-        data: {
-          last_date: formatDate(values?.date),
-          product: ProductId,
-          buyer: JSON.parse(profile)?.id,
-        },
-      });
-      if (response) {
-        handleSendMessage(response);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+  const handleSubmit = (values, { setSubmitting }) => {
     setSubmitting(false);
   };
 
@@ -148,14 +92,23 @@ const ProductDetailPage = () => {
             throw new Error("Failed to fetch data");
           }
           const anyProductsData = await anyProductsResponse.json();
-          setFilteredProducts(anyProductsData.results.slice(0, 4)); // Get only the first 4 products
+          console.log("ABCD", anyProductsData);
+          setFilteredProducts(
+            anyProductsData.results
+              .filter((res) => +res.id !== +ProductId)
+              .slice(0, 4)
+          ); // Get only the first 4 products
         } else {
           // Filter out the current product and get other matching products
           const otherMatchingProducts = data.results.filter(
             (result) => result.title !== product.title
           );
           if (otherMatchingProducts.length > 0) {
-            setFilteredProducts(otherMatchingProducts.slice(0, 4)); // Get only the first 4 other matching products
+            setFilteredProducts(
+              otherMatchingProducts
+                .filter((res) => +res.id !== +ProductId)
+                .slice(0, 4)
+            ); // Get only the first 4 other matching products
           } else {
             // If no other matching products, fetch any 4 products
             const anyProductsResponse = await fetch(
@@ -165,7 +118,11 @@ const ProductDetailPage = () => {
               throw new Error("Failed to fetch data");
             }
             const anyProductsData = await anyProductsResponse.json();
-            setFilteredProducts(anyProductsData.results.slice(0, 4)); // Get only the first 4 products
+            setFilteredProducts(
+              anyProductsData.results
+                .filter((res) => +res.id !== +ProductId)
+                .slice(0, 4)
+            ); // Get only the first 4 products
           }
         }
       } catch (error) {
@@ -224,7 +181,7 @@ const ProductDetailPage = () => {
   const ownerProfile = (item) => {
     const id = encodeURIComponent(item);
     router.push(`/pages/owner_profile?query=${id}`);
-  };;
+  };
 
   let callProductHandler = true; // Set initial value to true
 
@@ -892,14 +849,14 @@ const ProductDetailPage = () => {
             </div>
             <Formik
               initialValues={{
-                fullName: '',
-                phoneNumber: '',
-                flatBuilding: '',
-                pincode: '',
-                city: '',
-                state: '',
+                fullName: "",
+                phoneNumber: "",
+                flatBuilding: "",
+                pincode: "",
+                city: "",
+                state: "",
                 date: null,
-                additionalNotes: ''
+                additionalNotes: "",
               }}
               validationSchema={validationSchema}
               onSubmit={handleSubmit}
@@ -910,34 +867,58 @@ const ProductDetailPage = () => {
                     <div className="modal-inquiry-input">
                       <p>Full Name</p>
                       <Field type="text" name="fullName" />
-                      <ErrorMessage name="fullName" component="div" className="error-message" />
+                      <ErrorMessage
+                        name="fullName"
+                        component="div"
+                        className="error-message"
+                      />
                     </div>
                     <div className="modal-inquiry-input">
                       <p>Phone Number</p>
                       <Field type="text" name="phoneNumber" />
-                      <ErrorMessage name="phoneNumber" component="div" className="error-message" />
+                      <ErrorMessage
+                        name="phoneNumber"
+                        component="div"
+                        className="error-message"
+                      />
                     </div>
                     <div className="modal-inquiry-input">
                       <p>Flat No./ Building Name</p>
                       <Field type="text" name="flatBuilding" />
-                      <ErrorMessage name="flatBuilding" component="div" className="error-message" />
+                      <ErrorMessage
+                        name="flatBuilding"
+                        component="div"
+                        className="error-message"
+                      />
                     </div>
                     <div className="d-flex gap-4 w-100">
                       <div className="modal-inquiry-input w-100">
                         <p>Pincode</p>
                         <Field type="text" name="pincode" />
-                        <ErrorMessage name="pincode" component="div" className="error-message" />
+                        <ErrorMessage
+                          name="pincode"
+                          component="div"
+                          className="error-message"
+                        />
                       </div>
                       <div className="modal-inquiry-input w-100">
                         <p>City</p>
                         <Field type="text" name="city" />
-                        <ErrorMessage name="city" component="div" className="error-message" />
+                        <ErrorMessage
+                          name="city"
+                          component="div"
+                          className="error-message"
+                        />
                       </div>
                     </div>
                     <div className="modal-inquiry-input">
                       <p>State</p>
                       <Field type="text" name="state" />
-                      <ErrorMessage name="state" component="div" className="error-message" />
+                      <ErrorMessage
+                        name="state"
+                        component="div"
+                        className="error-message"
+                      />
                     </div>
                     <div className="modal-inquiry-input calender">
                       <p>Select Date</p>
@@ -946,23 +927,40 @@ const ProductDetailPage = () => {
                           {({ field, form, meta }) => (
                             <DatePicker
                               selected={field.value}
-                              onChange={val => form.setFieldValue(field.name, val)}
+                              onChange={(val) =>
+                                form.setFieldValue(field.name, val)
+                              }
                               dateFormat="dd/MM/yyyy"
                               inline
                             />
                           )}
                         </Field>
-                        <ErrorMessage name="date" component="div" className="error-message" />
+                        <ErrorMessage
+                          name="date"
+                          component="div"
+                          className="error-message"
+                        />
                       </div>
                     </div>
                     <div className="modal-inquiry-input">
                       <p>Additional Notes</p>
-                      <Field as="textarea" name="additionalNotes" placeholder="Add Notes" rows="5" />
+                      <Field
+                        as="textarea"
+                        name="additionalNotes"
+                        placeholder="Add Notes"
+                        rows="5"
+                      />
                       <span>Max. 2000 characters</span>
-                      <ErrorMessage name="additionalNotes" component="div" className="error-message" />
+                      <ErrorMessage
+                        name="additionalNotes"
+                        component="div"
+                        className="error-message"
+                      />
                     </div>
                     <div className="submit-inquiry">
-                      <button type="submit" disabled={isSubmitting}>Send Inquiry</button>
+                      <button type="submit" disabled={isSubmitting}>
+                        Send Inquiry
+                      </button>
                     </div>
                   </div>
                 </Form>
@@ -976,7 +974,6 @@ const ProductDetailPage = () => {
 };
 
 // export default ProductDetailPage;
-
 
 const ProductDetailPageWithSuspense = () => {
   return (

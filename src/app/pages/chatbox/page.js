@@ -96,7 +96,6 @@ const ChatBox = () => {
         });
 
         socket.on('fetchallchat', (data) => {
-            console.log("DATA", data)
             setChatMessage(data.message);
         });
 

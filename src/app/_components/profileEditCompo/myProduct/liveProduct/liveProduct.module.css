@@ -120,6 +120,10 @@
     line-height: 28px;
     color: #525252;
     margin: 0px;
+    overflow: hidden; /* Hide overflowing text */
+    white-space: nowrap; /* Prevent text from wrapping */
+    text-overflow: ellipsis; /* Add ellipsis (...) when text overflows */
+    width: 100px;
 }
 .productPrice{
     font-family: "Poppins";

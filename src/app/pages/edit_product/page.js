@@ -103,13 +103,9 @@ const EditPage = () => {
             rentalRules: Yup.string().required("Error Message"),
         }),
         onSubmit: async (values, { resetForm }) => {
-            console.log("values", values)
-            console.log("iamages", images)
             if (images.length === 0) {
                 setImgFlag(true)
             }
-           
-
         },
     });
 

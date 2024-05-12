@@ -1,21 +1,31 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Togglesubcategories } from "@/feature/SubcatagoriesId";
+import {
+  ClearSubCategory,
+  Togglesubcategories,
+} from "@/feature/SubcatagoriesId";
 import { Togglesortby } from "@/feature/Sortproductbyid";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { TogglesCategories } from "@/feature/CategoryId";
 
-const Sidebar = ({ subcategory }) => {
+const Sidebar = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const queryCategoryId = searchParams.get("categoryId");
+
   const dispatch = useDispatch();
-  const Value = useSelector((state) => state.subcatagoriesid.value);
+
+  const selectedSubCategories = useSelector(
+    (state) => state.subcatagoriesid.value
+  );
+  const selectedCategory = useSelector((state) => state.categoryId.value);
   // const sortby = useSelector((state) => state.SortbyID.value);
 
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [showAllSubcategories, setShowAllSubcategories] = useState(false);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
 
   const sortbycheck = [
     { id: "flexCheckDefault", label: "Most Popular", defaultChecked: true },
@@ -42,26 +52,26 @@ const Sidebar = ({ subcategory }) => {
     fetchData();
   }, []);
 
-
   useEffect(() => {
-    console.log('router:', router);
-    console.log('router.query:', router.query);
-    if (router.query && router.query.categoryId) {
-      const { categoryId } = router.query;
-      console.log('categoryId:', categoryId);
-      setSelectedCategory(categoryId);
+    if (queryCategoryId && categories.length) {
+      const tempCategory = categories.find(
+        (item) => +item.id === +queryCategoryId
+      );
+      dispatch(
+        TogglesCategories({ id: tempCategory.id, name: tempCategory.title })
+      );
     }
-  }, [router.query]);
+  }, [queryCategoryId, categories]);
 
-
-
-  const handleCategorySelect = (categoryId) => {
-    setSelectedCategory(categoryId);
+  const handleCategorySelect = (category) => {
+    dispatch(ClearSubCategory());
+    dispatch(TogglesCategories({ id: category.id, name: category.title }));
   };
 
-  const StoresubCatagoriesId = (subCategoryId) => {
-    setSelectedSubcategory(subCategoryId);
-    dispatch(Togglesubcategories(subCategoryId));
+  const StoresubCatagoriesId = (subCategory) => {
+    dispatch(
+      Togglesubcategories({ id: subCategory.id, name: subCategory.title })
+    );
   };
 
   const StoresorybyId = (subCategoryID) => {
@@ -84,7 +94,7 @@ const Sidebar = ({ subcategory }) => {
             <div className="d-flex align-items-center justify-content-between w-100 mt-2">
               <p className="mb-0">By Category</p>
               <button
-                className="btn "
+                className="btn"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapseExample"
@@ -113,19 +123,21 @@ const Sidebar = ({ subcategory }) => {
               <ul className="list-unstyled mb-0">
                 {categories
                   .slice(0, showAllCategories ? categories.length : 5)
-                  .map((category) => (
-                    <li
-                      key={category.id}
-                      className={`${selectedCategory === category.id
-                          ? "filter-div1-current"
-                          : ""
+                  .map((category) => {
+                    return (
+                      <li
+                        key={category.id}
+                        className={`${
+                          +selectedCategory?.id === +category.id
+                            ? "filter-div1-current"
+                            : ""
                         }`}
-
-                      onClick={() => handleCategorySelect(category.id)}
-                    >
-                      {category.title}
-                    </li>
-                  ))}
+                        onClick={() => handleCategorySelect(category)}
+                      >
+                        {category.title}
+                      </li>
+                    );
+                  })}
                 {!showAllCategories && categories.length > 5 && (
                   <span onClick={toggleShowAllCategories}>See all</span>
                 )}
@@ -139,7 +151,7 @@ const Sidebar = ({ subcategory }) => {
             <div className="d-flex align-items-center justify-content-between w-100 mt-2">
               <p className="mb-0">By Sub-Category</p>
               <button
-                className="btn "
+                className="btn"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapseExample2"
@@ -168,35 +180,43 @@ const Sidebar = ({ subcategory }) => {
               {selectedCategory && (
                 <div>
                   {categories
-                    .find((category) => category.id === selectedCategory)
+                    .find((category) => +category.id === +selectedCategory.id)
                     ?.sub_categories?.slice(
                       0,
                       showAllSubcategories ? categories.length : 5
                     )
-                    .map((subCategory) => (
-                      <div key={subCategory.id} className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id={`checkbox-${subCategory.id}`}
-                          onClick={() => StoresubCatagoriesId(subCategory.id)}
-                          checked={subcategory === subCategory.title}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefault"
-                        >
-                          {subCategory.title}
-                        </label>
-                      </div>
-                    ))}
+                    .map((subCategory) => {
+                      const isSelected = selectedSubCategories.findIndex(
+                        (item) => +item.id === +subCategory.id
+                      );
+
+                      return (
+                        <div key={subCategory.id} className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id={`checkbox-${subCategory.id}`}
+                            onClick={() => StoresubCatagoriesId(subCategory)}
+                            checked={isSelected !== -1}
+                          />
+                          <label
+                            htmlFor="flexCheckDefault"
+                            className={`form-check-label mt-0 ${
+                              isSelected !== -1 ? "filter-div1-current" : ""
+                            }`}
+                          >
+                            {subCategory.title}
+                          </label>
+                        </div>
+                      );
+                    })}
                 </div>
               )}
               {selectedCategory &&
                 !showAllSubcategories &&
-                categories.find((category) => category.id === selectedCategory)
-                  ?.sub_categories?.length > 5 && (
+                categories.find(
+                  (category) => category.id === selectedCategory.id
+                )?.sub_categories?.length > 5 && (
                   <span onClick={toggleShowAllSubcategories}>See all</span>
                 )}
             </div>

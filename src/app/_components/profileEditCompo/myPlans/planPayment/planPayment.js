@@ -124,7 +124,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
       if (response?.status === 200) {
         if (response.data.charge_type === "Percentage") {
           setUserPromoCodeAmount(
-            (planPaymentData.original_price * response.data.charge) / 100
+            (planPaymentData.current_price * response.data.charge) / 100
           );
         } else {
           setUserPromoCodeAmount(response.data.charge);
@@ -209,7 +209,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
 
   const handleApplyClick = (promo) => {
     if (promo.charge_type === "Percentage") {
-      promo.charge = (planPaymentData.original_price * promo.charge) / 100;
+      promo.charge = (planPaymentData.current_price * promo.charge) / 100;
       setSelectedPromoCode(promo);
     } else {
       setSelectedPromoCode(promo);

@@ -9,18 +9,22 @@ import React, {
   useState,
 } from "react";
 import Sidebar from "@/app/_components/sidebar";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "next/navigation";
+import { Togglesubcategories } from "@/feature/SubcatagoriesId";
 
 const ProductPage = () => {
-  const Value = useSelector((state) => state.subcatagoriesid.value);
+  const dispatch = useDispatch();
+
+  const selectedSubCategories = useSelector(
+    (state) => state.subcatagoriesid.value
+  );
+  const selectedCategory = useSelector((state) => state.categoryId.value);
   const searchParams = useSearchParams();
-  const search = searchParams.get("query");
+  const search = searchParams.get("categoryId");
   const router = useRouter();
   const autocompleteRef = useRef(null);
-  const [categories, setCategories] = useState("");
   const [products, setProducts] = useState([]);
   const [activeButton, setActiveButton] = useState("");
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -32,66 +36,64 @@ const ProductPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [inputValue, setInputValue] = useState("");
   const [location, setLocation] = useState("");
-  const [windowWidth, setWindowWidth] = useState(null);
-
-  const [filterNamesVisible, setFilterNamesVisible] = useState(true);
-
   const [filters, setFilters] = useState([]);
 
   // Update filters when Value (selected subcategories) changes
   useEffect(() => {
-    const updatedFilters = [
-      { id: 1, name: search, visible: true },
-      ...Value.map((subCategoryId) => ({
-        id: subCategoryId,
-        name: `Subcategory ${subCategory}`,
-        visible: true,
-      })),
-    ];
-    setFilters(updatedFilters);
-  }, [Value, search]);
-  
-  console.log("value", Value)
+    if (selectedCategory) {
+      const updatedFilters = [
+        {
+          id: selectedCategory?.id,
+          name: selectedCategory?.name,
+          type: "category",
+        },
+        ...selectedSubCategories.map((subCategory) => ({
+          id: subCategory.id,
+          name: `${subCategory.name}`,
+          type: "subCategory",
+        })),
+      ];
+      setFilters(updatedFilters);
+    }
+  }, [selectedSubCategories, search, selectedCategory]);
 
   const handleClearAll = () => {
-    setFilters(filters.map((filter) => ({ ...filter, visible: false })));
-    setFilterNamesVisible(false);
+    setFilters(filters.filter((item) => item.type === "category"));
   };
 
-  const handleRemoveFilter = (id) => {
+  const handleRemoveFilter = (subCat) => {
     setFilters((prevFilters) =>
-      prevFilters.map((filter) =>
-        filter.id === id ? { ...filter, visible: false } : filter
-      )
+      prevFilters.filter((filter) => filter.id === subCat.id)
     );
+    dispatch(Togglesubcategories({ id: subCat.id, name: subCat.title }));
   };
 
   //  productlist
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}products/listProducts/?limit=${displayedProductsCount}&page=${currentPage}`
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setProducts(data.results);
-        setTotalPages(Math.ceil(data.count / displayedProductsCount));
-        setNextPageUrl(data.next);
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_BASE_URL}products/listProducts/?limit=${displayedProductsCount}&page=${currentPage}`
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       const data = await response.json();
+  //       setProducts(data.results);
+  //       setTotalPages(Math.ceil(data.count / displayedProductsCount));
+  //       setNextPageUrl(data.next);
 
-        // Calculate total pages
-        const totalCount = data.count;
-        const pages = Math.ceil(totalCount / displayedProductsCount);
-        setTotalPages(pages);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  //       // Calculate total pages
+  //       const totalCount = data.count;
+  //       const pages = Math.ceil(totalCount / displayedProductsCount);
+  //       setTotalPages(pages);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchProducts();
-  }, [currentPage, displayedProductsCount]);
+  //   fetchProducts();
+  // }, [currentPage, displayedProductsCount]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -103,10 +105,10 @@ const ProductPage = () => {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        if (Value.length > 0) {
+        if (selectedSubCategories.length > 0) {
           const filteredProducts = data.results.filter((product) => {
             const ID = product?.sub_category;
-            return Value.includes(ID);
+            return selectedSubCategories.includes(ID);
           });
           setProducts(filteredProducts);
         } else {
@@ -122,39 +124,7 @@ const ProductPage = () => {
     };
 
     fetchProducts();
-  }, [currentPage, displayedProductsCount, Value]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}products/listCategories/`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await response.json();
-
-        // Find the main category for the extracted subcategory
-        const mainCategory = data.find((category) =>
-          category.sub_categories.some(
-            (subCategory) => subCategory.title === search
-          )
-        );
-
-        if (mainCategory) {
-          setCategories(mainCategory.title);
-        } else {
-          // If no main category is found, you might want to handle this case accordingly
-          setCategories('No category found');
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [search]);
+  }, [currentPage, displayedProductsCount, selectedSubCategories]);
 
   const handleNextPage = () => {
     if (nextPageUrl) {
@@ -204,11 +174,6 @@ const ProductPage = () => {
         (position) => {
           // Retrieve latitude and longitude from the position object
           const { latitude, longitude } = position.coords;
-          console.log(
-            longitude,
-            latitude,
-            "latitudelatitudelatitudelatitudelatitude"
-          );
         },
         (error) => {
           console.error("Error getting user location:", error);
@@ -334,14 +299,7 @@ const ProductPage = () => {
       window.document.body.removeChild(googleScript);
     };
   }, []);
-  console.log(categories, "categoriescategories");
 
-
-
-  console.log("efbhefbfehfb", )
-
-
-  
   return (
     <main className="product-page d-flex ">
       <div>
@@ -383,54 +341,48 @@ const ProductPage = () => {
               ref={autocompleteRef}
             ></input>
           </div>
-          <p>{categories}</p>
-          {filterNamesVisible ? (
-            <div className="filternames">
-              {filters.map(
-                (filter) =>
-                  filter.visible && (
-                    <div className="fiter1" key={filter.id}>
-                      <p>{filter.name}</p>
-                      <svg
-                        width="17"
-                        height="16"
-                        viewBox="0 0 17 16"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        onClick={() => handleRemoveFilter(filter.id)}
-                      >
-                        <path
-                          d="M12.5 4L4.5 12"
-                          stroke="#046BFB"
-                          strokeWidth="1.1"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M4.5 4L12.5 12"
-                          stroke="#046BFB"
-                          strokeWidth="1.1"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                  )
-              )}
-              <div className="fiterclear" onClick={handleClearAll}>
-                <p>Clear all filter</p>
+
+          <div className="filternames">
+            {filters.map((filter) => (
+              <div className="fiter1" key={filter.id}>
+                <p>{filter.name}</p>
+                {filter.type === "subCategory" && (
+                  <svg
+                    width="17"
+                    height="16"
+                    viewBox="0 0 17 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    onClick={() => handleRemoveFilter(filter)}
+                  >
+                    <path
+                      d="M12.5 4L4.5 12"
+                      stroke="#046BFB"
+                      strokeWidth="1.1"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M4.5 4L12.5 12"
+                      stroke="#046BFB"
+                      strokeWidth="1.1"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                )}
               </div>
+            ))}
+            <div className="fiterclear" onClick={handleClearAll}>
+              <p>Clear all filter</p>
             </div>
-          ) : (
-            ""
-          )}
+          </div>
 
           <div className="popularproduct">
             <div className="">
               <div className="productmain d-flex align-items-center  flex-wrap">
-                {filteredProducts
-                  .slice(0, displayedProductsCount)
-                  .map((data) => {
+                {products.length &&
+                  products.slice(0, displayedProductsCount).map((data) => {
                     return (
                       <div
                         key={data.id}
@@ -556,13 +508,15 @@ const ProductPage = () => {
               {/* Render page numbers */}
               {Array.from({ length: totalPages }, (_, i) => (
                 <li
-                  className={`page-item ${i + 1 === activeButton ? "active" : ""
-                    }`}
+                  className={`page-item ${
+                    i + 1 === activeButton ? "active" : ""
+                  }`}
                   key={i}
                 >
                   <a
-                    className={`page-link ${i + 1 === currentPage ? "active" : ""
-                      }`}
+                    className={`page-link ${
+                      i + 1 === currentPage ? "active" : ""
+                    }`}
                     onClick={() => handlePagenum(i + 1)}
                   >
                     {i + 1}
