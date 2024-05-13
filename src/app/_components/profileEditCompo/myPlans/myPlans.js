@@ -50,7 +50,6 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
   }, []);
 
   const handleDetalisPlan = (plan) => {
-    console.log(planData, "planData");
     const result = planData.some((element) => {
       return element.status === "activated";
     });
@@ -180,7 +179,7 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
                         >
                           {isDetailsLoading && selectedPlan.id === plan.id && (
                             <Spinner animation="border" size="sm" />
-                          )}{" "}
+                          )}
                           Buy Now
                         </button>
                       </div>
