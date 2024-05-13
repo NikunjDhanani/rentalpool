@@ -856,7 +856,6 @@ const Header = () => {
                     strokeLinejoin="round"
                   />
                 </svg>
-
                 <p>List an item</p>
               </div>
             </Link>

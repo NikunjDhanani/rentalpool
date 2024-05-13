@@ -65,12 +65,6 @@ const Page = () => {
     fetchProducts();
   }, []);
 
-  const loadMoreProducts = () => {
-    setDisplayedProductsCount((prevCount) => prevCount + 2);
-  };
-
-  const allProductsDisplayed = displayedProductsCount >= products.length;
-
   const getHeartFillColor = (productId) => {
     return selectedProducts.includes(productId) ? "red" : "currentColor";
   };
@@ -217,7 +211,7 @@ const Page = () => {
             </svg>
           </button>
         </div>
-        <div className="categoriesitems d-flex align-items-center overflow-scroll">
+        <div className="categoriesitems d-flex align-items-center overflow-scroll mt-3">
           {categories?.map((category) => (
             <div
               key={category?.id}
@@ -258,9 +252,8 @@ const Page = () => {
             </button>
           </Link>
         </div>
-        {console.log(displayedProductsCount, 'displayedProductsCount')}
-        <div className="productmain d-flex align-items-center justify-content-left flex-wrap">
-          {products.length === 0 ? (
+        <div className="productMainCard d-flex align-items-center justify-content-left flex-wrap mt-3">
+          {products?.length === 0 ? (
             <p className="no-product-found">
               Oops! It seems we couldn't find a matching product near by your
               location. Please stay connected with RentalsPool to make it
@@ -270,7 +263,7 @@ const Page = () => {
             products && products.slice(0, displayedProductsCount).map((data) => (
               <div
                 key={data.id}
-                className="product1"
+                className="product_card"
                 onClick={() => productHandler(data.id)}
               >
                 <img
@@ -278,7 +271,6 @@ const Page = () => {
                   alt="product"
                   className="product_image_for_popular_products"
                 />
-
                 <div
                   className="favoutite"
                   onClick={() => toggleHeartColor(data.id)}
@@ -330,26 +322,18 @@ const Page = () => {
                         {data.seller.address}
                       </h6>
                     </div>
-                    <button>Rent</button>
                   </div>
                 </div>
               </div>
             ))
           )}
         </div>
-        {window.innerWidth < 768 && (
-          <div className="loadmore">
-            {!allProductsDisplayed && (
-              <button onClick={loadMoreProducts}>Load more</button>
-            )}
-          </div>
-        )}
       </div>
-
-      <div className="container">
+      {/* Section adds */}
+      <div className="container-lg">
         <div className="homeads">
           <div className="ad11">
-            <div className="overlay-container"></div>
+            <div className="overlay-container" />
             <div className="banner-text">
               <h4>
                 Experience the allure of Indian fashion with our curated
@@ -361,7 +345,7 @@ const Page = () => {
             </div>
           </div>
           <div className="ad11">
-            <div className="overlay-container"></div>
+            <div className="overlay-container" />
             <div className="banner-text">
               <h4>
                 Experience the allure of Indian fashion with our curated
@@ -374,8 +358,8 @@ const Page = () => {
           </div>
         </div>
       </div>
-
-      <div className="container">
+      {/* Section How Its Works */}
+      <div className="container-lg">
         <div className=" howitswork">
           <div className="d-flex align-items-center justify-content-center flex-column">
             <h1>Let&rsquo;s see How Its Works</h1>
@@ -386,7 +370,6 @@ const Page = () => {
               you&apos;ll experience a new level of convenience and flexibility.
             </p>
           </div>
-
           <div>
             <div className="menu">
               <div className="clientrent">
@@ -396,7 +379,6 @@ const Page = () => {
                 >
                   <p> Renter</p>
                 </div>
-
                 <div
                   onClick={() => handleButtonClick(2)}
                   className={activeButton === 2 ? "owner" : "default"}
@@ -405,293 +387,294 @@ const Page = () => {
                 </div>
               </div>
             </div>
-            {activeButton === 1 && (
-              <div className="renterdiv d-flex align-items-center justify-content-center gap-3">
-                <div className="renterwork animate__animated animate__flipInY">
-                  <svg
-                    id="firstrentaldiv"
-                    width="292"
-                    height="278"
-                    viewBox="0 0 292 278"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M221.301 277.089H55.5327C24.9154 277.089 0 252.15 0 221.505V55.5838C0 24.9383 24.9154 0 55.5327 0H221.301C251.919 0 276.834 24.9383 276.834 55.5838V124.242L291.106 138.527L276.834 152.812V221.47C276.834 252.15 251.919 277.089 221.301 277.089ZM55.5327 5.29205C27.8182 5.29205 5.28718 27.8438 5.28718 55.5838V221.505C5.28718 249.245 27.8182 271.797 55.5327 271.797H221.301C249.016 271.797 271.547 249.245 271.547 221.505V150.668L283.642 138.562L271.547 126.456V55.5838C271.547 27.8438 249.016 5.29205 221.301 5.29205H55.5327Z"
-                      fill="#046BFB"
-                    />
-                  </svg>
-                  <div className="workitem">
-                    <Image
-                      src="/assets/mask2.png"
-                      width={50}
-                      height={50}
-                      alt="mask2"
-                    />
-                    <h5>Select an Item</h5>
-                    <p>
-                      Browse the extensive collection of items available for
-                      rent. Use our smart search and filters and choose the item
-                      you want to rent and view its details, photos, and
-                      pricing.
-                    </p>
+            <div>
+              {activeButton === 1 && (
+                <div className="renterdiv d-flex align-items-center justify-content-center gap-5">
+                  <div className="renterwork animate__animated animate__flipInY">
+                    <svg
+                      id="firstrentaldiv"
+                      width="292"
+                      height="278"
+                      viewBox="0 0 292 278"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M221.301 277.089H55.5327C24.9154 277.089 0 252.15 0 221.505V55.5838C0 24.9383 24.9154 0 55.5327 0H221.301C251.919 0 276.834 24.9383 276.834 55.5838V124.242L291.106 138.527L276.834 152.812V221.47C276.834 252.15 251.919 277.089 221.301 277.089ZM55.5327 5.29205C27.8182 5.29205 5.28718 27.8438 5.28718 55.5838V221.505C5.28718 249.245 27.8182 271.797 55.5327 271.797H221.301C249.016 271.797 271.547 249.245 271.547 221.505V150.668L283.642 138.562L271.547 126.456V55.5838C271.547 27.8438 249.016 5.29205 221.301 5.29205H55.5327Z"
+                        fill="#046BFB"
+                      />
+                    </svg>
+                    <div className="workitem">
+                      <Image
+                        src="/assets/mask2.png"
+                        width={50}
+                        height={50}
+                        alt="mask2"
+                      />
+                      <h5>Select an Item</h5>
+                      <p>
+                        Browse the extensive collection of items available for
+                        rent. Use our smart search and filters and choose the item
+                        you want to rent and view its details, photos, and
+                        pricing.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="renterwork animate__animated animate__flipInY">
+                    <svg
+                      id="firstrentaldiv"
+                      width="292"
+                      height="278"
+                      viewBox="0 0 292 278"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M276.938 124.242V55.5838C276.938 24.9383 252.022 0 221.405 0H55.6364C25.0191 0 0.103699 24.9383 0.103699 55.5838V126.421L12.1986 138.527L0.103699 150.633V221.47C0.103699 252.116 25.0191 277.054 55.6364 277.054H221.405C252.022 277.054 276.938 252.116 276.938 221.47V152.847L291.21 138.562L276.938 124.242ZM271.651 150.668V221.505C271.651 249.245 249.12 271.797 221.405 271.797H55.6364C27.9219 271.797 5.39088 249.245 5.39088 221.505V152.847L19.6628 138.562L5.39088 124.277V55.5838C5.39088 27.8438 27.9219 5.29205 55.6364 5.29205H221.405C249.12 5.29205 271.651 27.8438 271.651 55.5838V126.421L283.746 138.527L271.651 150.668Z"
+                        fill="#046BFB"
+                      />
+                      <path
+                        d="M0.103699 130.537V146.552L8.08633 138.527L0.103699 130.537Z"
+                        fill="#046BFB"
+                      />
+                    </svg>
+
+                    <div className="workitem">
+                      <Image
+                        src="/assets/mask3.png"
+                        width={50}
+                        height={50}
+                        alt="mask3"
+                      />
+                      <h5>Send Inquiry</h5>
+                      <p>
+                        Send a rental request to the owner by checking the
+                        item&rsquo;s availability on the calendar and select the
+                        dates when you need to rent the item.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="renterwork animate__animated animate__flipInY">
+                    <svg
+                      id="firstrentaldiv"
+                      width="292"
+                      height="278"
+                      viewBox="0 0 292 278"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M276.938 124.242V55.5838C276.938 24.9383 252.022 0 221.405 0H55.6364C25.0191 0 0.103699 24.9383 0.103699 55.5838V126.421L12.1986 138.527L0.103699 150.633V221.47C0.103699 252.116 25.0191 277.054 55.6364 277.054H221.405C252.022 277.054 276.938 252.116 276.938 221.47V152.847L291.21 138.562L276.938 124.242ZM271.651 150.668V221.505C271.651 249.245 249.12 271.797 221.405 271.797H55.6364C27.9219 271.797 5.39088 249.245 5.39088 221.505V152.847L19.6628 138.562L5.39088 124.277V55.5838C5.39088 27.8438 27.9219 5.29205 55.6364 5.29205H221.405C249.12 5.29205 271.651 27.8438 271.651 55.5838V126.421L283.746 138.527L271.651 150.668Z"
+                        fill="#046BFB"
+                      />
+                      <path
+                        d="M0.103699 130.537V146.552L8.08633 138.527L0.103699 130.537Z"
+                        fill="#046BFB"
+                      />
+                    </svg>
+
+                    <div className="workitem">
+                      <Image
+                        src="/assets/mask4.png"
+                        width={50}
+                        height={50}
+                        alt="mask4"
+                      />
+                      <h5>Chat with Owner</h5>
+                      <p>
+                        Discuss rental duration, pricing, and any other terms with
+                        owners in the chat. Reach an agreement that suits both the
+                        parties and Make a deal as per your convenience.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="renterwork animate__animated animate__flipInY">
+                    <svg
+                      id="firstrentaldiv"
+                      width="293"
+                      height="278"
+                      viewBox="0 0 277 278"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M221.373 0H55.6042C24.9869 0 0.0714722 24.9383 0.0714722 55.5838V126.421L12.1663 138.527L0.0714722 150.633V221.47C0.0714722 252.116 24.9869 277.054 55.6042 277.054H221.373C251.99 277.054 276.906 252.116 276.906 221.47V55.5838C276.906 24.9383 251.99 0 221.373 0ZM271.653 221.505C271.653 249.245 249.122 271.797 221.408 271.797H55.6387C27.9242 271.797 5.39318 249.245 5.39318 221.505V152.847L19.6651 138.562L5.39318 124.277V55.5838C5.39318 27.8438 27.9242 5.29205 55.6387 5.29205H221.373C249.087 5.29205 271.618 27.8438 271.618 55.5838V221.505H271.653Z"
+                        fill="#046BFB"
+                      />
+                      <path
+                        d="M0.0714722 130.537V146.552L8.08862 138.527L0.0714722 130.537Z"
+                        fill="#046BFB"
+                      />
+                    </svg>
+
+                    <div className="workitem">
+                      <Image
+                        src="/assets/mask.png"
+                        width={50}
+                        height={50}
+                        alt="mask"
+                      />
+                      <h5>Enjoy Renting</h5>
+                      <p>
+                        Pickup the item, use it as your own, and when you&apos;re
+                        done, return it as per deal with owner.
+                      </p>
+                    </div>
                   </div>
                 </div>
+              )}
 
-                <div className="renterwork animate__animated animate__flipInY">
-                  <svg
-                    id="firstrentaldiv"
-                    width="292"
-                    height="278"
-                    viewBox="0 0 292 278"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M276.938 124.242V55.5838C276.938 24.9383 252.022 0 221.405 0H55.6364C25.0191 0 0.103699 24.9383 0.103699 55.5838V126.421L12.1986 138.527L0.103699 150.633V221.47C0.103699 252.116 25.0191 277.054 55.6364 277.054H221.405C252.022 277.054 276.938 252.116 276.938 221.47V152.847L291.21 138.562L276.938 124.242ZM271.651 150.668V221.505C271.651 249.245 249.12 271.797 221.405 271.797H55.6364C27.9219 271.797 5.39088 249.245 5.39088 221.505V152.847L19.6628 138.562L5.39088 124.277V55.5838C5.39088 27.8438 27.9219 5.29205 55.6364 5.29205H221.405C249.12 5.29205 271.651 27.8438 271.651 55.5838V126.421L283.746 138.527L271.651 150.668Z"
-                      fill="#046BFB"
-                    />
-                    <path
-                      d="M0.103699 130.537V146.552L8.08633 138.527L0.103699 130.537Z"
-                      fill="#046BFB"
-                    />
-                  </svg>
+              {activeButton === 2 && (
+                <div className="renterdiv d-flex align-items-center justify-content-center gap-3">
+                  <div className="renterwork animate__animated animate__flipInY">
+                    <svg
+                      id="firstrentaldiv"
+                      width="292"
+                      height="278"
+                      viewBox="0 0 292 278"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M221.301 277.089H55.5327C24.9154 277.089 0 252.15 0 221.505V55.5838C0 24.9383 24.9154 0 55.5327 0H221.301C251.919 0 276.834 24.9383 276.834 55.5838V124.242L291.106 138.527L276.834 152.812V221.47C276.834 252.15 251.919 277.089 221.301 277.089ZM55.5327 5.29205C27.8182 5.29205 5.28718 27.8438 5.28718 55.5838V221.505C5.28718 249.245 27.8182 271.797 55.5327 271.797H221.301C249.016 271.797 271.547 249.245 271.547 221.505V150.668L283.642 138.562L271.547 126.456V55.5838C271.547 27.8438 249.016 5.29205 221.301 5.29205H55.5327Z"
+                        fill="#EF6239"
+                      />
+                    </svg>
 
-                  <div className="workitem">
-                    <Image
-                      src="/assets/mask3.png"
-                      width={50}
-                      height={50}
-                      alt="mask3"
-                    />
-                    <h5>Send Inquiry</h5>
-                    <p>
-                      Send a rental request to the owner by checking the
-                      item&rsquo;s availability on the calendar and select the
-                      dates when you need to rent the item.
-                    </p>
+                    <div className="workitem">
+                      <Image
+                        src="/assets/mask6.png"
+                        width={50}
+                        height={50}
+                        alt="mask6"
+                      />
+                      <h5>List an Item</h5>
+                      <p>
+                        List your items by uploading clear photos, adding a
+                        detailed description, price for renting, rentals’ rules,
+                        pickup location, and more other relevant details.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="renterwork animate__animated animate__flipInY">
+                    <svg
+                      id="firstrentaldiv"
+                      width="292"
+                      height="278"
+                      viewBox="0 0 292 278"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M276.938 124.242V55.5838C276.938 24.9383 252.022 0 221.405 0H55.6365C25.0192 0 0.10376 24.9383 0.10376 55.5838V126.421L12.1986 138.527L0.10376 150.633V221.47C0.10376 252.116 25.0192 277.054 55.6365 277.054H221.405C252.022 277.054 276.938 252.116 276.938 221.47V152.847L291.21 138.562L276.938 124.242ZM271.651 150.668V221.505C271.651 249.245 249.12 271.797 221.405 271.797H55.6365C27.922 271.797 5.39094 249.245 5.39094 221.505V152.847L19.6629 138.562L5.39094 124.277V55.5838C5.39094 27.8438 27.922 5.29205 55.6365 5.29205H221.405C249.12 5.29205 271.651 27.8438 271.651 55.5838V126.421L283.746 138.527L271.651 150.668Z"
+                        fill="#EF6239"
+                      />
+                      <path
+                        d="M0.10376 130.537V146.552L8.0864 138.527L0.10376 130.537Z"
+                        fill="#EF6239"
+                      />
+                    </svg>
+
+                    <div className="workitem">
+                      <Image
+                        src="/assets/mask7.png"
+                        width={50}
+                        height={50}
+                        alt="mask7"
+                      />
+                      <h5>Receive Requests</h5>
+                      <p>
+                        Once your product is listed, you&rsquo;ll start receiving
+                        rental requests from interested renters. Notifications
+                        will keep you informed about new requests.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="renterwork animate__animated animate__flipInY">
+                    <svg
+                      id="firstrentaldiv"
+                      width="293"
+                      height="278"
+                      viewBox="0 0 293 278"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M277.802 124.242V55.5838C277.802 24.9383 252.886 0 222.269 0H56.5005C25.8832 0 0.967773 24.9383 0.967773 55.5838V126.421L13.0626 138.527L0.967773 150.633V221.47C0.967773 252.116 25.8832 277.054 56.5005 277.054H222.269C252.886 277.054 277.802 252.116 277.802 221.47V152.847L292.074 138.562L277.802 124.242ZM272.515 150.668V221.505C272.515 249.245 249.984 271.797 222.269 271.797H56.5005C28.7859 271.797 6.25493 249.245 6.25493 221.505V152.847L20.5269 138.562L6.25493 124.277V55.5838C6.25493 27.8438 28.7859 5.29205 56.5005 5.29205H222.269C249.984 5.29205 272.515 27.8438 272.515 55.5838V126.421L284.61 138.527L272.515 150.668Z"
+                        fill="#EF6239"
+                      />
+                      <path
+                        d="M0.967773 130.537V146.552L8.95038 138.527L0.967773 130.537Z"
+                        fill="#EF6239"
+                      />
+                    </svg>
+
+                    <div className="workitem">
+                      <Image
+                        src="/assets/mask4.png"
+                        width={50}
+                        height={50}
+                        alt="mask4"
+                      />
+                      <h5>Chat with Renter</h5>
+                      <p>
+                        Discuss rental duration, pricing, and any other terms with
+                        renters in the chat. Reach an agreement that suits both
+                        parties and make a deal as per your convenience.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="renterwork animate__animated animate__flipInY">
+                    <svg
+                      id="firstrentaldiv"
+                      width="293"
+                      height="278"
+                      viewBox="0 0 277 278"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M221.373 0H55.6042C24.9869 0 0.0714722 24.9383 0.0714722 55.5838V126.421L12.1663 138.527L0.0714722 150.633V221.47C0.0714722 252.116 24.9869 277.054 55.6042 277.054H221.373C251.99 277.054 276.906 252.116 276.906 221.47V55.5838C276.906 24.9383 251.99 0 221.373 0ZM271.653 221.505C271.653 249.245 249.122 271.797 221.408 271.797H55.6387C27.9242 271.797 5.39318 249.245 5.39318 221.505V152.847L19.6651 138.562L5.39318 124.277V55.5838C5.39318 27.8438 27.9242 5.29205 55.6387 5.29205H221.373C249.087 5.29205 271.618 27.8438 271.618 55.5838V221.505H271.653Z"
+                        fill="#EF6239"
+                      />
+                      <path
+                        d="M0.0714722 130.537V146.552L8.08862 138.527L0.0714722 130.537Z"
+                        fill="#EF6239"
+                      />
+                    </svg>
+
+                    <div className="workitem">
+                      <Image
+                        src="/assets/mask5.png"
+                        width={50}
+                        height={50}
+                        alt="mask5"
+                      />
+                      <h5>Enjoy Earning</h5>
+                      <p>
+                        As per the deal, rent your stuff, collect the payment from
+                        renters, and enjoy your earnings.
+                      </p>
+                    </div>
                   </div>
                 </div>
-
-                <div className="renterwork animate__animated animate__flipInY">
-                  <svg
-                    id="firstrentaldiv"
-                    width="292"
-                    height="278"
-                    viewBox="0 0 292 278"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M276.938 124.242V55.5838C276.938 24.9383 252.022 0 221.405 0H55.6364C25.0191 0 0.103699 24.9383 0.103699 55.5838V126.421L12.1986 138.527L0.103699 150.633V221.47C0.103699 252.116 25.0191 277.054 55.6364 277.054H221.405C252.022 277.054 276.938 252.116 276.938 221.47V152.847L291.21 138.562L276.938 124.242ZM271.651 150.668V221.505C271.651 249.245 249.12 271.797 221.405 271.797H55.6364C27.9219 271.797 5.39088 249.245 5.39088 221.505V152.847L19.6628 138.562L5.39088 124.277V55.5838C5.39088 27.8438 27.9219 5.29205 55.6364 5.29205H221.405C249.12 5.29205 271.651 27.8438 271.651 55.5838V126.421L283.746 138.527L271.651 150.668Z"
-                      fill="#046BFB"
-                    />
-                    <path
-                      d="M0.103699 130.537V146.552L8.08633 138.527L0.103699 130.537Z"
-                      fill="#046BFB"
-                    />
-                  </svg>
-
-                  <div className="workitem">
-                    <Image
-                      src="/assets/mask4.png"
-                      width={50}
-                      height={50}
-                      alt="mask4"
-                    />
-                    <h5>Chat with Owner</h5>
-                    <p>
-                      Discuss rental duration, pricing, and any other terms with
-                      owners in the chat. Reach an agreement that suits both the
-                      parties and Make a deal as per your convenience.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="renterwork animate__animated animate__flipInY">
-                  <svg
-                    id="firstrentaldiv"
-                    width="293"
-                    height="278"
-                    viewBox="0 0 277 278"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M221.373 0H55.6042C24.9869 0 0.0714722 24.9383 0.0714722 55.5838V126.421L12.1663 138.527L0.0714722 150.633V221.47C0.0714722 252.116 24.9869 277.054 55.6042 277.054H221.373C251.99 277.054 276.906 252.116 276.906 221.47V55.5838C276.906 24.9383 251.99 0 221.373 0ZM271.653 221.505C271.653 249.245 249.122 271.797 221.408 271.797H55.6387C27.9242 271.797 5.39318 249.245 5.39318 221.505V152.847L19.6651 138.562L5.39318 124.277V55.5838C5.39318 27.8438 27.9242 5.29205 55.6387 5.29205H221.373C249.087 5.29205 271.618 27.8438 271.618 55.5838V221.505H271.653Z"
-                      fill="#046BFB"
-                    />
-                    <path
-                      d="M0.0714722 130.537V146.552L8.08862 138.527L0.0714722 130.537Z"
-                      fill="#046BFB"
-                    />
-                  </svg>
-
-                  <div className="workitem">
-                    <Image
-                      src="/assets/mask.png"
-                      width={50}
-                      height={50}
-                      alt="mask"
-                    />
-                    <h5>Enjoy Renting</h5>
-                    <p>
-                      Pickup the item, use it as your own, and when you&apos;re
-                      done, return it as per deal with owner.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeButton === 2 && (
-              <div className="renterdiv d-flex align-items-center justify-content-center gap-3">
-                <div className="renterwork animate__animated animate__flipInY">
-                  <svg
-                    id="firstrentaldiv"
-                    width="292"
-                    height="278"
-                    viewBox="0 0 292 278"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M221.301 277.089H55.5327C24.9154 277.089 0 252.15 0 221.505V55.5838C0 24.9383 24.9154 0 55.5327 0H221.301C251.919 0 276.834 24.9383 276.834 55.5838V124.242L291.106 138.527L276.834 152.812V221.47C276.834 252.15 251.919 277.089 221.301 277.089ZM55.5327 5.29205C27.8182 5.29205 5.28718 27.8438 5.28718 55.5838V221.505C5.28718 249.245 27.8182 271.797 55.5327 271.797H221.301C249.016 271.797 271.547 249.245 271.547 221.505V150.668L283.642 138.562L271.547 126.456V55.5838C271.547 27.8438 249.016 5.29205 221.301 5.29205H55.5327Z"
-                      fill="#EF6239"
-                    />
-                  </svg>
-
-                  <div className="workitem">
-                    <Image
-                      src="/assets/mask6.png"
-                      width={50}
-                      height={50}
-                      alt="mask6"
-                    />
-                    <h5>List an Item</h5>
-                    <p>
-                      List your items by uploading clear photos, adding a
-                      detailed description, price for renting, rentals’ rules,
-                      pickup location, and more other relevant details.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="renterwork animate__animated animate__flipInY">
-                  <svg
-                    id="firstrentaldiv"
-                    width="292"
-                    height="278"
-                    viewBox="0 0 292 278"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M276.938 124.242V55.5838C276.938 24.9383 252.022 0 221.405 0H55.6365C25.0192 0 0.10376 24.9383 0.10376 55.5838V126.421L12.1986 138.527L0.10376 150.633V221.47C0.10376 252.116 25.0192 277.054 55.6365 277.054H221.405C252.022 277.054 276.938 252.116 276.938 221.47V152.847L291.21 138.562L276.938 124.242ZM271.651 150.668V221.505C271.651 249.245 249.12 271.797 221.405 271.797H55.6365C27.922 271.797 5.39094 249.245 5.39094 221.505V152.847L19.6629 138.562L5.39094 124.277V55.5838C5.39094 27.8438 27.922 5.29205 55.6365 5.29205H221.405C249.12 5.29205 271.651 27.8438 271.651 55.5838V126.421L283.746 138.527L271.651 150.668Z"
-                      fill="#EF6239"
-                    />
-                    <path
-                      d="M0.10376 130.537V146.552L8.0864 138.527L0.10376 130.537Z"
-                      fill="#EF6239"
-                    />
-                  </svg>
-
-                  <div className="workitem">
-                    <Image
-                      src="/assets/mask7.png"
-                      width={50}
-                      height={50}
-                      alt="mask7"
-                    />
-                    <h5>Receive Requests</h5>
-                    <p>
-                      Once your product is listed, you&rsquo;ll start receiving
-                      rental requests from interested renters. Notifications
-                      will keep you informed about new requests.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="renterwork animate__animated animate__flipInY">
-                  <svg
-                    id="firstrentaldiv"
-                    width="293"
-                    height="278"
-                    viewBox="0 0 293 278"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M277.802 124.242V55.5838C277.802 24.9383 252.886 0 222.269 0H56.5005C25.8832 0 0.967773 24.9383 0.967773 55.5838V126.421L13.0626 138.527L0.967773 150.633V221.47C0.967773 252.116 25.8832 277.054 56.5005 277.054H222.269C252.886 277.054 277.802 252.116 277.802 221.47V152.847L292.074 138.562L277.802 124.242ZM272.515 150.668V221.505C272.515 249.245 249.984 271.797 222.269 271.797H56.5005C28.7859 271.797 6.25493 249.245 6.25493 221.505V152.847L20.5269 138.562L6.25493 124.277V55.5838C6.25493 27.8438 28.7859 5.29205 56.5005 5.29205H222.269C249.984 5.29205 272.515 27.8438 272.515 55.5838V126.421L284.61 138.527L272.515 150.668Z"
-                      fill="#EF6239"
-                    />
-                    <path
-                      d="M0.967773 130.537V146.552L8.95038 138.527L0.967773 130.537Z"
-                      fill="#EF6239"
-                    />
-                  </svg>
-
-                  <div className="workitem">
-                    <Image
-                      src="/assets/mask4.png"
-                      width={50}
-                      height={50}
-                      alt="mask4"
-                    />
-                    <h5>Chat with Renter</h5>
-                    <p>
-                      Discuss rental duration, pricing, and any other terms with
-                      renters in the chat. Reach an agreement that suits both
-                      parties and make a deal as per your convenience.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="renterwork animate__animated animate__flipInY">
-                  <svg
-                    id="firstrentaldiv"
-                    width="293"
-                    height="278"
-                    viewBox="0 0 277 278"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M221.373 0H55.6042C24.9869 0 0.0714722 24.9383 0.0714722 55.5838V126.421L12.1663 138.527L0.0714722 150.633V221.47C0.0714722 252.116 24.9869 277.054 55.6042 277.054H221.373C251.99 277.054 276.906 252.116 276.906 221.47V55.5838C276.906 24.9383 251.99 0 221.373 0ZM271.653 221.505C271.653 249.245 249.122 271.797 221.408 271.797H55.6387C27.9242 271.797 5.39318 249.245 5.39318 221.505V152.847L19.6651 138.562L5.39318 124.277V55.5838C5.39318 27.8438 27.9242 5.29205 55.6387 5.29205H221.373C249.087 5.29205 271.618 27.8438 271.618 55.5838V221.505H271.653Z"
-                      fill="#EF6239"
-                    />
-                    <path
-                      d="M0.0714722 130.537V146.552L8.08862 138.527L0.0714722 130.537Z"
-                      fill="#EF6239"
-                    />
-                  </svg>
-
-                  <div className="workitem">
-                    <Image
-                      src="/assets/mask5.png"
-                      width={50}
-                      height={50}
-                      alt="mask5"
-                    />
-                    <h5>Enjoy Earning</h5>
-                    <p>
-                      As per the deal, rent your stuff, collect the payment from
-                      renters, and enjoy your earnings.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
       {/* Section why choose us */}
-      <div className="whychooseus container-lg">
+      <div className="whychooseus container-lg mt-5">
         <h1 className="mb-3">Why choose us?</h1>
         <p>Ready to experience the future of renting?</p>
         <p>Download the RentalsPool and embark on a journey of convenience,</p>
         <p>sustainability, and community empowerment.</p>
-
         <div className="d-flex align-items-center justify-content-around w-100 mt-4 whychooseussection">
           <div className="mainwhy">
             <div className="why1">
@@ -781,7 +764,7 @@ const Page = () => {
               />
             </div>
             <div class="modal-body">
-              <div className="d-flex category_modal_card px-3">
+              <div className="d-flex category_modal_card">
                 {categories?.map((category) => (
                   <div
                     key={category?.id}
