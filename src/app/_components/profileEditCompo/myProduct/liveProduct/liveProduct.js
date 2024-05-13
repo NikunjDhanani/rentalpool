@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Pagination } from "react-bootstrap";
 import toast from "react-hot-toast";
+import PromotProduct from "../promotProduct/promotProduct";
 
 const LiveProduct = () => {
   const authToken = localStorage.getItem("authToken");
@@ -14,6 +15,7 @@ const LiveProduct = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const itemsPerPage = 10; // Set the number of products you want to display per page
+  const [promotProductDetalis, setPromotProductDetalis] = useState();
 
   useEffect(() => {
     setLoading(true);
@@ -136,6 +138,11 @@ const LiveProduct = () => {
     console.log("jndfjnfd");
   };
 
+  const handlePromt = (data) => {
+    setPromotProductDetalis(data);
+    console.log("data");
+  };
+
   return (
     <div className={styles.my_account_tab_content_container}>
       <div className={styles.edit_profile_container}>
@@ -197,21 +204,14 @@ const LiveProduct = () => {
                                 </p>
                               </div>
                               <div className={styles.productBtnDiv}>
-                                {product.status === "Approved" ? (
-                                  <button
-                                    className={styles.promoteBtn}
-                                    onClick={() =>
-                                      handleStatusUpdate("Removed")
-                                    }
-                                  >
+                                {!product.is_promoted ? (
+                                  <button className={styles.promoteBtn}>
                                     Promote
                                   </button>
                                 ) : (
                                   <button
                                     className={styles.editBtn}
-                                    onClick={() =>
-                                      handleStatusUpdate("Removed")
-                                    }
+                                    onClick={() => handlePromt(product)}
                                   >
                                     Promoted
                                   </button>
@@ -246,6 +246,7 @@ const LiveProduct = () => {
               </>
             )}
             {activeView === "draft" && <DraftProduct />}
+            {/* {promotProductDetalis && <PromotProduct />} */}
           </div>
         </div>
       </div>
