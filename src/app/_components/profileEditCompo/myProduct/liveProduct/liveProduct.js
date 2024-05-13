@@ -15,6 +15,7 @@ const LiveProduct = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const itemsPerPage = 10; // Set the number of products you want to display per page
+  const [promotProductDetalis, setPromotProductDetalis] = useState();
 
   useEffect(() => {
     setLoading(true);
@@ -137,6 +138,11 @@ const LiveProduct = () => {
     console.log("jndfjnfd");
   };
 
+  const handlePromt = (data) => {
+    setPromotProductDetalis(data);
+    console.log("data");
+  };
+
   return (
     <div className={styles.my_account_tab_content_container}>
       <div className={styles.edit_profile_container}>
@@ -203,7 +209,10 @@ const LiveProduct = () => {
                                     Promote
                                   </button>
                                 ) : (
-                                  <button className={styles.editBtn}>
+                                  <button
+                                    className={styles.editBtn}
+                                    onClick={() => handlePromt(product)}
+                                  >
                                     Promoted
                                   </button>
                                 )}
@@ -237,6 +246,7 @@ const LiveProduct = () => {
               </>
             )}
             {activeView === "draft" && <DraftProduct />}
+            {/* {promotProductDetalis && <PromotProduct />} */}
           </div>
         </div>
       </div>

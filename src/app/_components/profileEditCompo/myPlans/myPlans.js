@@ -50,10 +50,11 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
   }, []);
 
   const handleDetalisPlan = (plan) => {
+    console.log(planData, "planData");
     const result = planData.some((element) => {
       return element.status === "activated";
     });
-    if (!result) {
+    if (result) {
       toast.error(
         "You already have one active plan. Please use this filter for upload your product."
       );
@@ -70,7 +71,7 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
       },
     })
       .then((response) => {
-        if (response.data.active_plan) {
+        if (!response.data.active_plan) {
           setShowPlanPayment(true);
           setPlanPaymentData(plan);
         }
