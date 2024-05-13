@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Pagination } from "react-bootstrap";
 import toast from "react-hot-toast";
+import PromotProduct from "../promotProduct/promotProduct";
 
 const LiveProduct = () => {
   const authToken = localStorage.getItem("authToken");
@@ -197,22 +198,12 @@ const LiveProduct = () => {
                                 </p>
                               </div>
                               <div className={styles.productBtnDiv}>
-                                {product.status === "Approved" ? (
-                                  <button
-                                    className={styles.promoteBtn}
-                                    onClick={() =>
-                                      handleStatusUpdate("Removed")
-                                    }
-                                  >
+                                {!product.is_promoted ? (
+                                  <button className={styles.promoteBtn}>
                                     Promote
                                   </button>
                                 ) : (
-                                  <button
-                                    className={styles.editBtn}
-                                    onClick={() =>
-                                      handleStatusUpdate("Removed")
-                                    }
-                                  >
+                                  <button className={styles.editBtn}>
                                     Promoted
                                   </button>
                                 )}
