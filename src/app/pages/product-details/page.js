@@ -3,6 +3,7 @@ import SubHeader from "@/app/_components/SubHeader";
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Image from "next/image";
+import styles from "./product_details.module.css";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
@@ -10,6 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Swiper from "swiper";
 import * as Yup from "yup";
 import DefaultImg from "../../../../public/assets/product/defaultimg.png";
+import { Modal } from "react-bootstrap";
 
 const ProductDetailPage = () => {
   const router = useRouter();
@@ -205,6 +207,29 @@ const ProductDetailPage = () => {
     return selectedProducts.includes(favId) ? "red" : "currentColor";
   };
 
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleButtonClick = () => {
+    setModalOpen(true);
+  };
+
+  const currentUrl = window.location.href;
+  const handleCopyToClipboard = () => {
+    navigator.clipboard
+      .writeText(currentUrl)
+      .then(() => {
+        // Clipboard successfully copied
+        setModalOpen(false); // Close the modal
+      })
+      .catch((error) => {
+        console.error("Error copying to clipboard:", error);
+      });
+  };
+
+  const handleAddToFavroutes = () => {
+    
+  }
+
   return (
     <main>
       <div>
@@ -295,61 +320,65 @@ const ProductDetailPage = () => {
                     </div>
                   </div>
                   <div className="product-like-share">
-                    <svg
-                      className="product-like-share-icon"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="#717171"
-                      class="bi bi-heart"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                    <svg
-                      width="24"
-                      height="24"
-                      className="product-like-share-icon"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle
-                        cx="17.5"
-                        cy="4.5"
-                        r="2.5"
-                        stroke="#717171"
-                        strokeWidth="1.5"
-                      />
-                      <circle
-                        cx="5.5"
-                        cy="11.5"
-                        r="2.5"
-                        stroke="#717171"
-                        strokeWidth="1.5"
-                      />
-                      <path
-                        d="M15 6L8 10"
-                        stroke="#717171"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M7.5 13.5L15 18"
-                        stroke="#717171"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <circle
-                        cx="17.5"
-                        cy="19.5"
-                        r="2.5"
-                        stroke="#717171"
-                        strokeWidth="1.5"
-                      />
-                    </svg>
+                    <span onClick={() => handleAddToFavroutes()}>
+                      <svg
+                        className="product-like-share-icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="#717171"
+                        class="bi bi-heart"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                      </svg>
+                    </span>
+                    <span onClick={() => handleButtonClick()}>
+                      <svg
+                        width="24"
+                        height="24"
+                        className="product-like-share-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="17.5"
+                          cy="4.5"
+                          r="2.5"
+                          stroke="#717171"
+                          strokeWidth="1.5"
+                        />
+                        <circle
+                          cx="5.5"
+                          cy="11.5"
+                          r="2.5"
+                          stroke="#717171"
+                          strokeWidth="1.5"
+                        />
+                        <path
+                          d="M15 6L8 10"
+                          stroke="#717171"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M7.5 13.5L15 18"
+                          stroke="#717171"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <circle
+                          cx="17.5"
+                          cy="19.5"
+                          r="2.5"
+                          stroke="#717171"
+                          strokeWidth="1.5"
+                        />
+                      </svg>
+                    </span>
                   </div>
                 </div>
                 <div className="product-location">
@@ -969,6 +998,17 @@ const ProductDetailPage = () => {
           </div>
         </div>
       </div>
+      <Modal show={modalOpen} onHide={() => setModalOpen(false)}>
+        <div className="p-4">
+          <p>URL: {currentUrl}</p>
+          <button
+            className={`text-center w-100 d-sm-block mb-lg-0 mb-3 d-none ${styles.share_btn}`}
+            onClick={handleCopyToClipboard}
+          >
+            Copy URL
+          </button>
+        </div>
+      </Modal>
     </main>
   );
 };

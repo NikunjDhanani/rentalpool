@@ -1,499 +1,488 @@
-.user_profile
-{
-    border: 1px solid #E8E8ED;
-    border-radius: 10px;
+.user_profile {
+  border: 1px solid #E8E8ED;
+  border-radius: 10px;
 }
 
-.user_profile > *
-{
-    font-family: "Poppins", sans-serif;
+.user_profile>* {
+  font-family: "Poppins", sans-serif;
 }
 
-.user_name
-{
-    font-weight: 700;
-    color: #525252;
-    font-size: 28px;
+.user_name {
+  font-weight: 700;
+  color: #525252;
+  font-size: 28px;
 }
 
 .menu {
-  position: absolute; /* Or use your preferred positioning */
-  top: 100%; /* Position the menu below the button */
-  right: 0; /* Align the menu with the button's right side */
-  background-color: white; /* Set the background color */
-  border: 1px solid #ccc; /* Add a border */
-  padding: 10px; /* Add padding */
-  display: none; /* Initially hide the menu */
+  position: absolute;
+  /* Or use your preferred positioning */
+  top: 100%;
+  /* Position the menu below the button */
+  right: 0;
+  /* Align the menu with the button's right side */
+  background-color: white;
+  /* Set the background color */
+  border: 1px solid #ccc;
+  /* Add a border */
+  padding: 10px;
+  /* Add padding */
+  display: none;
+  /* Initially hide the menu */
 }
 
 .menu:hover {
-  display: block; /* Show the menu when hovering over it */
+  display: block;
+  /* Show the menu when hovering over it */
 }
 
-.follower_count 
-{
-    font-weight: 600;
-    color: #525252;
-    font-size: 20px;
-    padding-right: 5px;
+.follower_count {
+  font-weight: 600;
+  color: #525252;
+  font-size: 20px;
+  padding-right: 5px;
 }
 
-.user_followers p
-{
-    color: #525252;
-    font-size: 18px;
-    font-weight: 400;
+.user_followers p {
+  color: #525252;
+  font-size: 18px;
+  font-weight: 400;
 }
 
-.follower_following .separation
-{
-    width: 1px;
-    height: 20px;
-    background: #757575;
+.follower_following .separation {
+  width: 1px;
+  height: 20px;
+  background: #757575;
 }
 
-.user_info p
-{
-    font-weight: 400;
-    color: #757575;
-    font-size: 13px;
-    line-height: 20px;
+.user_info p {
+  font-weight: 400;
+  color: #757575;
+  font-size: 13px;
+  line-height: 20px;
 }
 
-.follower_share_btn
-{
-    gap: 14px;
-    margin-top: 33px;
+.follower_share_btn {
+  gap: 14px;
+  margin-top: 33px;
 }
 
-.follower_btn , .share_btn
-{
-    background: #046BFB;
-    border-radius: 4px;
-    padding: 14px 32px 14px 32px;
-    font-size: 16px;
-    font-weight: 400;
+.follower_btn,
+.share_btn {
+  background: #046BFB;
+  border-radius: 4px;
+  padding: 14px 32px 14px 32px;
+  font-size: 16px;
+  font-weight: 400;
 }
 
-.share_btn
-{
-    background: #ffffff;
-    border: 1px solid #046BFB;
-    color: #046BFB;
+.share_btn {
+  background: #ffffff;
+  border: 1px solid #046BFB;
+  color: #046BFB;
 }
 
 .searchSection {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
-  }
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
 
-  
+
 .searchFilterContentWrap {
-    display: flex;
-    justify-content: space-between;
-  }
+  display: flex;
+  justify-content: space-between;
+}
 
-  .userStatusImgWrap {
-    /* display: flex; */
-    align-items: center;
-  }
-  .userStatusHeaderWrap {
-    display: flex;
-    align-items: center !important;
-  }
+.userStatusImgWrap {
+  /* display: flex; */
+  align-items: center;
+}
 
-  .searchColWrap {
-    display: flex;
-    align-items: baseline;
-    grid-gap: 12px;
-  }
-  .searchResultContainer {
-    background:#E8E8ED;
-    border-radius: 10px;
-    padding: 30px 34.58px 24px;
-  }
-  .filterSearchWrap .searchInputBtn {
-    max-width: 800px;
-  }
-  .filterSearchWrap {
-    display: flex;
-    width: 100%;
-    align-items: baseline;
-    grid-gap: 12px;
-  }
-  .cardItem{
-    background-color: white;
-    border-radius: 10px;
-    position: relative;
-    border: 1px solid white;
-    padding: 20px 25.9px 20px 30px;
-    margin-bottom: 25px;
-  }
-  .cardItem:hover
-  {
-    border: 1px solid rgba(4, 107, 251, 1);
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
-    -webkit-transition: 0.2s;
-  }
+.userStatusHeaderWrap {
+  display: flex;
+  align-items: center !important;
+}
 
-  .cardItem img 
-  {
-    /* max-width: 190px; */
-    height: 250px;
-  }
-  .userBookMessageImg {
-    max-width: 44px;
-    max-height: 44px;
-    margin-right: 12px;
-    /* margin-top: -80%; */
-  }
-  .userBookMessageImg img {
-    max-width: inherit;
-    max-height: inherit;
-    border-radius: 50%;
-  }
+.searchColWrap {
+  display: flex;
+  align-items: baseline;
+  grid-gap: 12px;
+}
 
-  .userCardWrapper{
-    padding: 25px 6px;
-  }
+.searchResultContainer {
+  background: #E8E8ED;
+  border-radius: 10px;
+  padding: 30px 34.58px 24px;
+}
 
-  .cardItemcontainer{
-    align-items: start;
-    justify-content: center;
-  }
-  .cardText{
-    font-size: 20px;
-    font-weight: 500;
-    color: #525252;
-    font-family: "Poppins";
-    margin-bottom: 0px;
-  }
+.filterSearchWrap .searchInputBtn {
+  max-width: 800px;
+}
+
+.filterSearchWrap {
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  grid-gap: 12px;
+}
+
+.cardItem {
+  background-color: white;
+  border-radius: 10px;
+  position: relative;
+  border: 1px solid white;
+  padding: 20px 25.9px 20px 30px;
+  margin-bottom: 25px;
+}
+
+.cardItem:hover {
+  border: 1px solid rgba(4, 107, 251, 1);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+  -webkit-transition: 0.2s;
+}
+
+.cardItem img {
+  /* max-width: 190px; */
+  height: 250px;
+}
+
+.userBookMessageImg {
+  max-width: 44px;
+  max-height: 44px;
+  margin-right: 12px;
+  /* margin-top: -80%; */
+}
+
+.userBookMessageImg img {
+  max-width: inherit;
+  max-height: inherit;
+  border-radius: 50%;
+}
+
+.userCardWrapper {
+  padding: 25px 6px;
+}
+
+.cardItemcontainer {
+  align-items: start;
+  justify-content: center;
+}
+
+.cardText {
+  font-size: 20px;
+  font-weight: 500;
+  color: #525252;
+  font-family: "Poppins";
+  margin-bottom: 0px;
+}
 
 
-  .cardContent{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    align-items: center;
-  }
-  .locationName{
-    font-size: 9.5px;
-    font-weight: 400;
-    line-height: 12px;
-    margin-top: 3px;
-  }
-  .innerContent{
-    display: flex;
-    flex-direction: column;
-  }
+.cardContent {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  align-items: center;
+}
 
-  .rentbutton {
-    height: 32px;
-    padding: 0px 24px 16px 24px;
-    color: rgba(4, 107, 251, 1);
-    border-radius: 4px;
-    border: 1px solid rgba(4, 107, 251, 1);
-    cursor: pointer;
-    background: white;
-    margin-left: 3px;
-  }
+.locationName {
+  font-size: 9.5px;
+  font-weight: 400;
+  line-height: 12px;
+  margin-top: 3px;
+}
 
-  .rentbutton:hover
-  {
-    background: #046BFB;
-    color: white;
-  }
-  
-  .rentbutton p {
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 19px;
-    text-align: center;
-    margin-top: 5px;
-    margin-bottom: 0px;
-  }
+.innerContent {
+  display: flex;
+  flex-direction: column;
+}
 
-  .textCurrency{
-    font-size: 18px;
-    font-weight: 600;
-    color: #046BFB;
-    line-height: 22.5px;
-  }
+.rentbutton {
+  height: 32px;
+  padding: 0px 24px 16px 24px;
+  color: rgba(4, 107, 251, 1);
+  border-radius: 4px;
+  border: 1px solid rgba(4, 107, 251, 1);
+  cursor: pointer;
+  background: white;
+  margin-left: 3px;
+}
 
-  .suffixtext{
-    font-weight: 400;
-    font-size: 9.5px;
-    color: #525252;
-    line-height: 12px;
-  }
+.rentbutton:hover {
+  background: #046BFB;
+  color: white;
+}
 
-  .favouritebtn{
-    background-color: rgba(255, 255, 255, 0.5);
-    width: 30px;
-    height: 30px;
-    border-radius: 50px;
-    border: none;
-    position: absolute;
-    right: 18%;
-    top: 10%;
-  }
+.rentbutton p {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 19px;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
 
-  .statusTimeWrap {
-    display: flex;
-    align-items: center;
-    /* padding: 5px; */
-    /* font-size: 24px; */
-    width: 85%;
-    margin-left: 46px;
-    color: black;
-    padding-top: 20px;
-    padding-left: 9px;
-    margin-bottom: 30px;
-    /* font-weight: 400; */
-    line-height: 25px;
-  }
-  .statusTextWrap {
-    /* font-size: 24px; */
-    font-weight: 400;
-    margin-left: 46px;
-    color: black;
-    margin-top: 12px;
-    width: 87%;
-    /* padding-top: 20px; */
-    padding-left: 9px;
-    text-justify: auto;
-    line-height: 25px;
-  }
+.textCurrency {
+  font-size: 18px;
+  font-weight: 600;
+  color: #046BFB;
+  line-height: 22.5px;
+}
 
-  .card_col
-  {
-    padding: 0 6.58px !important;
-    cursor: pointer;
-  }
+.suffixtext {
+  font-weight: 400;
+  font-size: 9.5px;
+  color: #525252;
+  line-height: 12px;
+}
 
-  /* .custom_pagination a , .custom_pagination , .custom_pagination .active
+.favouritebtn {
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  border: none;
+  position: absolute;
+  right: 18%;
+  top: 10%;
+}
+
+.statusTimeWrap {
+  display: flex;
+  align-items: center;
+  /* padding: 5px; */
+  /* font-size: 24px; */
+  width: 85%;
+  margin-left: 46px;
+  color: black;
+  padding-top: 20px;
+  padding-left: 9px;
+  margin-bottom: 30px;
+  /* font-weight: 400; */
+  line-height: 25px;
+}
+
+.statusTextWrap {
+  /* font-size: 24px; */
+  font-weight: 400;
+  margin-left: 46px;
+  color: black;
+  margin-top: 12px;
+  width: 87%;
+  /* padding-top: 20px; */
+  padding-left: 9px;
+  text-justify: auto;
+  line-height: 25px;
+}
+
+.card_col {
+  padding: 0 6.58px !important;
+  cursor: pointer;
+}
+
+/* .custom_pagination a , .custom_pagination , .custom_pagination .active
   {
     width: 37.6px;
     border-radius: 8px !important;
   } */
-  
-  /**************************************** responsive css start ***************************************/
 
-@media (max-width: 1400px) and (min-width:1200px)
-{
-  .cardItem img
-  {
+/**************************************** responsive css start ***************************************/
+
+@media (max-width: 1400px) and (min-width:1200px) {
+  .cardItem img {
     height: 220px;
   }
 }
 
-@media (max-width: 1200px) and (min-width:992px)
-{
-  .user_followers img
-  {
+@media (max-width: 1200px) and (min-width:992px) {
+  .user_followers img {
     margin-right: 8px !important;
     width: 20px;
     height: 20px;
   }
-  .follower_count
-  {
+
+  .follower_count {
     font-size: 16px;
   }
-  .user_followers p 
-  {
+
+  .user_followers p {
     font-size: 14px;
   }
 }
 
-@media (min-width:768px)
-{
-  .left_col
-  {
+@media (min-width:768px) {
+  .left_col {
     width: 30.304%;
   }
-  .right_col
-  {
+
+  .right_col {
     width: 69.696%;
   }
 }
 
-  @media (max-width:992px) and (min-width:768px) 
-  {
-    .main_container
-    {
-      max-width: 820px !important;
-    }
-    .cardItem img
-    {
-      height: 220px;
-    }
+@media (max-width:992px) and (min-width:768px) {
+  .main_container {
+    max-width: 820px !important;
   }
 
-  @media screen and (max-width: 991px) {
-    .searchResultContainer {
-      width: 100%;
-    }
-    .searchFilterContentWrap {
-      flex-direction: column;
-    }
+  .cardItem img {
+    height: 220px;
+  }
+}
 
-    .searchText{
-      font-size: 26px;
-    }
+@media screen and (max-width: 991px) {
+  .searchResultContainer {
+    width: 100%;
   }
 
-  @media (max-width:768px)
-  {
-    .cardItem img
-    {
-      height: 210px;
-    }
+  .searchFilterContentWrap {
+    flex-direction: column;
   }
 
-  @media (max-width:576px)
-  {
-    .searchResultContainer
-    {
-        background: none !important;
-        padding: 0px;
-    }
-    .cardItem
-    {
-      border: 1px solid #EBEBEB;
-      padding: 10px 14px !important;
-      margin-bottom: 10px;
-    }
-    .card_col
-    {
-      padding: 0 9.5px !important;
-    }
-    .separation
-    {
-      margin: 0 10px !important;
-      height: 15px !important;
-    }
-    .follower_following
-    {
-      align-items: center;
-      padding-top: 0px !important;
-    }
-    .user_info
-    {
-      padding-top: 8px !important;
-    }
-    .user_info p 
-    {
-      font-size: 12px !important;
-      padding-top: 8px;
-      line-height: 16px;
-    }
-    .user_info .follower_count 
-    {
-      font-size: 18px !important;
-      font-weight: 600 !important;
-    }
-    .follower_share_btn
-    {
-      margin-top: 8px;
-    }
-    .cardItem img
-    {
-      height: 240px;
-    }
+  .searchText {
+    font-size: 26px;
+  }
+}
+
+@media (max-width:768px) {
+  .cardItem img {
+    height: 210px;
+  }
+}
+
+@media (max-width:576px) {
+  .searchResultContainer {
+    background: none !important;
+    padding: 0px;
   }
 
-  @media (max-width:480px)
-  {
-    .cardItem img
-    {
-      height: 220px;
-    }
+  .cardItem {
+    border: 1px solid #EBEBEB;
+    padding: 10px 14px !important;
+    margin-bottom: 10px;
   }
 
-  @media (max-width: 426px)
-  {
-    .cardText
-    {
-      font-size: 10px;
-      padding-top: 5px !important;
-      margin-bottom: 0px;
-      font-weight: 600;
-      line-height: 15px;
-    }
-    .cardContent
-    {
-      margin-top: 0px;
-    }
-    .searchResultContainer .col-6
-    {
-      padding: 0 5px !important;
-    }
-    .textCurrency
-    {
-      font-size: 12px;
-      line-height: 18px;
-    }
-    .product_image
-    {
-      height: 158px;
-    }
-    .like
-    {
-      height: 15px !important;
-      width: 15px !important;
-    }
-    .innerContent svg
-    {
-      width: 12px;
-      height: 12px;
-    }
-    .locationName
-    {
-      line-height: 12px;
-    }
-    .user_profile .user_image img
-    {
-      width: 80px;
-      height: 80px;
-    }
-    .user_name 
-    {
-      font-weight: 600;
-      font-size: 20px;
-      padding-top: 8px !important;
-    }
-    .user_followers img 
-    {
-      margin-right: 9px !important;
-      width: 20px !important;
-    }
-    .follower_count
-    {
-      font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 0 !important;
-    }
-    .user_followers p 
-    {
-      font-size: 14px;
-      font-weight: 400;
-      margin-bottom: 0px !important;
-    }
-    .user_followers 
-    {
-      align-items: center;
-    }
-    .cardItem img
-    {
-      height: 200px;
-    }
+  .card_col {
+    padding: 0 9.5px !important;
   }
 
-  @media (max-width:376px)
-  {
-    .cardItem img
-    {
-      height: 158px;
-    }
+  .separation {
+    margin: 0 10px !important;
+    height: 15px !important;
   }
-  
+
+  .follower_following {
+    align-items: center;
+    padding-top: 0px !important;
+  }
+
+  .user_info {
+    padding-top: 8px !important;
+  }
+
+  .user_info p {
+    font-size: 12px !important;
+    padding-top: 8px;
+    line-height: 16px;
+  }
+
+  .user_info .follower_count {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+  }
+
+  .follower_share_btn {
+    margin-top: 8px;
+  }
+
+  .cardItem img {
+    height: 240px;
+  }
+}
+
+@media (max-width:480px) {
+  .cardItem img {
+    height: 220px;
+  }
+}
+
+@media (max-width: 426px) {
+  .cardText {
+    font-size: 10px;
+    padding-top: 5px !important;
+    margin-bottom: 0px;
+    font-weight: 600;
+    line-height: 15px;
+  }
+
+  .cardContent {
+    margin-top: 0px;
+  }
+
+  .searchResultContainer .col-6 {
+    padding: 0 5px !important;
+  }
+
+  .textCurrency {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .product_image {
+    height: 158px;
+  }
+
+  .like {
+    height: 15px !important;
+    width: 15px !important;
+  }
+
+  .innerContent svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .locationName {
+    line-height: 12px;
+  }
+
+  .user_profile .user_image img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .user_name {
+    font-weight: 600;
+    font-size: 20px;
+    padding-top: 8px !important;
+  }
+
+  .user_followers img {
+    margin-right: 9px !important;
+    width: 20px !important;
+  }
+
+  .follower_count {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 0 !important;
+  }
+
+  .user_followers p {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 0px !important;
+  }
+
+  .user_followers {
+    align-items: center;
+  }
+
+  .cardItem img {
+    height: 200px;
+  }
+}
+
+@media (max-width:376px) {
+  .cardItem img {
+    height: 158px;
+  }
+}

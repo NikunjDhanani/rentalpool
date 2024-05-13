@@ -19,6 +19,7 @@ import { useMediaQuery } from "../../_components/MediaQueryHook";
 import OwnerProfileService from "@/service/owener_profile.service";
 import DefaultImg from "../../../../public/assets/product/defaultimg.png";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const Oprofile = () => {
   const router = useRouter();
@@ -130,6 +131,7 @@ const Oprofile = () => {
       console.error(error);
     }
   };
+
   const handleUnFollowRequest = async () => {
     try {
       await axios({
@@ -158,6 +160,59 @@ const Oprofile = () => {
       .catch((error) => {
         console.error("Error copying to clipboard:", error);
       });
+  };
+
+  const handleReportOwner = async () => {
+    const userId =
+      localStorage.getItem("profile") &&
+      JSON.parse(localStorage.getItem("profile"))?.id;
+    try {
+      const res = await axios({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}products/reportSeller/`,
+        method: "POST",
+        headers: {
+          Authorization: `Token ${authToken}`,
+        },
+        data: {
+          reasons: "null",
+          seller: +ownerId,
+          user: +userId,
+        },
+      });
+
+      if (res?.status === 201) {
+        console.log("res", res);
+        toast.success("Seller Reported");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleBlockOwner = async () => {
+    const userId =
+      localStorage.getItem("profile") &&
+      JSON.parse(localStorage.getItem("profile"))?.id;
+    try {
+      const res = await axios({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}products/blockUser/`,
+        method: "POST",
+        headers: {
+          Authorization: `Token ${authToken}`,
+        },
+        data: {
+          reasons: "null",
+          user: +userId,
+        },  
+      });
+
+      if (res?.status === 201) {
+        console.log("res", res);
+        toast.success("Seller Blocked");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -192,7 +247,11 @@ const Oprofile = () => {
                   />
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                     <li>
-                      <button class="dropdown-item" type="button">
+                      <button
+                        class="dropdown-item"
+                        type="button"
+                        onClick={() => handleReportOwner()}
+                      >
                         <svg
                           width="26"
                           height="26"
@@ -207,7 +266,11 @@ const Oprofile = () => {
                       </button>
                     </li>
                     <li>
-                      <button class="dropdown-item" type="button">
+                      <button
+                        class="dropdown-item"
+                        type="button"
+                        onClick={() => handleBlockOwner()}
+                      >
                         <svg
                           width="26"
                           height="26"

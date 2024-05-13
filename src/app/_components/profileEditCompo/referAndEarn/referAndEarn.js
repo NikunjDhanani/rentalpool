@@ -1,25 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import styles from "./referAndEarn.module.css";
-import axios from "axios";
 
 const ReferAndEarn = () => {
-  const [coins, setCoins] = useState();
-
-  useEffect(() => {
-    axios({
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}users/coins_info/`,
-      method: "GET",
-    })
-      .then((res) => {
-        setCoins(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
-
+  const userData =
+    localStorage.getItem("profile") &&
+    JSON.parse(localStorage.getItem("profile"));
   const handleCopyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
   };
@@ -63,12 +49,12 @@ const ReferAndEarn = () => {
             </div>
             <div className={styles.codeDiv}>
               <p className={styles.codeTitle}>Your Code</p>
-              <p className={styles.code}>PAR7MVTSE</p>
+              <p className={styles.code}>{userData?.refferal_code}</p>
               <img
                 src="/assets/profileEdit/copy.svg"
                 className={styles.copyBtn}
                 onClick={() => {
-                  handleCopyToClipboard("PAR7MVTSE");
+                  handleCopyToClipboard(userData?.refferal_code);
                 }}
               />
               <img
@@ -80,15 +66,15 @@ const ReferAndEarn = () => {
               <p className={styles.availableCoinTitle}>Available Coins</p>
               <div className={styles.coinTotalTitleDiv}>
                 <p>Earned Coins</p>
-                <p>10</p>
+                <p>{userData?.coins}</p>
               </div>
               <div className={styles.coinTotalTitleDiv}>
                 <p>Used Coins</p>
-                <p>0</p>
+                <p>{userData?.used_coins}</p>
               </div>
               <div className={styles.coinTotalDiv}>
                 <p>Total</p>
-                <p>10</p>
+                <p>{userData?.total_coins}</p>
               </div>
             </div>
           </div>

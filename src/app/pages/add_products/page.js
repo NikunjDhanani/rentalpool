@@ -148,6 +148,10 @@ const AddProduct = () => {
     },
   });
 
+  const handleSaveToDraft = () => {
+    
+  }
+
   return (
     <main>
       <div className={`${styles.add_products}`}>
@@ -506,7 +510,7 @@ const AddProduct = () => {
                       Review product
                     </button>
                     <br />
-                    <p className={`${styles.save_to_draft_btn}`}>
+                    <p className={`${styles.save_to_draft_btn}`} onClick={() => handleSaveToDraft()}>
                       or <span> Save to draft</span>
                     </p>
                   </div>
