@@ -756,14 +756,12 @@ const Page = () => {
                 alt="playstore"
                 width={130}
                 height={38}
-                layout="responsive"
               />
               <Image
                 src="/assets/footer/appstor.png"
                 alt="appstor"
                 width={130}
                 height={38}
-                layout="responsive"
               />
             </div>
           </div>
