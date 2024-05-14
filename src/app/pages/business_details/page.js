@@ -395,7 +395,7 @@ const BussinessDetails = () => {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g clip-path="url(#clip0_1901_2609)">
+              <g clipPath="url(#clip0_1901_2609)">
                 <path
                   d="M167.083 35.1391H131.991V81.6748H167.083V35.1391Z"
                   fill="#FFD817"

@@ -270,7 +270,7 @@ const ChatBox = () => {
                         />
                     </div>
                     <div className="write_a_review my-2">Write a Review</div>
-                    <textarea class="form-control" id="feedback" rows="5" maxlength="2000" placeholder="Additional Comments..." value={textValue} onChange={handleChange}></textarea>
+                    <textarea className="form-control" id="feedback" rows="5" maxlength="2000" placeholder="Additional Comments..." value={textValue} onChange={handleChange}></textarea>
                     <div className="text-end max_2000_characters mt-2">Max. 2000 characters</div>
                 </Modal.Body>
                 <Modal.Footer className="justify-content-center">

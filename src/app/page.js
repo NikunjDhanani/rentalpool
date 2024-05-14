@@ -753,15 +753,17 @@ const Page = () => {
             <div className="appicons">
               <Image
                 src="/assets/footer/playstore.png"
+                alt="playstore"
                 width={130}
                 height={38}
-                alt="playstore"
+                layout="responsive"
               />
               <Image
                 src="/assets/footer/appstor.png"
+                alt="appstor"
                 width={130}
                 height={38}
-                alt="appstor"
+                layout="responsive"
               />
             </div>
           </div>
@@ -769,24 +771,24 @@ const Page = () => {
       </div>
       {/* Modal Top Categories */}
       <div
-        class="modal modalcategories fade"
+        className="modal modalcategories fade"
         id="exampleModalToggle"
         aria-hidden="true"
         aria-labelledby="exampleModalToggleLabel"
-        tabindex="-1"
+        tabIndex="-1"
       >
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <span class="top_categories_header">Top Categories</span>
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <span className="top_categories_header">Top Categories</span>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               />
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <div className="d-flex category_modal_card">
                 {categories?.map((category) => (
                   <div

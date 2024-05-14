@@ -237,7 +237,7 @@ const Oprofile = () => {
                   className={`d-flex justify-content-end ${styles.more_share_btns}`}
                 >
                   <Image
-                    class=" dropdown-toggle"
+                    className=" dropdown-toggle"
                     type="button"
                     id="dropdownMenu2"
                     data-bs-toggle="dropdown"
@@ -245,10 +245,10 @@ const Oprofile = () => {
                     src={more_btn}
                     alt="More"
                   />
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
                     <li>
                       <button
-                        class="dropdown-item"
+                        className="dropdown-item"
                         type="button"
                         onClick={() => handleReportOwner()}
                       >
@@ -267,7 +267,7 @@ const Oprofile = () => {
                     </li>
                     <li>
                       <button
-                        class="dropdown-item"
+                        className="dropdown-item"
                         type="button"
                         onClick={() => handleBlockOwner()}
                       >
