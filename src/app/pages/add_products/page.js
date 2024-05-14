@@ -1,14 +1,14 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Form } from "react-bootstrap";
-import styles from "./add_products.module.css";
+import { useFormik } from "formik";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Form } from "react-bootstrap";
+import * as Yup from "yup";
 import right_arrow from "../../../../public/assets/icons/Right_arrow.svg";
 import add_image from "../../../../public/assets/icons/add_image.svg";
 import cancel_img_btn from "../../../../public/assets/icons/cancel_img_btn.svg";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useRouter } from "next/navigation";
+import styles from "./add_products.module.css";
 
 const errorSvg = (
   <svg
@@ -27,7 +27,7 @@ const errorSvg = (
 
 const AddProduct = () => {
   const authToken = localStorage.getItem("authToken");
-  const routes = useRouter();
+  const router = useRouter();
   const [images, setImages] = useState([]);
   // Function to handle file selection
   const handleFileChange = (e) => {
@@ -139,7 +139,12 @@ const AddProduct = () => {
         sub_category: values.subCategory,
         address: values.address,
       };
-      routes.push("/pages/review_product");
+      { console.log(values, obj, images, 'valuesvalues') }
+      // routes.push("/pages/review_product");
+      router.push({
+        pathname: '/pages/review_product',
+        query: { obj, values, images }
+      });
       console.log("values====>", obj, values, images);
       // console.log("iamages", images);
       // if (images.length === 0) {
@@ -149,7 +154,7 @@ const AddProduct = () => {
   });
 
   const handleSaveToDraft = () => {
-    
+
   }
 
   return (
@@ -258,7 +263,7 @@ const AddProduct = () => {
                         name="productTitle"
                         className={
                           formik.errors.productTitle &&
-                          formik.touched.productTitle
+                            formik.touched.productTitle
                             ? "border-danger mb-0"
                             : ""
                         }
@@ -267,7 +272,7 @@ const AddProduct = () => {
                         placeholder="Product Title"
                       />
                       {formik.errors.productTitle &&
-                      formik.touched.productTitle ? (
+                        formik.touched.productTitle ? (
                         <Form.Text
                           className="text-danger"
                           style={{ marginTop: "1%" }}
@@ -314,7 +319,7 @@ const AddProduct = () => {
                           onChange={(e) => handlePriceChange(e)}
                           className={
                             formik.errors.productDes &&
-                            formik.touched.productDes
+                              formik.touched.productDes
                               ? "border-danger"
                               : "mb-0"
                           }
@@ -486,7 +491,7 @@ const AddProduct = () => {
                         value={formik.values.rentalRules}
                         className={
                           formik.errors.rentalRules &&
-                          formik.touched.rentalRules
+                            formik.touched.rentalRules
                             ? "border-danger mb-0"
                             : ""
                         }

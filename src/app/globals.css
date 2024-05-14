@@ -53,7 +53,7 @@ a {
 
 .headerinput1 input {
   border: 1px solid rgba(220, 232, 255, 1);
-  padding: 13px 80px 13px 140px;
+  padding: 13px 80px;
   border-radius: 5px;
 }
 
@@ -66,7 +66,7 @@ a {
 
 .headerinput1 svg {
   position: absolute;
-  left: 93px;
+  left: 50px;
   top: 13px;
 }
 
@@ -306,9 +306,12 @@ a {
   -webkit-transition: 0.2s;
 }
 
+.listitem p {
+ font-weight: 500;
+}
+
 .listitem:hover p {
   color: white;
-  /* White text color on hover */
 }
 
 .listitem:hover svg path {
@@ -1258,9 +1261,8 @@ a {
   border-radius: 5px;
   padding: 5px;
   padding-left: 40px;
-  width: 200px;
   caret-color: blue;
-  width: 95%;
+  width: 50vw;
 }
 
 .mobileheader {
@@ -1576,7 +1578,6 @@ a {
 }
 
 .profile {
-  /* background: #7b1fa2; */
   color: #fff;
   display: flex;
   align-items: center;
@@ -1640,10 +1641,6 @@ a {
 .profile-2 svg {
   margin-top: -5px;
   margin-right: 5px;
-}
-
-.profile-2 span {
-  font-size: 16px;
 }
 
 .profile-menu li {
@@ -2238,19 +2235,6 @@ p {
   display: none;
 }
 
-/* .container_header{
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.mobilenav{
-  max-width: 1200px ;
-  margin: 0 auto;
-}
-.home_container{
-  max-width: 1200px;
-  margin: 0 auto;
-} */
-
 .error-message {
   color: red;
 }
@@ -2458,6 +2442,15 @@ p {
 
 /* media queries */
 @media (max-width:1200px) {
+  .headerinput1 input {
+    padding: 13px 50px;
+  }
+
+  .headerinput1 svg {
+    position: absolute;
+    left: 24px;
+  }
+
   .product_card {
     width: 200px;
     height: 316px;
@@ -2471,6 +2464,15 @@ p {
 }
 
 @media (max-width:992px) {
+
+  .profile {
+    line-height: 40px;
+  }
+
+  .listitem {
+    height: 35.6px;
+    padding: 0 20px 0 20px;
+  }
 
   .productMainCard {
     gap: 18px;
@@ -2587,6 +2589,10 @@ p {
 
 @media (max-width:768px) {
 
+  .mobileheader .headerinput1 input {
+    width: 58vw;
+  }
+
   .product_card {
     width: 180px;
     height: 280px;
@@ -2651,7 +2657,7 @@ p {
     flex-wrap: wrap;
   }
 
-  .copyright_text{
+  .copyright_text {
     display: none;
   }
 
@@ -2889,14 +2895,6 @@ p {
     display: none;
   }
 
-  .dektopnav {
-    display: none;
-  }
-
-  .mobilenav {
-    display: block;
-  }
-
   .sidebarofdesk {
     display: none;
   }
@@ -3048,7 +3046,6 @@ p {
   }
 
   .big-image img {
-    /* width: 100% !important; */
     max-width: 270px !important;
     height: 300px !important;
   }
@@ -3250,9 +3247,6 @@ p {
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  .mobileheader .headerinput1 input {
-    width: 350px;
-  }
 
   .slide {
     height: 240px !important;
@@ -3291,16 +3285,6 @@ p {
 
   .mobileheader button {
     padding: 4.5px 20px 4.5px 20px !important;
-  }
-
-  .mobileheader .headerinput1 svg {
-    left: 64px !important;
-    top: 9px !important;
-  }
-
-  .mobileheader .headerinput1 input {
-    padding-left: 90px !important;
-    padding-right: 70px !important;
   }
 
   .mobilenav-2 svg {
@@ -4469,23 +4453,6 @@ p {
 
 /* login/signup/sendotp popup style */
 
-.login_btn {
-  margin-left: 20px;
-}
-
-.login_btn button {
-  border-radius: 5px;
-  background: #046BFB;
-  color: white;
-  padding: 12px 20px;
-  border: 1px solid #046BFB;
-}
-
-.login_btn button:hover {
-  background: #fff;
-  color: #046BFB;
-}
-
 .login_popup .modal-dialog,
 .signup_popup .modal-dialog,
 .sendotp_popup .modal-dialog {
@@ -4883,14 +4850,6 @@ p {
     display: none;
   }
 
-  .dektopnav {
-    display: none;
-  }
-
-  .mobilenav {
-    display: block;
-  }
-
   .sidebarofdesk {
     display: none;
   }
@@ -5037,9 +4996,6 @@ p {
 }
 
 @media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-  .mobileheader .headerinput1 input {
-    width: 350px;
-  }
 
   .slide {
     height: 240px !important;
@@ -5078,16 +5034,6 @@ p {
 
   .mobileheader button {
     padding: 4.5px 20px 4.5px 20px !important;
-  }
-
-  .mobileheader .headerinput1 svg {
-    left: 64px !important;
-    top: 9px !important;
-  }
-
-  .mobileheader .headerinput1 input {
-    padding-left: 90px !important;
-    padding-right: 70px !important;
   }
 
   .mobilenav-2 svg {
@@ -5159,6 +5105,25 @@ p {
 }
 
 @media (max-width:992px) {
+
+  .dektopnav {
+    display: none;
+  }
+
+  .mobilenav {
+    display: block;
+  }
+
+  .add_item_button {
+    align-items: center !important;
+    display: flex !important;
+  }
+
+  .add_item_button:hover {
+    color: white;
+    background: #046bfb;
+  }
+
   .favoutite {
     top: 24px !important;
     right: 24px !important;

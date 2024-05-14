@@ -1,12 +1,11 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import LoginPopup from "./LoginPopup";
 import OtpPopup from "./OtpPopup";
 import SignupPopup from "./SignupPopup";
-import { usePathname } from 'next/navigation';
 
 const Header = () => {
   const router = useRouter();
@@ -165,13 +164,6 @@ const Header = () => {
     setShowModal(true);
   };
 
-  const menuItems = [
-    { pathname: "/pages/how-it-work", text: "How it works" },
-    { pathname: "/pages/about-us", text: "About us" },
-    { pathname: "/pages/contact-us", text: "Contact us" },
-  ];
-
-
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
@@ -326,18 +318,18 @@ const Header = () => {
     <div>
       {/* desktop nav */}
       <div className="dektopnav">
-        <div className="container d-flex align-items-center justify-content-between header">
+        <div className="container-xxl d-flex align-items-center justify-content-between header">
           <Link href="/">
             {" "}
             <Image
               src="/assets/logo.png"
-              width={280}
+              width={260}
               height={45.27}
               alt="logo"
             />
           </Link>
 
-          <div className="d-flex ">
+          <div className="d-flex">
             <div>
               <div className="headerinput1">
                 <svg
@@ -371,7 +363,8 @@ const Header = () => {
                   value={searchQuery}
                   onChange={handleInputChange2}
                   onKeyDown={handleKeyDown}
-                ></input>
+                />
+
                 <svg
                   id="closesearchbtn"
                   onClick={() => setSearchQuery("")}
@@ -579,10 +572,6 @@ const Header = () => {
           </div>
 
           <div>
-            {localStorageData === null &&
-              <div className="login_btn" id="login_btn">
-                <button onClick={handleLoginButtonClick}>Login</button>
-              </div>}
             <LoginPopup
               show={showLogin}
               onSignupClick={handleSignupButtonClick}
@@ -612,12 +601,16 @@ const Header = () => {
 
           <div className="d-flex align-items-center gap-3 headerusericons">
             <div className="headermenuicon" onClick={() => localStorageData === null ? handleLoginButtonClick() : router.push('/pages/favourites')}>
-              <Image
-                src="/assets/icons/favourite.png"
-                width={24}
-                height={24}
-                alt="favourite"
-              />
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_4022_1088)">
+                  <path d="M17.0625 1.5C16.1133 1.5011 15.1744 1.69666 14.3037 2.0746C13.433 2.45255 12.649 3.00487 12 3.6975C11.0489 2.68242 9.8146 1.97669 8.45735 1.67195C7.1001 1.3672 5.68258 1.47751 4.38881 1.98854C3.09504 2.49958 1.98478 3.38775 1.20215 4.53775C0.419527 5.68775 0.000684862 7.04646 0 8.4375C0 15.345 11.1412 22.125 11.625 22.3913C11.7416 22.4613 11.8752 22.4984 12.0112 22.4984C12.1473 22.4984 12.2809 22.4613 12.3975 22.3913C12.8588 22.125 24 15.345 24 8.4375C23.998 6.59817 23.2665 4.83474 21.9659 3.53414C20.6653 2.23354 18.9018 1.50199 17.0625 1.5ZM12 20.865C10.0612 19.6275 1.5 13.845 1.5 8.4375C1.50096 7.28248 1.86969 6.15777 2.55276 5.22637C3.23582 4.29498 4.19772 3.60528 5.29906 3.25725C6.4004 2.90922 7.58395 2.92093 8.67819 3.29068C9.77243 3.66043 10.7205 4.36902 11.385 5.31375C11.4542 5.41202 11.5461 5.49221 11.6528 5.54756C11.7595 5.60291 11.8779 5.6318 11.9981 5.6318C12.1183 5.6318 12.2368 5.60291 12.3435 5.54756C12.4502 5.49221 12.542 5.41202 12.6112 5.31375C13.2752 4.3674 14.2235 3.65728 15.3184 3.28648C16.4134 2.91569 17.598 2.90352 18.7004 3.25174C19.8027 3.59996 20.7654 4.29044 21.4486 5.22295C22.1319 6.15546 22.5002 7.28147 22.5 8.4375C22.5 13.8412 13.9388 19.6238 12 20.865Z" fill="#525252" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_4022_1088">
+                    <rect width="24" height="24" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
               <p>Favourite</p>
             </div>
             <div className="headermenuicon" onClick={() => localStorageData === null && handleLoginButtonClick()}>
@@ -712,7 +705,7 @@ const Header = () => {
                     Insights
                   </li>
                 </ul>
-                {localStorageData !== null && <button onClick={() => localStorage.clear()}>Log Out</button>}
+                <button onClick={() => localStorageData !== null ? localStorage.clear() : handleLoginButtonClick()}>{localStorageData !== null ? "Logout" : "Login"}</button>
               </div>
             </div>
           </div>
@@ -724,9 +717,9 @@ const Header = () => {
             transition: "background-color 0.3s ease, box-shadow 0.3s ease",
           }}
         >
-          <div className="container d-flex align-items-center justify-content-between header-2-2">
+          <div className="container-xxl d-flex align-items-center justify-content-between header-2-2">
             <div className="d-flex align-items-center gap-4 ">
-              <div className="profile ">
+              <div className="profile">
                 {" "}
                 <div className="bg-primary w-100 profile-2">
                   <svg
@@ -916,8 +909,66 @@ const Header = () => {
             </Link>
           </div>
 
-          <div className="mobilenav-2">
-            <svg
+          <div className="mobilenav-2 d-flex">
+            <div onClick={() => localStorageData === null && handleLoginButtonClick()}>
+              {localStorageData === null ?
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M17.3451 1.32061C16.4807 1.24999 15.4053 1.25 14.0336 1.25H9.96644C8.59472 1.25 7.51929 1.24999 6.65494 1.32061C5.77479 1.39252 5.04769 1.54138 4.38955 1.87671C3.30762 2.42798 2.42798 3.30762 1.87671 4.38955C1.54138 5.04769 1.39252 5.7748 1.32061 6.65494C1.24999 7.51929 1.25 8.59472 1.25 9.96644V14.2283C1.25 16.7256 3.27441 18.75 5.77166 18.75H6.37341C6.62191 18.75 6.79183 19.001 6.69954 19.2317C6.01288 20.9484 7.9899 22.5003 9.49441 21.4257L12.1051 19.5609L12.1543 19.5259C12.8632 19.0264 13.7079 18.7556 14.5751 18.7501L14.6354 18.75H15.3311C16.8797 18.7502 17.8244 18.7504 18.6179 18.5177C20.4971 17.9667 21.9667 16.4971 22.5177 14.6179C22.7504 13.8244 22.7502 12.8798 22.75 11.3312V9.96642C22.75 8.59473 22.75 7.51927 22.6794 6.65494C22.6075 5.77479 22.4586 5.04769 22.1233 4.38955C21.572 3.30762 20.6924 2.42798 19.6104 1.87671C18.9523 1.54138 18.2252 1.39252 17.3451 1.32061ZM5.07054 3.21322C5.48197 3.00359 5.9897 2.87996 6.77708 2.81563C7.57322 2.75058 8.58749 2.75 10 2.75H14C15.4125 2.75 16.4268 2.75058 17.2229 2.81563C18.0103 2.87996 18.518 3.00359 18.9295 3.21322C19.7291 3.62068 20.3793 4.27085 20.7868 5.07054C20.9964 5.48197 21.12 5.9897 21.1844 6.77708C21.2494 7.57322 21.25 8.58749 21.25 10V11.1842C21.25 12.9261 21.2424 13.6363 21.0783 14.1958C20.671 15.5848 19.5848 16.671 18.1958 17.0783C17.6363 17.2424 16.9261 17.25 15.1842 17.25H14.6354L14.5655 17.2501C13.3922 17.2576 12.2493 17.6239 11.2902 18.2997L8.62255 20.2051C8.33709 20.409 7.96197 20.1145 8.09226 19.7888C8.57867 18.5728 7.68311 17.25 6.37341 17.25H5.77166C4.10284 17.25 2.75 15.8972 2.75 14.2283V10C2.75 8.58749 2.75058 7.57322 2.81563 6.77708C2.87996 5.9897 3.00359 5.48197 3.21322 5.07054C3.62068 4.27085 4.27085 3.62068 5.07054 3.21322Z"
+                    fill="#525252"
+                  />
+                  <path
+                    d="M9 10C9 10.5523 8.55228 11 8 11C7.44772 11 7 10.5523 7 10C7 9.44772 7.44772 9 8 9C8.55228 9 9 9.44772 9 10Z"
+                    fill="#525252"
+                  />
+                  <path
+                    d="M13 10C13 10.5523 12.5523 11 12 11C11.4477 11 11 10.5523 11 10C11 9.44772 11.4477 9 12 9C12.5523 9 13 9.44772 13 10Z"
+                    fill="#525252"
+                  />
+                  <path
+                    d="M17 10C17 10.5523 16.5523 11 16 11C15.4477 11 15 10.5523 15 10C15 9.44772 15.4477 9 16 9C16.5523 9 17 9.44772 17 10Z"
+                    fill="#525252"
+                  />
+                </svg> :
+                <Link href="/pages/chatbox">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M17.3451 1.32061C16.4807 1.24999 15.4053 1.25 14.0336 1.25H9.96644C8.59472 1.25 7.51929 1.24999 6.65494 1.32061C5.77479 1.39252 5.04769 1.54138 4.38955 1.87671C3.30762 2.42798 2.42798 3.30762 1.87671 4.38955C1.54138 5.04769 1.39252 5.7748 1.32061 6.65494C1.24999 7.51929 1.25 8.59472 1.25 9.96644V14.2283C1.25 16.7256 3.27441 18.75 5.77166 18.75H6.37341C6.62191 18.75 6.79183 19.001 6.69954 19.2317C6.01288 20.9484 7.9899 22.5003 9.49441 21.4257L12.1051 19.5609L12.1543 19.5259C12.8632 19.0264 13.7079 18.7556 14.5751 18.7501L14.6354 18.75H15.3311C16.8797 18.7502 17.8244 18.7504 18.6179 18.5177C20.4971 17.9667 21.9667 16.4971 22.5177 14.6179C22.7504 13.8244 22.7502 12.8798 22.75 11.3312V9.96642C22.75 8.59473 22.75 7.51927 22.6794 6.65494C22.6075 5.77479 22.4586 5.04769 22.1233 4.38955C21.572 3.30762 20.6924 2.42798 19.6104 1.87671C18.9523 1.54138 18.2252 1.39252 17.3451 1.32061ZM5.07054 3.21322C5.48197 3.00359 5.9897 2.87996 6.77708 2.81563C7.57322 2.75058 8.58749 2.75 10 2.75H14C15.4125 2.75 16.4268 2.75058 17.2229 2.81563C18.0103 2.87996 18.518 3.00359 18.9295 3.21322C19.7291 3.62068 20.3793 4.27085 20.7868 5.07054C20.9964 5.48197 21.12 5.9897 21.1844 6.77708C21.2494 7.57322 21.25 8.58749 21.25 10V11.1842C21.25 12.9261 21.2424 13.6363 21.0783 14.1958C20.671 15.5848 19.5848 16.671 18.1958 17.0783C17.6363 17.2424 16.9261 17.25 15.1842 17.25H14.6354L14.5655 17.2501C13.3922 17.2576 12.2493 17.6239 11.2902 18.2997L8.62255 20.2051C8.33709 20.409 7.96197 20.1145 8.09226 19.7888C8.57867 18.5728 7.68311 17.25 6.37341 17.25H5.77166C4.10284 17.25 2.75 15.8972 2.75 14.2283V10C2.75 8.58749 2.75058 7.57322 2.81563 6.77708C2.87996 5.9897 3.00359 5.48197 3.21322 5.07054C3.62068 4.27085 4.27085 3.62068 5.07054 3.21322Z"
+                      fill="#525252"
+                    />
+                    <path
+                      d="M9 10C9 10.5523 8.55228 11 8 11C7.44772 11 7 10.5523 7 10C7 9.44772 7.44772 9 8 9C8.55228 9 9 9.44772 9 10Z"
+                      fill="#525252"
+                    />
+                    <path
+                      d="M13 10C13 10.5523 12.5523 11 12 11C11.4477 11 11 10.5523 11 10C11 9.44772 11.4477 9 12 9C12.5523 9 13 9.44772 13 10Z"
+                      fill="#525252"
+                    />
+                    <path
+                      d="M17 10C17 10.5523 16.5523 11 16 11C15.4477 11 15 10.5523 15 10C15 9.44772 15.4477 9 16 9C16.5523 9 17 9.44772 17 10Z"
+                      fill="#525252"
+                    />
+                  </svg>
+                </Link>
+              }
+            </div>
+            {/* <svg
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -942,7 +993,7 @@ const Header = () => {
                 d="M17 10C17 10.5523 16.5523 11 16 11C15.4477 11 15 10.5523 15 10C15 9.44772 15.4477 9 16 9C16.5523 9 17 9.44772 17 10Z"
                 fill="#525252"
               />
-            </svg>
+            </svg> */}
             <Image
               src="/assets/icons/profile.png"
               width={24}
@@ -1028,15 +1079,14 @@ const Header = () => {
               <li data-bs-dismiss="offcanvas" aria-label="Close">
                 <Link href="/">Home</Link>{" "}
               </li>
-              <li>My Account</li>
-              <li>All Categories</li>
-              <li>Favorites</li>
+              <li>All Category</li>
+              <li onClick={() => localStorageData === null ? handleLoginButtonClick() : router.push('/pages/favourites')} data-bs-dismiss="offcanvas" aria-label="Close">Favourite</li>
             </ul>
             <hr />
             <ul>
-              <Link href="/pages/how-it-work"><li>How its work</li></Link>
-              <Link href="/pages/about-us"><li>About Us</li></Link>
-              <Link href="/pages/contact-us"><li>Contact Us</li></Link>
+              <Link href="/pages/how-it-work"><li data-bs-dismiss="offcanvas" aria-label="Close">How its work</li></Link>
+              <Link href="/pages/about-us"><li data-bs-dismiss="offcanvas" aria-label="Close">About Us</li></Link>
+              <Link href="/pages/contact-us"><li data-bs-dismiss="offcanvas" aria-label="Close">Contact Us</li></Link>
             </ul>
           </div>
         </div>
@@ -1139,31 +1189,33 @@ const Header = () => {
             )}
           </div>
 
-          <button>
-            <svg
-              width="17"
-              height="16"
-              viewBox="0 0 17 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M8.5 3.33325L8.5 12.6666"
-                stroke="#046BFB"
-                strokeWidth="1.1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M13.1667 8L3.83333 8"
-                stroke="#046BFB"
-                strokeWidth="1.1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <Link href="/pages/list-item-page"> Add</Link>
-          </button>
+          <Link href="/pages/list-item-page">
+            <div className="listitem add_item_button">
+              <svg
+                width="17"
+                height="16"
+                viewBox="0 0 17 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8.5 3.33325L8.5 12.6666"
+                  stroke="#046BFB"
+                  strokeWidth="1.1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M13.1667 8L3.83333 8"
+                  stroke="#046BFB"
+                  strokeWidth="1.1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>{" "}
+              Add
+            </div>
+          </Link>
         </div>
       </div>
     </div>

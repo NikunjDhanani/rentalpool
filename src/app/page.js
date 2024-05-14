@@ -140,8 +140,26 @@ const Page = () => {
       });
   };
 
+  const handleStartNowImage = async () => {
+    const authToken = localStorage.getItem("authToken");
+    axios({
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}products/getHomePosters/`,
+      method: "GET",
+      headers: {
+        Authorization: `Token ${authToken}`,
+      },
+    })
+      .then((response) => {
+       console.log(response,'responseresponse' )
+      })
+      .catch((err) => {
+        console.error("Error updating profile:", err);
+      });
+  };
+
   useEffect(() => {
     handleProfile();
+    handleStartNowImage();
   }, []);
 
   return (
@@ -359,7 +377,7 @@ const Page = () => {
         </div>
       </div>
       {/* Section How Its Works */}
-      <div className="container-lg">
+      {/* <div className="container-lg">
         <div className=" howitswork">
           <div className="d-flex align-items-center justify-content-center flex-column">
             <h1>Let&rsquo;s see How Its Works</h1>
@@ -668,7 +686,7 @@ const Page = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* Section why choose us */}
       <div className="whychooseus container-lg mt-5">
         <h1 className="mb-3">Why choose us?</h1>
