@@ -1,23 +1,17 @@
-// SignupPopup.js
-
-import React, { useState, useEffect } from 'react';
-import { Form, Modal, Button } from "react-bootstrap";
-import Image from 'next/image';
-import popup_img from "../../../public/assets/popup_img.png";
-import PhoneInput, { PhoneNumber } from 'react-phone-number-input';
 import axios from 'axios';
-import OtpPopup from './OtpPopup'
+import Image from 'next/image';
+import { Button, Form, Modal } from "react-bootstrap";
+import PhoneInput from 'react-phone-number-input';
+import popup_img from "../../../public/assets/popup_img.png";
 
 const SignupPopup = ({ show, onClose, onSendOtpClick, onLoginClick, formData, setFormData }) => {
 
-  const [showOtpPopup, setShowOtpPopup] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [value, setValue] = useState();
-
   const phoneNo = formData.phoneNumber;
+
   const handleSendOtpClick = () => {
     onSendOtpClick(phoneNo);
   };
+
   const handleLoginClick = () => {
     onLoginClick();
   };
@@ -32,30 +26,26 @@ const SignupPopup = ({ show, onClose, onSendOtpClick, onLoginClick, formData, se
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios({
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}users/register/`,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      data: formData,
-    })
-      .then((response) => {
-        if (response.status === 201) {
-      handleSendOtpClick();
-          console.log('User registered successfully!');
-        } else {
-          console.error('Registration failed');
-        }
-      })
-      .catch((error) => {
-        console.error('Error registering user:', error);
+
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}users/register/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
+
+      if (response.status === 201) {
+        handleSendOtpClick();
+        console.log('User registered successfully!');
+      } else {
+        console.error('Registration failed');
+      }
+    } catch (error) {
+      console.error('Error registering user:', error);
+    }
   };
 
   return (
-
-    <>
     <Modal className='signup_popup' show={show} onHide={onClose}>
       <Modal.Header className='border-0 p-0' closeButton></Modal.Header>
       <Modal.Body className='p-0'>
@@ -167,18 +157,12 @@ const SignupPopup = ({ show, onClose, onSendOtpClick, onLoginClick, formData, se
           </div>
           <div className='col-md-1 p-0 order-2'></div>
           <div className='col-md-6 p-0 order-md-3 order-1 text-center d-sm-block d-none'>
-            <Image className='popup_img mb-md-0 mb-4' src={popup_img} />
+            <Image className='popup_img mb-md-0 mb-4' src={popup_img} alt="Description of the image content" />
           </div>
         </div>
       </Modal.Body>
     </Modal>
-
-    
-</>
-
   );
-
-  
 }
 
 export default SignupPopup;

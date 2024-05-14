@@ -36,8 +36,22 @@ const Footer = () => {
           <div className="col-xl-2 col-md-3 col-12">
             <h3 className="get_app">Get App</h3>
             <div className="d-flex gap-2 application_image_main">
-              <img src="/assets/footer/playstore.png" className="application_image" alt="playstore" />
-              <img src="/assets/footer/appstor.png" className="application_image" alt="appstor" />
+              <Image
+                src="/assets/footer/playstore.png"
+                className="application_image"
+                alt="playstore"
+                width={100}
+                height={100}
+                layout="responsive"
+              />
+              <Image
+                src="/assets/footer/appstor.png"
+                className="application_image"
+                alt="appstore"
+                width={100}
+                height={100}
+                layout="responsive"
+              />
             </div>
             <div className="social_media_icon">
               <div>

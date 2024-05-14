@@ -1,10 +1,9 @@
 "use client";
-
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
 import toast from "react-hot-toast";
 import styles from "./myPlans.module.css";
-import { Spinner } from "react-bootstrap";
 
 const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
   const [planData, setPlanData] = useState([]);
@@ -39,6 +38,7 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
       `${process.env.NEXT_PUBLIC_BASE_URL}users/myPackages/`,
       setPlanData
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -47,6 +47,7 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
       `${process.env.NEXT_PUBLIC_BASE_URL}products/allPackages/?page=1`,
       setSilverPlanData
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDetalisPlan = (plan) => {
@@ -139,13 +140,14 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
                     index % 3 === 0
                       ? "#F1F7FF"
                       : index % 3 === 1
-                      ? "#FFECDD"
-                      : "#E8E8ED";
+                        ? "#FFECDD"
+                        : "#E8E8ED";
 
                   return (
                     <div
                       className={styles.planContainer}
                       style={{ background: backgroundColor }}
+                      key={index}
                     >
                       <div className={styles.planTitleDescriptionDiv}>
                         <h3 className={styles.mainTitleForPlan}>{plan.name}</h3>

@@ -1,13 +1,14 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import right_arrow from "../../../../public/assets/icons/Right_arrow.svg";
 import styles from "./review.module.css";
 import { useRouter } from 'next/router';
+import React from "react";
 
 const reviewProduct = () => {
   const product = [];
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [selectedImageIndex, setSelectedImageIndex] = React.useState(0);
   // const { obj, values, images } = router.query;
   // console.log(obj, values, images ,'obj, values, images')
 
@@ -93,7 +94,7 @@ const reviewProduct = () => {
                 </div>
                 <div>
                   <div className="big-image" style={{ width: '70%', transform: 'translate(18%, 0px)' }}>
-                    <img
+                    <Image
                       src={thumbnailImages[selectedImageIndex]}
                       alt="Big Image"
                     />

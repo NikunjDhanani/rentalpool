@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import styles from "./referAndEarn.module.css";
 
 const ReferAndEarn = () => {
@@ -17,17 +18,14 @@ const ReferAndEarn = () => {
           <div className={styles.edit_profile_heading_container}>
             <h2>Refer & Earn </h2>
           </div>
-          <div
-            className={styles.edit_profile_tab_container}
-            style={{ position: "relative" }}
-          >
+          <div className={styles.edit_profile_tab_container} style={{ position: "relative" }}>
             <h2 className={styles.referAndEarnTitle}>Invite Friends & Earn</h2>
             <div className={styles.coinDetainMainDiv}>
               <div className={styles.coinDetailDiv}>
                 <div className={styles.friendsAndYouGetCoinDiv}>
                   <h3 className={styles.coinTitle}>Friends Get</h3>
                   <div className={styles.vectorImgOne}>
-                    <img src="/assets/profileEdit/friends.png" width={"100%"} />
+                    <Image src="/assets/profileEdit/friends.png" alt="profile" layout="responsive" width={100} height={100} />
                   </div>
                   <p className={styles.coinDescription}>
                     By using your referral code, your friend gets 10 RP coins.
@@ -39,7 +37,13 @@ const ReferAndEarn = () => {
                 <div className={styles.friendsAndYouGetCoinDiv}>
                   <h3 className={styles.coinTitle}>You Get</h3>
                   <div className={styles.vectorImgTwo}>
-                    <img src="/assets/profileEdit/you.png" width={"100%"} />
+                    <Image
+                      src="/assets/profileEdit/you.png"
+                      alt="profile"
+                      width={100}
+                      height={100}
+                      layout="responsive"
+                    />
                   </div>
                   <p className={styles.coinDescription}>
                     You also get 1o RP coins. (1 RP Coin = 1 INR)
@@ -50,16 +54,22 @@ const ReferAndEarn = () => {
             <div className={styles.codeDiv}>
               <p className={styles.codeTitle}>Your Code</p>
               <p className={styles.code}>{userData?.refferal_code}</p>
-              <img
+              <Image
                 src="/assets/profileEdit/copy.svg"
                 className={styles.copyBtn}
+                alt="profile"
+                width={24}
+                height={24}
                 onClick={() => {
                   handleCopyToClipboard(userData?.refferal_code);
                 }}
               />
-              <img
+              <Image
                 src="/assets/profileEdit/Share.svg"
                 className={styles.shareBtn}
+                alt="profile"
+                width={24}
+                height={24}
               />
             </div>
             <div className={styles.coinTotalDetailDiv}>

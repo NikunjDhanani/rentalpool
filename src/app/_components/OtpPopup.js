@@ -46,7 +46,7 @@ const OtpPopup = ({ show, onClose, setShowLogin, setShowSignup, setShowOtp, form
           setShowOtp(false);
           setOtp(['', '', '', '', '', '']);
           setPhoneNumber('');
-        } else {  
+        } else {
           console.error('OTP verification failed');
         }
       })
@@ -113,7 +113,7 @@ const OtpPopup = ({ show, onClose, setShowLogin, setShowSignup, setShowOtp, form
           </div>
           <div className='col-md-1 p-0 order-2'></div>
           <div className='col-md-6 p-0 order-md-3 order-1 text-center d-sm-block d-none'>
-            <Image className='popup_img mb-md-0 mb-4' src={popup_img} />
+            <Image className='popup_img mb-md-0 mb-4' src={popup_img} alt="Description of the image content" />
           </div>
         </div>
       </Modal.Body>

@@ -1,11 +1,12 @@
 "use client";
-import styles from "./liveProduct.module.css";
-import DraftProduct from "../draftProduct/draftProduct";
-import { useState, useEffect } from "react";
 import axios from "axios";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { Pagination } from "react-bootstrap";
 import toast from "react-hot-toast";
+import DraftProduct from "../draftProduct/draftProduct";
 import PromotProduct from "../promotProduct/promotProduct";
+import styles from "./liveProduct.module.css";
 
 const LiveProduct = () => {
   const authToken = localStorage.getItem("authToken");
@@ -172,10 +173,11 @@ const LiveProduct = () => {
                               className={styles.productContainer}
                             >
                               <div className={styles.productImgDiv}>
-                                <img
+                                <Image
                                   src={product.primary_image}
-                                  alt={product.title}
-                                  className={styles.productImage}
+                                  alt="product"
+                                  height={40}
+                                  width={40}
                                 />
                               </div>
                               <div className={styles.productdescriptionWithBtn}>

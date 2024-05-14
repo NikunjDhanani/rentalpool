@@ -1,10 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
 import toast from "react-hot-toast";
 import styles from "./planPayment.module.css";
+import Image from "next/image";
 
 const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
   const router = useRouter();
@@ -109,6 +110,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
       .catch((err) => {
         console.error(err);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleApplyCoupon = async () => {
@@ -229,7 +231,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   onClick={() => setShowPlanPayment(false)}
                   className={styles.backBtn}
                 >
-                  <img src="/assets/profileEdit/back.png" />
+                  <Image src="/assets/profileEdit/back.png" alt="back" height={8} width={13} />{" "}
                   Back
                 </button>
               </div>

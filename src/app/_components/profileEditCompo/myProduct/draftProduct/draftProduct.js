@@ -1,9 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { Pagination } from "react-bootstrap";
-import styles from "./draftProduct.module.css";
 import toast from "react-hot-toast";
+import styles from "./draftProduct.module.css";
+import Image from "next/image";
 
 const DraftProduct = () => {
   const authToken = localStorage.getItem("authToken");
@@ -137,10 +138,11 @@ const DraftProduct = () => {
                       return (
                         <div key={index} className={styles.productContainer}>
                           <div className={styles.productImgDiv}>
-                            <img
+                            <Image
                               src={product.primary_image}
-                              alt={product.title}
-                              className={styles.productImage}
+                              alt="product"
+                              height={40}
+                              width={40}
                             />
                           </div>
                           <div className={styles.productdescriptionWithBtn}>

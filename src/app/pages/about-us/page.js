@@ -39,7 +39,7 @@ const AboutUs = () => {
             </div>
           </div>
           <div className={`text-center ${styles.why_choose_section}`}>
-            <Image className={`${styles.about_img}`} src={about_img} />
+            <Image className={`${styles.about_img}`} src={about_img} alt="about us" height={100} width={100} layout="responsive" />
             <h4 className={`text-center ${styles.section_heading}`}>Why Choose RentalsPool?</h4>
             <div className={`row justify-content-center ${styles.why_choose_section_row}`}>
               <div className={`col-lg-4 col-6 ${styles.single_card_col}`}>
@@ -60,7 +60,7 @@ const AboutUs = () => {
                 <div className={`text-center ${styles.single_card}`}>
                   <Image src={card_3} width="99.53" height="100" alt='Earn' />
                   <h4>Earn Extra</h4>
-                  <p>Are you using your items rarely?<br></br>Join with us on RentalsPool and earn some extra money by renting them out when you're not using them.</p>
+                  <p>Are you using your items rarely?<br />Join with us on RentalsPool and earn some extra money by renting them out when you&apos;re not using them.</p>
                 </div>
               </div>
               <div className={`col-lg-4 col-6 mb-0 ${styles.single_card_col}`}>
@@ -81,13 +81,13 @@ const AboutUs = () => {
           </div>
           <div className={`position-relative ${styles.feature_rentalspool_section}`}>
             <h4 className={`text-center ${styles.section_heading}`}>Features of RentalsPool</h4>
-            <p className={`text-center ${styles.section_des}`}>RentalsPool is designed keeping you in mind, offering a range of innovative features that make renting and sharing items at ease. With our user-friendly interface and cutting-edge technology, you'll experience a new level of convenience and flexibility.</p>
+            <p className={`text-center ${styles.section_des}`}>RentalsPool is designed keeping you in mind, offering a range of innovative features that make renting and sharing items at ease. With our user-friendly interface and cutting-edge technology, you&apos;ll experience a new level of convenience and flexibility.</p>
             <div className={`row ${styles.feature_rentalspool_row}`}>
               <div className={`col-xl-4 col-md-6 ${styles.feature_rentalspool_col}`}>
                 <div className={`d-flex justify-content-end ${styles.feature_wrapper}`}>
                   <div className={`${styles.feature_description}`}>
                     <h4>Search and Filters</h4>
-                    <p>Easily find the items you're looking for, our smart search and advanced filters will guide you. Filter by category, location, availability, and more to pinpoint your perfect rental.</p>
+                    <p>Easily find the items you&apos;re looking for, our smart search and advanced filters will guide you. Filter by category, location, availability, and more to pinpoint your perfect rental.</p>
                   </div>
                   <div className={`${styles.feature_img}`}>
                     <Image src={feature_1} alt='feature_1' />

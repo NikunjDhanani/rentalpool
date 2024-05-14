@@ -1,12 +1,12 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Pagination } from "react-bootstrap";
-import styles from "./favorites.module.css";
-import Image from "next/image";
 import { useMediaQuery } from "@/app/_components/MediaQueryHook/index";
-import product_image from "../../../../public/assets/product.png";
-import cancel_btn from "../../../../public/assets/icons/cancel.svg";
 import axios from "axios";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { Pagination } from "react-bootstrap";
+import cancel_btn from "../../../../public/assets/icons/cancel.svg";
+import product_image from "../../../../public/assets/product.png";
+import styles from "./favorites.module.css";
 
 const Page = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -168,12 +168,13 @@ const Page = () => {
                           className={`${styles.cancel_button}`}
                           onClick={() => handleCancelProduct(product.id)}
                         >
-                          <Image src={cancel_btn}></Image>
+                          <Image src={cancel_btn} alt="button" />
                         </button>
                         <Image
                           className={`${styles.product_image}`}
                           src={product_image}
-                        ></Image>
+                          alt="button"
+                        />
                         <p className={`mb-0 ${styles.product_name}`}>
                           {product.name}
                         </p>

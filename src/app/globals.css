@@ -492,8 +492,8 @@ a {
 }
 
 .application_image {
-  width: 154px;
-  height: 45px;
+  width: 154px !important;
+  height: 45px !important;
 }
 
 .application_image_main {
@@ -544,8 +544,8 @@ a {
 }
 
 .first_page_poster {
-  width: 80%;
-  height: 80%;
+  width: 80% !important;
+  height: 80% !important;
 }
 
 .slide {
@@ -648,8 +648,8 @@ a {
 }
 
 .categories_icon_modal {
-  height: 100px;
-  width: 100px;
+  height: 100px !important;
+  width: 100px !important;
 }
 
 .category_modal {
@@ -688,8 +688,8 @@ a {
 }
 
 .categoriesitems .items img {
-  height: 100px;
-  width: 100px;
+  height: 100px !important;
+  width: 100px !important;
 }
 
 .categoriesitems .items p {
@@ -752,8 +752,8 @@ a {
 }
 
 .product_image_for_popular_products {
-  width: 100%;
-  height: 220px;
+  width: 100% !important;
+  height: 220px !important;
   border-radius: 5px;
 }
 
@@ -2329,8 +2329,8 @@ p {
 }
 
 .user-image {
-  height: 44px;
-  width: 44px;
+  height: 44px !important;
+  width: 44px !important;
   border-radius: 50%;
 }
 
@@ -2399,6 +2399,8 @@ p {
   position: absolute;
   top: 18px;
   left: 16px;
+  width: 26px !important;
+  height: 26px !important;
 }
 
 .rate_your_experience {
@@ -2458,7 +2460,7 @@ p {
   }
 
   .product_image_for_popular_products {
-    height: 180px;
+    height: 180px !important;
     border-radius: 4px;
   }
 }
@@ -2490,8 +2492,8 @@ p {
 
   .first_page_poster {
     margin-bottom: 24px;
-    width: 60%;
-    height: 60%;
+    width: 60% !important;
+    height: 60% !important;
   }
 
   .start_now_btn {
@@ -2517,8 +2519,8 @@ p {
   }
 
   .categories_icon_modal {
-    height: 64px;
-    width: 64px;
+    height: 64px !important;
+    width: 64px !important;
   }
 
   .category_modal {
@@ -2545,8 +2547,8 @@ p {
   }
 
   .user-image {
-    height: 36px;
-    width: 36px;
+    height: 36px !important;
+    width: 36px !important;
     border-radius: 50%;
   }
 
@@ -2600,7 +2602,7 @@ p {
   }
 
   .product_image_for_popular_products {
-    height: 150px;
+    height: 150px !important;
   }
 
   .banner-text h4 {
@@ -2692,8 +2694,8 @@ p {
   }
 
   .categoriesitems .items img {
-    height: 50px;
-    width: 50px;
+    height: 50px !important;
+    width: 50px !important;
   }
 
   .categoriesitems .items p {
@@ -4351,8 +4353,8 @@ p {
 }
 
 .modalcategories .categoriesitems .items img {
-  height: 60px;
-  width: 60px;
+  height: 60px !important;
+  width: 60px !important;
 }
 
 .modalcategories .categoriesitems .items p {
@@ -4725,11 +4727,6 @@ p {
   .categoriesitems .items {
     padding: 28px 40px 28px 40px;
     height: 150px;
-  }
-
-  .categoriesitems .items img {
-    height: 50px;
-    width: 50px;
   }
 
   .categoriesitems .items p {

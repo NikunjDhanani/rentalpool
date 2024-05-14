@@ -1,9 +1,9 @@
-import styles from "./insights.module.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Pagination } from "react-bootstrap";
-import InsightsTwo from "./insightsTwo/insightsTwo";
+import styles from "./insights.module.css";
 import insightTwoStyles from "./insigntsTwo.module.css";
+import Image from "next/image";
 
 const Insights = () => {
   const [insightOne, setInsightOne] = useState(true);
@@ -14,12 +14,12 @@ const Insights = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 5; // Set the number of products you want to display per page
-  const [selectedProductId, setSelectedProductId] = useState(null);
   const [selectedProductData, setSelectedProductData] = useState(null);
 
   useEffect(() => {
     setLoading(true);
     loadProducts(currentPage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   const loadProducts = async (page) => {
@@ -160,10 +160,11 @@ const Insights = () => {
                       {products.map((product, index) => (
                         <div key={index} className={styles.productContainer}>
                           <div className={styles.productImgDiv}>
-                            <img
+                            <Image
                               src={product.primary_image_thumbnail}
                               alt={product.title}
-                              className={styles.productImage}
+                              width={100}
+                              height={100}
                             />
                           </div>
                           <div className={styles.productdescriptionWithBtn}>
@@ -178,15 +179,15 @@ const Insights = () => {
                             </div>
                             <div className={styles.productBtnDiv}>
                               <div className={styles.insightsIconDiv}>
-                                <img src="/assets/profileEdit/eye.png" />
+                                <Image src="/assets/profileEdit/eye.png" width={24} height={24} alt="icon" />
                                 <span>{product?.insights?.product_views}</span>
                               </div>
                               <div className={styles.insightsIconDiv}>
-                                <img src="/assets/profileEdit/heart.png" />
+                                <Image src="/assets/profileEdit/heart.png" width={24} height={24} alt="icon" />
                                 <span>{product?.insights?.favorites}</span>
                               </div>
                               <div className={styles.insightsIconDiv}>
-                                <img src="/assets/profileEdit/msg.png" />
+                                <Image src="/assets/profileEdit/msg.png" width={24} height={24} alt="icon" />
                                 <span>
                                   {product?.insights?.chat_intialized}
                                 </span>
@@ -229,7 +230,7 @@ const Insights = () => {
                     className={insightTwoStyles.backBtn}
                     onClick={backBtnClick}
                   >
-                    <img src="/assets/profileEdit/back.png" />
+                    <Image src="/assets/profileEdit/back.png" alt="back" height={8} width={13} />{" "}
                     Back
                   </button>
                 </div>
@@ -237,8 +238,9 @@ const Insights = () => {
                   <>
                     <div className={insightTwoStyles.promotProductImgDescDiv}>
                       <div className={insightTwoStyles.promotProductImg}>
-                        <img
+                        <Image
                           src={selectedProductData.primary_image}
+                          alt="primary"
                           width={100}
                           height={100}
                         />

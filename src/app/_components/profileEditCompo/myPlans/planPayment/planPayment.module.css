@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-
 .promotProductImgDescDiv {
     padding: 12px 30px;
     border: 1px solid #E8E8ED;
@@ -11,16 +10,16 @@
 }
 
 .promotProductImg {
-    max-width: 190px;
-    height: 220px;
+    max-width: 190px !important;
+    height: 220px !important;
     border-radius: 5px;
 }
 
 .promotProductImg {
-    width: 100%;
+    width: 100% !important;
 }
 
-.planProductName{
+.planProductName {
     font-family: "Poppins";
     font-size: 20px;
     font-weight: 600;
@@ -434,15 +433,14 @@
     }
 
     .promotProductImg {
-        max-width: 47px;
-        height: auto;
+        max-width: 47px !important;
+        height: auto !important;
         border-radius: 5px;
         margin-right: 10px;
     }
 
     .promotProductImg img {
         border-radius: 5px;
-
     }
 
     .backBtn img {

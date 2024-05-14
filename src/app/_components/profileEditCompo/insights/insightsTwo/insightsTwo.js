@@ -1,4 +1,4 @@
-// import styles from "./insigntsTwo.module.css"
+import Image from "next/image";
 
 const InsightsTwo = () => {
 
@@ -11,24 +11,25 @@ const InsightsTwo = () => {
     return (
         <div className={styles.my_account_tab_content_container}>
             <div className={styles.edit_profile_container}>
-
                 <div className={styles.main_tab_content}>
                     <div className={styles.edit_profile_tab_container}>
                         <div className={styles.backBtnDiv}>
-                            <button className={styles.backBtn}><img src="/assets/profileEdit/back.png" />Back</button>
+                            <button className={styles.backBtn}>
+                                <Image src="/assets/profileEdit/back.png" alt="back" height={8} width={13} />{" "}
+                                Back
+                            </button>
                         </div>
                         {/* <h2 className={styles.referAndEarnTitle}>Promote your product</h2>
                         <p className={styles.promotProductDescription}>Reach more customers and rent more!</p> */}
                         {data.map((product, index) => (
-                            <div className={styles.promotProductImgDescDiv}>
+                            <div className={styles.promotProductImgDescDiv} key={index}>
                                 <div className={styles.promotProductImg}>
-                                    <img src={product.img} />
+                                    <Image src={product.img} alt="product" height={40} width={40} />
                                 </div>
                                 <h3 className={styles.productTitle}>{product.title}</h3>
                             </div>
                         ))}
                         <div>
-                            
                             <div className={styles.coinTotalDetailDiv}>
                                 <p className={styles.availableCoinTitle}>Overview</p>
                                 <div className={styles.coinTotalTitleDiv}>
@@ -45,10 +46,10 @@ const InsightsTwo = () => {
                                 </div>
                             </div>
                         </div>
-                    </div >
-                </div >
-            </div >
-        </div >
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
 

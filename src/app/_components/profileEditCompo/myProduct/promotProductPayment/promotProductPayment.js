@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Spinner } from "react-bootstrap";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 const PromotProductPayment = ({
   promotCardDetalis,
@@ -99,6 +100,7 @@ const PromotProductPayment = ({
       setPayLoading(false);
     }
   };
+
   return (
     <div className={styles.my_account_tab_content_container}>
       <div className={styles.edit_profile_container}>
@@ -109,7 +111,7 @@ const PromotProductPayment = ({
                 className={styles.backBtn}
                 onClick={() => setpromotCardDetalis(null)}
               >
-                <img src="/assets/profileEdit/back.png" />
+                <Image src="/assets/profileEdit/back.png" alt="back" height={8} width={13} />{" "}
                 Back
               </button>
             </div>
@@ -119,7 +121,7 @@ const PromotProductPayment = ({
             </p>
             <div className={styles.promotProductImgDescDiv}>
               <div className={stylesNew.promotProductImg}>
-                <img src={planData.primary_image} />
+                <Image src={planData.primary_image} alt="product" height={40} width={40} />
               </div>
               <h3 className={styles.productTitle}>{planData.title}</h3>
               <p className={styles.productPrice}>

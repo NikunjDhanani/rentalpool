@@ -1,10 +1,11 @@
 "use client"
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
 import { Modal } from "react-bootstrap";
 import ReactStarRating from "react-star-ratings-component";
+import { io } from "socket.io-client";
 import styles from "../../_components/profileEditCompo/myPlans/planPayment/planPayment.module.css";
+import Image from "next/image";
 
 const ChatBox = () => {
     const [senderMessageDetails, setSenderMessageDetails] = useState([]);
@@ -92,7 +93,7 @@ const ChatBox = () => {
         // Emit the message to the server
         socket.emit('fetch_old_chat', {
             command: 'fetch_old_chat',
-            user_id: 43 
+            user_id: 43
         });
 
         socket.on('fetchallchat', (data) => {
@@ -104,6 +105,8 @@ const ChatBox = () => {
             socket.disconnect();
         };
     }, []);
+
+
 
     useEffect(() => {
         axios({
@@ -121,6 +124,7 @@ const ChatBox = () => {
             .catch((err) => {
                 console.error(err);
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Function to format date and time
@@ -159,7 +163,14 @@ const ChatBox = () => {
                             return (
                                 <div key={data.id} className="message-sender d-flex justify-content-between align-items-center px-2 py-1" onClick={() => handleSenderMessageDetails(data)}>
                                     <div className="d-flex align-items-center">
-                                        <img className="user-image" src={data[key].image ? data[key].image : "/assets/userImage.png"} alt="User" />
+                                        <Image
+                                            className="user-image"
+                                            src={data[key].image ? data[key].image : "/assets/userImage.png"}
+                                            alt="User"
+                                            width={100}
+                                            height={100}
+                                            layout="responsive"
+                                        />
                                         <div className="px-2">
                                             <div className="user-name-sender">{data[key].name}</div>
                                             <div className="product-name-sender">{data.product.title}</div>
@@ -180,7 +191,7 @@ const ChatBox = () => {
                 <div className="contactus-container chat-box-side">
                     <div className="d-flex justify-content-between align-items-center chat-box-header">
                         <div>
-                            <img
+                            <Image
                                 className="user-image"
                                 src={
                                     senderUserDerails?.whoAmI === 'buyer'
@@ -192,6 +203,9 @@ const ChatBox = () => {
                                             : "/assets/userImage.png"
                                 }
                                 alt="User"
+                                width={100}
+                                height={100}
+                                layout="responsive"
                             />
                             <span className="user-name">{senderUserDerails?.whoAmI === 'buyer' ? senderUserDerails?.seller?.name : senderUserDerails?.buyer?.name}</span>
                         </div>
@@ -223,7 +237,14 @@ const ChatBox = () => {
                                     onChange={handleTypeMessage}
                                 />
                                 <div className="send-message" onClick={handleSendMessage}>
-                                    <img className="send-message-arrow" src="/assets/SendMassage.png" alt="Message" />
+                                    <Image
+                                        className="send-message-arrow"
+                                        src="/assets/SendMassage.png"
+                                        alt="Message"
+                                        width={100}
+                                        height={100}
+                                        layout="responsive"
+                                    />
                                 </div>
                             </div>
                         </div>

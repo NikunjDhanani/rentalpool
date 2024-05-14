@@ -1,17 +1,16 @@
 "use client";
 import SubHeader from "@/app/_components/SubHeader";
-import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Image from "next/image";
-import styles from "./product_details.module.css";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
+import { Modal } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swiper from "swiper";
 import * as Yup from "yup";
 import DefaultImg from "../../../../public/assets/product/defaultimg.png";
-import { Modal } from "react-bootstrap";
+import styles from "./product_details.module.css";
 
 const ProductDetailPage = () => {
   const router = useRouter();
@@ -133,6 +132,7 @@ const ProductDetailPage = () => {
     };
 
     fetchFilteredProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product]); // Only 'product' is used as a dependency
 
   const productImg = product && product.primary_image;
@@ -148,12 +148,11 @@ const ProductDetailPage = () => {
   );
 
   useEffect(() => {
-    // Initialize Swiper
     new Swiper(".swiper-container", {
       slidesPerView: 4,
       spaceBetween: 10,
-      // Other Swiper options
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleThumbnailClick = (index) => {
@@ -227,7 +226,7 @@ const ProductDetailPage = () => {
   };
 
   const handleAddToFavroutes = () => {
-    
+
   }
 
   return (

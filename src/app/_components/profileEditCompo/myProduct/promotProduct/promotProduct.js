@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import styles from "./promotProduct.module.css";
 import axios from "axios";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import PromotProductPayment from "../promotProductPayment/promotProductPayment";
+import styles from "./promotProduct.module.css";
 
 const PromotProduct = ({
   promotProductDetalis,
@@ -12,6 +13,7 @@ const PromotProduct = ({
   const [loading, setLoading] = useState(true);
   const [promotCardDetalis, setpromotCardDetalis] = useState(null);
   const authToken = localStorage.getItem("authToken");
+
   const fetchData = async (url, setDataFunction) => {
     try {
       const response = await axios({
@@ -36,6 +38,7 @@ const PromotProduct = ({
       `${process.env.NEXT_PUBLIC_BASE_URL}products/promotePackages/`,
       setPlanData
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDetalisPlan = (plan) => {
@@ -53,7 +56,7 @@ const PromotProduct = ({
                   className={styles.backBtn}
                   onClick={() => setPromotProductDetalis(null)}
                 >
-                  <img src="/assets/profileEdit/back.png" />
+                  <Image src="/assets/profileEdit/back.png" alt="back" height={8} width={13} />{" "}
                   Back
                 </button>
               </div>
@@ -63,7 +66,7 @@ const PromotProduct = ({
               </p>
               <div className={styles.promotProductImgDescDiv}>
                 <div className={styles.promotProductImg}>
-                  <img src={promotProductDetalis.primary_image} />
+                  <Image src={promotProductDetalis.primary_image} alt="product" height={40} width={40} />
                 </div>
                 <div>
                   <h3 className={styles.productTitle}>
@@ -86,13 +89,14 @@ const PromotProduct = ({
                       index % 3 === 0
                         ? "#F1F7FF"
                         : index % 3 === 1
-                        ? "#FFECDD"
-                        : "#E8E8ED";
+                          ? "#FFECDD"
+                          : "#E8E8ED";
 
                     return (
                       <div
                         className={styles.planContainer}
                         style={{ background: backgroundColor }}
+                        key={index}
                       >
                         <div className={styles.planTitleDescriptionDiv}>
                           <h3 className={styles.mainTitleForPlan}>

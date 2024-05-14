@@ -38,7 +38,6 @@ const Page = () => {
         console.error("Error fetching data:", error);
       }
     }
-
     fetchData();
   }, []);
 
@@ -150,7 +149,7 @@ const Page = () => {
       },
     })
       .then((response) => {
-       console.log(response,'responseresponse' )
+        console.log(response, 'responseresponse')
       })
       .catch((err) => {
         console.error("Error updating profile:", err);
@@ -160,6 +159,7 @@ const Page = () => {
   useEffect(() => {
     handleProfile();
     handleStartNowImage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -194,10 +194,13 @@ const Page = () => {
               </button>
             </div>
             <div className="col-lg-6 col-12 text-center order-lg-2 order-1">
-              <img
+              <Image
                 src="/assets/Home/slider1.png"
                 alt="img"
                 className="first_page_poster"
+                width={100}
+                height={100}
+                layout="responsive"
               />
             </div>
           </div>
@@ -236,9 +239,12 @@ const Page = () => {
               className="items"
               onClick={() => handleCategoryClick(category?.id)}
             >
-              <img
+              <Image
                 src={category?.icon}
                 alt="categoriesicon"
+                width={100}
+                height={100}
+                layout="responsive"
               />
               <p key={category?.id}>{category?.title}</p>
             </div>
@@ -272,11 +278,7 @@ const Page = () => {
         </div>
         <div className="productMainCard d-flex align-items-center justify-content-left flex-wrap mt-3">
           {products?.length === 0 ? (
-            <p className="no-product-found">
-              Oops! It seems we couldn't find a matching product near by your
-              location. Please stay connected with RentalsPool to make it
-              better.
-            </p>
+            <p className="no-product-found">Oops! It seems we couldn&apos;t find a matching product near by your location. Please stay connected with RentalsPool to make it better.</p>
           ) : (
             products && products.slice(0, displayedProductsCount).map((data) => (
               <div
@@ -284,10 +286,13 @@ const Page = () => {
                 className="product_card"
                 onClick={() => productHandler(data.id)}
               >
-                <img
+                <Image
                   src={data.primary_image}
                   alt="product"
                   className="product_image_for_popular_products"
+                  width={100}
+                  height={100}
+                  layout="responsive"
                 />
                 <div
                   className="favoutite"
@@ -789,10 +794,13 @@ const Page = () => {
                     className="category_modal"
                     onClick={() => handleCategoryClick(category.id)}
                   >
-                    <img
+                    <Image
                       src={category?.icon}
                       alt="categoriesicon"
                       className="categories_icon_modal"
+                      width={100}
+                      height={100}
+                      layout="responsive"
                     />
                     <span key={category?.id}>{category?.title}</span>
                   </div>
