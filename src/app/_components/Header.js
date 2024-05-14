@@ -36,8 +36,15 @@ const Header = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
+  const [localStorageData, setLocalStorageData] = useState("");
   const pathname = usePathname();
-  const localStorageData = localStorage.getItem('authToken');
+
+  useEffect(() => {
+    if (localStorage) {
+      setLocalStorageData(localStorage.getItem("authToken"))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleLoginButtonClick = () => {
     setShowLogin(true);

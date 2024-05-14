@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./personalProfileEdit.module.css";
 import axios from "axios";
 import BusinessProfileEdit from "../businessProfile/businessProfileEdit";
+import Image from "next/image";
 
 const PersonalProfileEdit = () => {
   const [formData, setFormData] = useState({
@@ -158,7 +159,7 @@ const PersonalProfileEdit = () => {
                   id="personal"
                 >
                   <div className={styles.user_image_container}>
-                    <img
+                    <Image
                       src={
                         formData.profileImage
                           ? typeof formData?.profileImage === "string"
@@ -167,15 +168,19 @@ const PersonalProfileEdit = () => {
                           : "/assets/profileEdit/profile.png"
                       }
                       alt="User Profile"
+                      height={80}
+                      width={80}
                     />
                     <label
                       htmlFor="profileImageUpload"
                       className={styles.imageUploadLabel}
                     >
-                      <img
+                      <Image
                         className={styles.inputFileImgDiv}
                         src="/assets/profileEdit/add_circle.svg"
                         alt="Add Profile"
+                        height={20}
+                        width={20}
                       />
                     </label>
                     <input

@@ -101,7 +101,7 @@
 }
 
 .user_image_container {
-    max-width: 120px;
+    max-width: 120px !important;
     margin: 22px auto;
     padding: 15px 0px;
     position: relative;
@@ -111,11 +111,12 @@
     position: absolute;
     width: 32px !important;
     right: 5px;
-    height: 32px;
+    height: 32px !important;
 }
 
 .user_image_container img {
-    width: 100%;
+    width: 100% !important;
+    height: 100% !important;
     border-radius: 50%;
 }
 
@@ -252,7 +253,7 @@
         font-size: 12px;
     }
     .user_image_container {
-        max-width: 98px;
+        max-width: 98px !important;
         margin: 10px auto;
         padding: 15px 0px;
     }
