@@ -771,24 +771,24 @@ const Page = () => {
       </div>
       {/* Modal Top Categories */}
       <div
-        className="modal modalcategories fade"
+        class="modal modalcategories fade"
         id="exampleModalToggle"
         aria-hidden="true"
         aria-labelledby="exampleModalToggleLabel"
         tabIndex="-1"
       >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <span className="top_categories_header">Top Categories</span>
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="top_categories_header">Top Categories</span>
               <button
                 type="button"
-                className="btn-close"
+                class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               />
             </div>
-            <div className="modal-body">
+            <div class="modal-body">
               <div className="d-flex category_modal_card">
                 {categories?.map((category) => (
                   <div
