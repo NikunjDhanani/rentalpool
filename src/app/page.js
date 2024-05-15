@@ -187,10 +187,20 @@ const Page = () => {
   };
 
   useEffect(() => {
-    handleProfile();
-    handleStartNowImage();
+    if (localStorage.getItem("authToken") !== null) {
+      handleProfile();
+      handleStartNowImage();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function truncateString(str, maxLength) {
+    if (str.length > maxLength) {
+      return str.substring(0, maxLength) + "...";
+    } else {
+      return str;
+    }
+  }
 
   return (
     <main>
@@ -349,13 +359,14 @@ const Page = () => {
                   </svg>
                 </div>
                 <div className="product-description">
-                  <p>{capitalizeFirstLetter(data.title)}</p>
+                  <p>{capitalizeFirstLetter(truncateString(data.title, 15))}</p>
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="prices">
                       <h5>
                         <span>Rs {data.rent_per_day}</span>/day
                       </h5>
-                      <h6>
+                      <div className="d-flex align-items-center justify-content-between ">
+                        <h6>
                         {" "}
                         <svg
                           width="12"
@@ -378,8 +389,10 @@ const Page = () => {
                             strokeWidth="1.5"
                           />
                         </svg>
-                        {data.seller.address}
+                        {truncateString(data.seller.address, 36)}
                       </h6>
+                      <button>Rent</button>
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -394,7 +407,7 @@ const Page = () => {
           <div className="ad11">
             <div className="overlay-container" />
             <div className="banner-text">
-              <h4>
+              <h4 className="pr-1">
                 Experience the allure of Indian fashion with our curated
                 collection
               </h4>

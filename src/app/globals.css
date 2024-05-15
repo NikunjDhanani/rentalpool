@@ -72,14 +72,13 @@ a {
 
 .searchproductsuggust {
   position: absolute;
-  width: 421px;
-  height: auto;
+  min-width: 280px;
+  max-height: 300px;
   top: 86px;
-  left: 503px;
   box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.15);
   background: rgba(255, 255, 255, 1);
   z-index: 10000;
-  padding: 25px;
+  padding: 14px;
   font-size: 14px;
   font-weight: 400;
   line-height: 28px;
@@ -87,6 +86,24 @@ a {
   color: rgba(82, 82, 82, 1);
   overflow: scroll;
   cursor: pointer;
+}
+
+.searchproductsuggustHeader {
+  position: absolute;
+  box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 1);
+  z-index: 10000;
+  padding: 16px;
+  top: 60px;
+  max-height: 350px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: left;
+  color: rgba(82, 82, 82, 1);
+  overflow: scroll;
+  cursor: pointer;
+  min-width: 300px;
 }
 
 #closesearchbtn {
@@ -98,7 +115,7 @@ a {
 
 .headerinput2 {
   position: relative;
-  margin-left: 20px;
+  width: 100%;
 }
 
 #locationicon2 {
@@ -120,7 +137,7 @@ a {
 }
 
 .headerinput2 input {
-  width: 190px;
+  width: 100%;
   height: 50px;
   padding: 13px 15px 13px 50px;
   border-radius: 5px;
@@ -1310,14 +1327,13 @@ a {
 }
 
 /* sidebar */
-
 .offcanvas.offcanvas-end {
   border: none !important;
+  padding: 24px 16px !important;
 }
 
 .mobilenav .headerinput2 input {
   border-color: rgba(217, 217, 217, 1);
-  width: 93%;
   padding-right: 91px;
   height: 45px;
   padding: 6px 11px 6px 50px;
@@ -1344,7 +1360,7 @@ a {
   display: flex;
   align-items: center;
   margin-top: 10px;
-  margin-left: 20px;
+  cursor: pointer;
 }
 
 .headermobilesidebar p {
@@ -1362,10 +1378,6 @@ a {
   margin-right: 5px;
 }
 
-.sidebarmenu {
-  padding: 0px 20px;
-}
-
 .sidebarmenu ul {
   margin: 0;
   padding: 0;
@@ -1373,12 +1385,15 @@ a {
 
 .sidebarmenu ul li {
   list-style-type: none;
-  margin: 12px 3px;
+  margin-bottom: 10px;
   cursor: pointer;
+  font-size: 14px;
+  color: #525252;
+  transition: color 0.3s, font-weight 0.3s;
 }
 
-.sidebarmenu ul:nth-child(1) {
-  margin-bottom: 25px;
+.sidebarmenu ul li:hover {
+  color: black;
 }
 
 .sidebarmenu ul:nth-child(2) li {
@@ -1392,7 +1407,7 @@ a {
 }
 
 .sidebarmenu ul:nth-child(3) li {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 16px;
   text-align: left;
@@ -1488,10 +1503,6 @@ a {
   opacity: 1;
   -webkit-transition: 0.2s;
 } */
-
-.headermobilesidebar {
-  cursor: pointer;
-}
 
 /*modal*/
 .custom-modal .modal-dialog {
@@ -2595,6 +2606,10 @@ p {
 
 @media (max-width:768px) {
 
+  .product-description p {
+    font-size: 14px;
+  }
+
   .mobileheader .headerinput1 input {
     width: 58vw;
   }
@@ -2762,10 +2777,6 @@ p {
   .howitswork p {
     font-size: 12.5px;
     line-height: 20px;
-  }
-
-  .renterwork svg {
-    transform: rotate(90deg) !important;
   }
 
   .whychooseus p {
@@ -2949,10 +2960,13 @@ p {
   /* filter bar */
 
   .filterbar .offcanvas-header {
-    padding-bottom: 0px;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .small_header_canvas {
+    padding: 0 !important;
   }
 
   .filterbar .offcanvas-header svg {
@@ -3343,7 +3357,6 @@ p {
   }
 
   .big-image img {
-    /* width: 100% !important; */
     max-width: 350px !important;
     height: 450px !important;
   }
@@ -4908,6 +4921,10 @@ p {
     justify-content: center;
   }
 
+  .small_header_canvas {
+    padding: 0 !important;
+  }
+
   .filterbar .offcanvas-header svg {
     margin-right: 10px;
     margin-top: -3.3px;
@@ -5138,6 +5155,10 @@ p {
 @media (max-width:576px) {
   .set_location_form {
     width: 97%;
+  }
+
+  .renterwork svg {
+    transform: rotate(90deg) !important;
   }
 
   .set_location_form form {
