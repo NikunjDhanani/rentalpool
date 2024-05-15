@@ -6,7 +6,7 @@ import {
   ClearSubCategory,
   Togglesubcategories,
 } from "@/feature/SubcatagoriesId";
-import { Togglesortby } from "@/feature/Sortproductbyid";
+import { Togglesortby, ClearSortBy } from "@/feature/Sortproductbyid";
 import { useRouter, useSearchParams } from "next/navigation";
 import { TogglesCategories } from "@/feature/CategoryId";
 
@@ -21,16 +21,16 @@ const Sidebar = () => {
     (state) => state.subcatagoriesid.value
   );
   const selectedCategory = useSelector((state) => state.categoryId.value);
-  // const sortby = useSelector((state) => state.SortbyID.value);
+  const sortby = useSelector((state) => state.sortBy.value);
 
   const [categories, setCategories] = useState([]);
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [showAllSubcategories, setShowAllSubcategories] = useState(false);
 
   const sortbycheck = [
-    { id: "flexCheckDefault", label: "Most Popular", defaultChecked: true },
-    { id: "flexCheckdefaultChecked", label: "Low to High" },
-    { id: "flexCheckDefaultHigh", label: "High to Low" },
+    { id: "1", label: "Most Popular" },
+    { id: "2", label: "Low to High" },
+    { id: "3", label: "High to Low" },
   ];
 
   useEffect(() => {
@@ -65,6 +65,7 @@ const Sidebar = () => {
 
   const handleCategorySelect = (category) => {
     dispatch(ClearSubCategory());
+    dispatch(ClearSortBy());
     dispatch(TogglesCategories({ id: category.id, name: category.title }));
   };
 
@@ -74,8 +75,8 @@ const Sidebar = () => {
     );
   };
 
-  const StoresorybyId = (subCategoryID) => {
-    dispatch(Togglesortby(subCategoryID));
+  const StoresorybyId = (subCategoryID, e) => {
+    dispatch(Togglesortby(e.target.checked === true ? subCategoryID : null));
   };
 
   const toggleShowAllCategories = () => {
@@ -261,8 +262,8 @@ const Sidebar = () => {
                     type="checkbox"
                     value=""
                     id={checkbox.id}
-                    defaultChecked={checkbox.defaultChecked}
-                    onClick={() => StoresorybyId(checkbox.id)}
+                    checked={checkbox.id === sortby}
+                    onClick={(e) => StoresorybyId(checkbox.id, e)}
                   />
                   <label className="form-check-label" htmlFor={checkbox.id}>
                     {checkbox.label}

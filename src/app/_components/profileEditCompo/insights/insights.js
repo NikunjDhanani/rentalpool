@@ -28,7 +28,6 @@ const Insights = () => {
         `${process.env.NEXT_PUBLIC_BASE_URL}products/myProducts/?page=${page}`
       );
       const { results, count } = response.data;
-      console.log(results, "resultsresults");
       setProducts(results);
 
       // Calculate the total number of pages based on the count of products and items per page
@@ -58,7 +57,6 @@ const Insights = () => {
       setCurrentPage(page);
     }
   };
-  console.log(products, "products");
   const renderPaginationItems = () => {
     const paginationItems = [];
 

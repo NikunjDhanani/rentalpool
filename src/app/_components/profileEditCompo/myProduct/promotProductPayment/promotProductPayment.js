@@ -27,7 +27,6 @@ const PromotProductPayment = ({
   };
 
   const handlePayment = async (res) => {
-    console.log(res, "resresresresres");
     await loadRazorpay();
     const razorpay = new window.Razorpay({
       key: "rzp_test_wWIFX3u8n8hlHy",
@@ -57,7 +56,6 @@ const PromotProductPayment = ({
     razorpay.open();
   };
   const postVerifyRazorpayOrder = async (response) => {
-    console.log(response, "response");
     try {
       const responce = await axios({
         url: `${process.env.NEXT_PUBLIC_BASE_URL}products/verifyRazorpayPromotePackageOrder/`,

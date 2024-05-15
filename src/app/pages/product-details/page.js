@@ -93,7 +93,6 @@ const ProductDetailPage = () => {
             throw new Error("Failed to fetch data");
           }
           const anyProductsData = await anyProductsResponse.json();
-          console.log("ABCD", anyProductsData);
           setFilteredProducts(
             anyProductsData.results
               .filter((res) => +res.id !== +ProductId)

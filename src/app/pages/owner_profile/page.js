@@ -181,7 +181,6 @@ const Oprofile = () => {
       });
 
       if (res?.status === 201) {
-        console.log("res", res);
         toast.success("Seller Reported");
       }
     } catch (error) {
@@ -207,7 +206,6 @@ const Oprofile = () => {
       });
 
       if (res?.status === 201) {
-        console.log("res", res);
         toast.success("Seller Blocked");
       }
     } catch (error) {

@@ -6,11 +6,14 @@ import { useEffect, useRef, useState } from "react";
 import LoginPopup from "./LoginPopup";
 import OtpPopup from "./OtpPopup";
 import SignupPopup from "./SignupPopup";
+import { ClearSubCategory, Togglesubcategories } from "@/feature/SubcatagoriesId";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
   const router = useRouter();
   const autocompleteRef = useRef(null);
   const autocompleteRef2 = useRef(null);
+  const dispatch = useDispatch()
   const [activeMenuItem, setActiveMenuItem] = useState("");
   const [isSticky, setIsSticky] = useState(false);
   const [openClass, setOpenClass] = useState(false);
@@ -249,20 +252,21 @@ const Header = () => {
     }
   };
 
-  const handleSuggestionClick = (title) => {
-    setSearchQuery(title);
+  const handleSuggestionClick = (product) => {
+    setSearchQuery(product.title);
     setShowSuggestions(false);
-    const query = encodeURIComponent(title);
-    router.push(`/pages/result-page?query=${query}`);
+    const query = encodeURIComponent(product.title);
+    const categoryId = encodeURIComponent(product?.category?.id)
+      router.push(`/pages/result-page?query=${query}&&categoryId=${categoryId}`);
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      // Redirect to result page when Enter key is pressed
-      router.push(`/result-page?query=${encodeURIComponent(searchQuery)}`);
-      setShowSuggestions(false);
-    }
-  };
+  // const handleKeyDown = (e) => {
+  //   if (e.key === "Enter") {
+  //     // Redirect to result page when Enter key is pressed
+  //     router.push(`/result-page?query=${encodeURIComponent(searchQuery)}`);
+  //     setShowSuggestions(false);
+  //   }
+  // };
 
   const parseAddress = (formattedAddress) => {
     const addressComponents = formattedAddress.split(",");
@@ -282,9 +286,13 @@ const Header = () => {
     return { city, state };
   };
 
-  const categoriesPage = (items) => {
-    const query = encodeURIComponent(items);
-    router.push(`/pages/product-page?query=${query}`);
+  const categoriesPage = (items, catId) => {
+    const query = encodeURIComponent(items.title);
+    dispatch(ClearSubCategory());
+    dispatch(
+      Togglesubcategories({ id: items.id, name: items.title })
+    );
+    router.push(`/pages/product-page?query=${query}&&categoryId=${catId}`);
   };
 
   function ChatBoxIcon() {
@@ -369,7 +377,7 @@ const Header = () => {
                   placeholder="Search for Products"
                   value={searchQuery}
                   onChange={handleInputChange2}
-                  onKeyDown={handleKeyDown}
+                  // onKeyDown={handleKeyDown}
                 />
 
                 <svg
@@ -416,7 +424,7 @@ const Header = () => {
                         .map((product) => (
                           <div
                             key={product.id}
-                            onClick={() => handleSuggestionClick(product.title)}
+                            onClick={() => handleSuggestionClick(product)}
                           >
                             {product.title}
                           </div>
@@ -784,7 +792,6 @@ const Header = () => {
                           {category.title}
                         </li>
                       ))}
-
                       {selectedCategory && (
                         <ul className="profile-menu2">
                           {categories
@@ -795,7 +802,7 @@ const Header = () => {
                               <li
                                 key={subCategory.id}
                                 onClick={() =>
-                                  categoriesPage(subCategory.title)
+                                  categoriesPage(subCategory, selectedCategory)
                                 }
                               >
                                 {" "}
@@ -1137,7 +1144,7 @@ const Header = () => {
                 placeholder="Search for Products"
                 value={searchQuery}
                 onChange={handleInputChange2}
-                onKeyDown={handleKeyDown}
+                // onKeyDown={handleKeyDown}
               ></input>
               <svg
                 id="closesearchbtn"
@@ -1183,7 +1190,7 @@ const Header = () => {
                       .map((product) => (
                         <div
                           key={product.id}
-                          onClick={() => handleSuggestionClick(product.title)}
+                          onClick={() => handleSuggestionClick(product)}
                         >
                           {product.title}
                         </div>
