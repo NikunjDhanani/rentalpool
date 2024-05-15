@@ -810,9 +810,9 @@ const Header = () => {
               </div>
 
               <div className="Hmenu">
-                <Link href="/pages/how-it-work">
-                  <p className={activeMenuItem === '/pages/how-it-work' ? 'active' : ''}>
-                    How it works
+                <Link href="" scroll={false}>
+                  <p>
+                    How it work
                   </p>
                 </Link>
               </div>
@@ -826,7 +826,7 @@ const Header = () => {
               <div className="Hmenu">
                 <Link href="/pages/contact-us">
                   <p className={activeMenuItem === '/pages/contact-us' ? 'active' : ''}>
-                    Contact Us
+                    Contact us
                   </p>
                 </Link>
               </div>
@@ -1091,9 +1091,15 @@ const Header = () => {
             </ul>
             <hr />
             <ul>
-              <Link href="/pages/how-it-work"><li data-bs-dismiss="offcanvas" aria-label="Close">How its work</li></Link>
-              <Link href="/pages/about-us"><li data-bs-dismiss="offcanvas" aria-label="Close">About Us</li></Link>
-              <Link href="/pages/contact-us"><li data-bs-dismiss="offcanvas" aria-label="Close">Contact Us</li></Link>
+              <Link href="" scroll={false}>
+                <li data-bs-dismiss="offcanvas" aria-label="Close">How it work</li>
+              </Link>
+              <Link href="/pages/about-us">
+                <li data-bs-dismiss="offcanvas" aria-label="Close">About us</li>
+              </Link>
+              <Link href="/pages/contact-us">
+                <li data-bs-dismiss="offcanvas" aria-label="Close">Contact us</li>
+              </Link>
             </ul>
           </div>
         </div>

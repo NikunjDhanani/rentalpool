@@ -57,7 +57,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container-lg">
       <div className="contactus-container">
         <h2 className="contactus-heading">Contact Us</h2>
         <hr className="contact-btm-hr" />

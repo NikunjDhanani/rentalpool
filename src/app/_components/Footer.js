@@ -19,7 +19,7 @@ const Footer = () => {
             <h3>Useful Links</h3>
             <Link href="/pages/about-us"><p>About Us</p></Link>
             <Link href="/pages/contact-us"><p>Contact Us</p></Link>
-            <Link href="/pages/how-it-work"><p>How Its Work</p></Link>
+            <Link href=""><p>How Its Work</p></Link>
             <p>Terms of Service</p>
             <p>Privacy Policy</p>
           </div>

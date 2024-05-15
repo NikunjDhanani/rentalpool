@@ -159,7 +159,7 @@ const PersonalProfileEdit = () => {
                   id="personal"
                 >
                   <div className={styles.user_image_container}>
-                    <Image
+                    <img
                       src={
                         formData.profileImage
                           ? typeof formData?.profileImage === "string"
@@ -168,19 +168,15 @@ const PersonalProfileEdit = () => {
                           : "/assets/profileEdit/profile.png"
                       }
                       alt="User Profile"
-                      height={80}
-                      width={80}
                     />
                     <label
                       htmlFor="profileImageUpload"
                       className={styles.imageUploadLabel}
                     >
-                      <Image
+                      <img
                         className={styles.inputFileImgDiv}
                         src="/assets/profileEdit/add_circle.svg"
                         alt="Add Profile"
-                        height={20}
-                        width={20}
                       />
                     </label>
                     <input

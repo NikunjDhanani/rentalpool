@@ -307,7 +307,7 @@ a {
 }
 
 .listitem p {
- font-weight: 500;
+  font-weight: 500;
 }
 
 .listitem:hover p {
@@ -1032,8 +1032,8 @@ a {
 }
 
 .renterwork {
-  width: 295px;
-  height: 271px;
+  width: 288px;
+  height: 288px;
   border-radius: 50px;
   display: flex;
   align-items: center;
@@ -1043,43 +1043,47 @@ a {
 }
 
 .renterdiv {
-  margin-top: 26px;
+  margin-top: 10px;
+  flex-wrap: wrap !important;
 }
 
 .workitem {
-  width: 240.85px;
-  height: 240.07px;
+  width: 234px;
+  height: 234px;
   background: rgba(247, 247, 247, 1);
   border-radius: 40px;
   box-shadow: rgba(0, 0, 0, 0.45) 25px 25px 20px -20px;
-}
-
-.workitem {
   text-align: center;
-  padding: 10px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: initial;
   flex-direction: column;
-  padding-top: 25px;
+  padding: 18px 10px 10px 10px;
 }
 
-.workitem img {
-  margin-bottom: 10px;
-  /* margin-top: 5px;  */
+.work_item_heading {
+  font-size: 16px !important;
+  font-weight: 500;
+  color: #525252;
+  margin-top: 8px;
 }
 
-.workitem p {
-  font-size: 12px;
+.work_item_content {
+  font-size: 12px !important;
   font-weight: 400;
-  line-height: 16px;
   text-align: center;
+  margin-bottom: 0 !important;
+  line-height: 18px !important;
+  color: #525252;
 }
 
 #firstrentaldiv {
   position: absolute;
   top: 0;
-  left: 6px;
+  left: 4px;
+  width: 292px !important;
+  height: 292px !important;
 }
 
 /*  loadmore */
@@ -2760,26 +2764,8 @@ p {
     line-height: 20px;
   }
 
-  .renterdiv {
-    flex-direction: column;
-  }
-
-  .workitem h5 {
-    font-size: 17px;
-  }
-
-  .workitem img {
-    margin-bottom: 5px;
-  }
-
   .renterwork svg {
     transform: rotate(90deg) !important;
-  }
-
-  #firstrentaldiv {
-    position: absolute;
-    top: 6px;
-    left: -2px;
   }
 
   .whychooseus p {
@@ -3217,12 +3203,6 @@ p {
 
   .productinquirymobile {
     display: block;
-  }
-
-  .contactus-container {
-    padding: 10px !important;
-    border: none !important;
-    margin-top: 0 !important;
   }
 
   .contact-btm-hr {
@@ -4255,9 +4235,18 @@ p {
 .contactus-container {
   border: 1px solid #e8e8ed;
   margin: 25px 0px;
-  padding: 35px;
   border-radius: 10px;
   padding: 30px 105px;
+}
+
+@media (max-width:768px) {
+
+  .contactus-container {
+    padding: 18px 10px !important;
+    border: none !important;
+    margin: 0 !important;
+  }
+
 }
 
 .callus-div,

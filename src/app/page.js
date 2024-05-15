@@ -382,7 +382,7 @@ const Page = () => {
         </div>
       </div>
       {/* Section How Its Works */}
-      {/* <div className="container-lg">
+      <div className="container-lg">
         <div className=" howitswork">
           <div className="d-flex align-items-center justify-content-center flex-column">
             <h1>Let&rsquo;s see How Its Works</h1>
@@ -412,7 +412,7 @@ const Page = () => {
             </div>
             <div>
               {activeButton === 1 && (
-                <div className="renterdiv d-flex align-items-center justify-content-center gap-5">
+                <div className="renterdiv d-flex align-items-center justify-content-center gap-3">
                   <div className="renterwork animate__animated animate__flipInY">
                     <svg
                       id="firstrentaldiv"
@@ -434,8 +434,8 @@ const Page = () => {
                         height={50}
                         alt="mask2"
                       />
-                      <h5>Select an Item</h5>
-                      <p>
+                      <p className="work_item_heading">Select an Item</p>
+                      <p className="work_item_content">
                         Browse the extensive collection of items available for
                         rent. Use our smart search and filters and choose the item
                         you want to rent and view its details, photos, and
@@ -470,8 +470,8 @@ const Page = () => {
                         height={50}
                         alt="mask3"
                       />
-                      <h5>Send Inquiry</h5>
-                      <p>
+                      <p className="work_item_heading">Send Inquiry</p>
+                      <p className="work_item_content">
                         Send a rental request to the owner by checking the
                         item&rsquo;s availability on the calendar and select the
                         dates when you need to rent the item.
@@ -505,8 +505,8 @@ const Page = () => {
                         height={50}
                         alt="mask4"
                       />
-                      <h5>Chat with Owner</h5>
-                      <p>
+                      <p className="work_item_heading">Chat with Owner</p>
+                      <p className="work_item_content">
                         Discuss rental duration, pricing, and any other terms with
                         owners in the chat. Reach an agreement that suits both the
                         parties and Make a deal as per your convenience.
@@ -540,8 +540,8 @@ const Page = () => {
                         height={50}
                         alt="mask"
                       />
-                      <h5>Enjoy Renting</h5>
-                      <p>
+                      <p className="work_item_heading">Enjoy Renting</p>
+                      <p className="work_item_content">
                         Pickup the item, use it as your own, and when you&apos;re
                         done, return it as per deal with owner.
                       </p>
@@ -574,8 +574,8 @@ const Page = () => {
                         height={50}
                         alt="mask6"
                       />
-                      <h5>List an Item</h5>
-                      <p>
+                      <p className="work_item_heading">List an Item</p>
+                      <p className="work_item_content">
                         List your items by uploading clear photos, adding a
                         detailed description, price for renting, rentals’ rules,
                         pickup location, and more other relevant details.
@@ -609,8 +609,8 @@ const Page = () => {
                         height={50}
                         alt="mask7"
                       />
-                      <h5>Receive Requests</h5>
-                      <p>
+                      <p className="work_item_heading">Receive Requests</p>
+                      <p className="work_item_content">
                         Once your product is listed, you&rsquo;ll start receiving
                         rental requests from interested renters. Notifications
                         will keep you informed about new requests.
@@ -644,8 +644,8 @@ const Page = () => {
                         height={50}
                         alt="mask4"
                       />
-                      <h5>Chat with Renter</h5>
-                      <p>
+                      <p className="work_item_heading">Chat with Renter</p>
+                      <p className="work_item_content">
                         Discuss rental duration, pricing, and any other terms with
                         renters in the chat. Reach an agreement that suits both
                         parties and make a deal as per your convenience.
@@ -679,8 +679,8 @@ const Page = () => {
                         height={50}
                         alt="mask5"
                       />
-                      <h5>Enjoy Earning</h5>
-                      <p>
+                      <p className="work_item_heading">Enjoy Earning</p>
+                      <p className="work_item_content">
                         As per the deal, rent your stuff, collect the payment from
                         renters, and enjoy your earnings.
                       </p>
@@ -691,7 +691,7 @@ const Page = () => {
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
       {/* Section why choose us */}
       <div className="whychooseus container-lg mt-5">
         <h1 className="mb-3">Why choose us?</h1>
