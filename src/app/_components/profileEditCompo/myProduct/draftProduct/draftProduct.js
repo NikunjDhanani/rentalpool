@@ -113,12 +113,10 @@ const DraftProduct = () => {
             toast.success("Product delete sucessfully");
           }
         }
-        console.log(response, "sdfjsdfhsdfhsdf");
       })
       .catch((err) => {
         console.error(err);
       });
-    console.log("jndfjnfd");
   };
 
   return (

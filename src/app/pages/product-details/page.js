@@ -11,6 +11,7 @@ import Swiper from "swiper";
 import * as Yup from "yup";
 import DefaultImg from "../../../../public/assets/product/defaultimg.png";
 import styles from "./product_details.module.css";
+import axios from "axios";
 
 const ProductDetailPage = () => {
   const router = useRouter();
@@ -93,7 +94,6 @@ const ProductDetailPage = () => {
             throw new Error("Failed to fetch data");
           }
           const anyProductsData = await anyProductsResponse.json();
-          console.log("ABCD", anyProductsData);
           setFilteredProducts(
             anyProductsData.results
               .filter((res) => +res.id !== +ProductId)
@@ -224,10 +224,40 @@ const ProductDetailPage = () => {
         console.error("Error copying to clipboard:", error);
       });
   };
-
-  const handleAddToFavroutes = () => {
-
-  }
+  const [storeId, setStoreId] = useState();
+  const handleAddToFavroutes = async (id) => {
+    setStoreId(id);
+    if (id) {
+      try {
+        await axios({
+          url: `${process.env.NEXT_PUBLIC_BASE_URL}products/UnfavouriteProduct/${id}/`,
+          method: "GET",
+        });
+        // setSelectedProducts(selectedProducts.filter((id) => id !== productId));
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      try {
+        const formData = new FormData();
+        formData.append("insight_type ", 3);
+        formData.append("product", id);
+        await axios({
+          url: `${process.env.NEXT_PUBLIC_BASE_URL}products/productInsights/`,
+          method: "POST",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Token ${authToken}`,
+          },
+          data: formData,
+        });
+        // setSelectedProducts([...selectedProducts, productId]);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    console.log(storeId, id, "jfjsdfjsdfs");
+  };
 
   return (
     <main>
@@ -319,7 +349,7 @@ const ProductDetailPage = () => {
                     </div>
                   </div>
                   <div className="product-like-share">
-                    <span onClick={() => handleAddToFavroutes()}>
+                    <span onClick={() => handleAddToFavroutes(product.id)}>
                       <svg
                         className="product-like-share-icon"
                         xmlns="http://www.w3.org/2000/svg"

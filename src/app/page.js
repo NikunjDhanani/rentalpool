@@ -65,6 +65,7 @@ const Page = () => {
   }, []);
 
   const getHeartFillColor = (productId) => {
+    console.log(productId, "selectedProducts");
     return selectedProducts.includes(productId) ? "red" : "currentColor";
   };
 
@@ -98,15 +99,44 @@ const Page = () => {
       };
     }
   }, [calculateDisplayedProducts, setDisplayedProductsCount]);
+  const authToken = localStorage.getItem("authToken");
 
   let callProductHandler = true;
-  const toggleHeartColor = (productId) => {
+  const toggleHeartColor = async (productId) => {
     if (selectedProducts.includes(productId)) {
-      setSelectedProducts(selectedProducts.filter((id) => id !== productId));
+      try {
+        await axios({
+          url: `${process.env.NEXT_PUBLIC_BASE_URL}products/UnfavouriteProduct/${productId}/`,
+          method: "GET",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Token ${authToken}`,
+          },
+        });
+        // setSelectedProducts(selectedProducts.filter((id) => id !== productId));
+      } catch (error) {
+        console.error(error);
+      }
     } else {
-      setSelectedProducts([...selectedProducts, productId]);
+      try {
+        const formData = new FormData();
+        formData.append("insight_type ", 3);
+        formData.append("product", productId);
+        await axios({
+          url: `${process.env.NEXT_PUBLIC_BASE_URL}products/productInsights/`,
+          method: "POST",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Token ${authToken}`,
+          },
+          data: formData,
+        });
+        // setSelectedProducts([...selectedProducts, productId]);
+      } catch (error) {
+        console.error(error);
+      }
     }
-    callProductHandler = false; // Set to false to prevent productHandler from being called
+    // callProductHandler = false; // Set to false to prevent productHandler from being called
   };
 
   const productHandler = (item) => {
@@ -149,7 +179,7 @@ const Page = () => {
       },
     })
       .then((response) => {
-        console.log(response, 'responseresponse')
+        console.log(response, "responseresponse");
       })
       .catch((err) => {
         console.error("Error updating profile:", err);
@@ -174,9 +204,10 @@ const Page = () => {
                 <br />
                 with RentalsPool
               </div>
-              <div className="rentalspool_details_main_page">Get what you need, Rent what you have, All through Rentalspool!</div>
+              <div className="rentalspool_details_main_page">
+                Get what you need, Rent what you have, All through Rentalspool!
+              </div>
               <button className="start_now_btn bg-primary">
-                Start Now{" "}
                 <svg
                   width="24"
                   height="24"
@@ -278,9 +309,14 @@ const Page = () => {
         </div>
         <div className="productMainCard d-flex align-items-center justify-content-left flex-wrap mt-3">
           {products?.length === 0 ? (
-            <p className="no-product-found">Oops! It seems we couldn&apos;t find a matching product near by your location. Please stay connected with RentalsPool to make it better.</p>
+            <p className="no-product-found">
+              Oops! It seems we couldn&apos;t find a matching product near by
+              your location. Please stay connected with RentalsPool to make it
+              better.
+            </p>
           ) : (
-            products && products.slice(0, displayedProductsCount).map((data) => (
+            products &&
+            products.slice(0, displayedProductsCount).map((data) => (
               <div
                 key={data.id}
                 className="product_card"
@@ -437,8 +473,8 @@ const Page = () => {
                       <p className="work_item_heading">Select an Item</p>
                       <p className="work_item_content">
                         Browse the extensive collection of items available for
-                        rent. Use our smart search and filters and choose the item
-                        you want to rent and view its details, photos, and
+                        rent. Use our smart search and filters and choose the
+                        item you want to rent and view its details, photos, and
                         pricing.
                       </p>
                     </div>
@@ -507,9 +543,10 @@ const Page = () => {
                       />
                       <p className="work_item_heading">Chat with Owner</p>
                       <p className="work_item_content">
-                        Discuss rental duration, pricing, and any other terms with
-                        owners in the chat. Reach an agreement that suits both the
-                        parties and Make a deal as per your convenience.
+                        Discuss rental duration, pricing, and any other terms
+                        with owners in the chat. Reach an agreement that suits
+                        both the parties and Make a deal as per your
+                        convenience.
                       </p>
                     </div>
                   </div>
@@ -542,8 +579,8 @@ const Page = () => {
                       />
                       <p className="work_item_heading">Enjoy Renting</p>
                       <p className="work_item_content">
-                        Pickup the item, use it as your own, and when you&apos;re
-                        done, return it as per deal with owner.
+                        Pickup the item, use it as your own, and when
+                        you&apos;re done, return it as per deal with owner.
                       </p>
                     </div>
                   </div>
@@ -611,9 +648,9 @@ const Page = () => {
                       />
                       <p className="work_item_heading">Receive Requests</p>
                       <p className="work_item_content">
-                        Once your product is listed, you&rsquo;ll start receiving
-                        rental requests from interested renters. Notifications
-                        will keep you informed about new requests.
+                        Once your product is listed, you&rsquo;ll start
+                        receiving rental requests from interested renters.
+                        Notifications will keep you informed about new requests.
                       </p>
                     </div>
                   </div>
@@ -646,9 +683,9 @@ const Page = () => {
                       />
                       <p className="work_item_heading">Chat with Renter</p>
                       <p className="work_item_content">
-                        Discuss rental duration, pricing, and any other terms with
-                        renters in the chat. Reach an agreement that suits both
-                        parties and make a deal as per your convenience.
+                        Discuss rental duration, pricing, and any other terms
+                        with renters in the chat. Reach an agreement that suits
+                        both parties and make a deal as per your convenience.
                       </p>
                     </div>
                   </div>
@@ -681,8 +718,8 @@ const Page = () => {
                       />
                       <p className="work_item_heading">Enjoy Earning</p>
                       <p className="work_item_content">
-                        As per the deal, rent your stuff, collect the payment from
-                        renters, and enjoy your earnings.
+                        As per the deal, rent your stuff, collect the payment
+                        from renters, and enjoy your earnings.
                       </p>
                     </div>
                   </div>

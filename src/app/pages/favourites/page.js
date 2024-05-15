@@ -15,8 +15,18 @@ const Page = () => {
   const isTablet = useMediaQuery("(max-width: 1200px)");
   const itemsPerPage = isTablet ? 8 : 12;
 
-  const handleCancelProduct = (productId) => {
-    setProductsData(productsData.filter((product) => product.id !== productId));
+  const handleCancelProduct = async (productId) => {
+    try {
+      const data = await axios({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}products/UnfavouriteProduct/${productId}/`,
+        method: "GET",
+      });
+      if (data.status === 200) {
+        fetchData();
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // Calculate total pages based on total records and items per page
@@ -146,7 +156,7 @@ const Page = () => {
   const currentItems = Array.isArray(productsData)
     ? productsData.slice(startIndex, endIndex)
     : [];
-
+  console.log(currentItems, productsData, "sdjfshdfdsfdf");
   return (
     <main>
       <div className={`${styles.my_favorites}`}>
@@ -156,7 +166,7 @@ const Page = () => {
             {totalRecords !== 0 ? (
               <>
                 <div className="row">
-                  {currentItems.map((product) => (
+                  {productsData.results.map((product) => (
                     <div
                       key={product.id}
                       className={`col-xl-3 col-lg-3 col-6 ${styles.product_card}`}
@@ -170,16 +180,16 @@ const Page = () => {
                         >
                           <Image src={cancel_btn} alt="button" />
                         </button>
-                        <Image
+                        <img
                           className={`${styles.product_image}`}
-                          src={product_image}
+                          src={product.primary_image}
                           alt="button"
                         />
                         <p className={`mb-0 ${styles.product_name}`}>
-                          {product.name}
+                          {product.title}
                         </p>
                         <p className={`${styles.product_price}`}>
-                          Rs {product.price}
+                          Rs {product.rent_per_day}
                           <sub>/days</sub>
                         </p>
                         <button className={`${styles.inquiry_btn}`}>
@@ -201,7 +211,9 @@ const Page = () => {
                 </div>
               </>
             ) : (
-              <h4>No Product Available in Favorites</h4>
+              <div className="text-center my-4">
+                No Product Available in Favorites
+              </div>
             )}
           </div>
         </div>
