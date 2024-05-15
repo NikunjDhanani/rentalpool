@@ -179,7 +179,7 @@ const Page = () => {
       },
     })
       .then((response) => {
-        console.log(response, "responseresponse");
+        // console.log(response, 'responseresponse')
       })
       .catch((err) => {
         console.error("Error updating profile:", err);
