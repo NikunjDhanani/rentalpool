@@ -148,8 +148,15 @@ const Oprofile = () => {
   const handleButtonClick = () => {
     setModalOpen(true);
   };
+  const [currentUrl, setCurrentUrl] = useState(null);
+  useEffect(() => {
+    if (sellerDetails) {
+      setCurrentUrl(
+        `https://app.rentalspool.com/profile?id=${sellerDetails.id}`
+      );
+    }
+  }, [sellerDetails]);
 
-  const currentUrl = window.location.href;
   const handleCopyToClipboard = () => {
     navigator.clipboard
       .writeText(currentUrl)
@@ -202,7 +209,7 @@ const Oprofile = () => {
         data: {
           reasons: "null",
           user: +userId,
-        },  
+        },
       });
 
       if (res?.status === 201) {
@@ -219,7 +226,12 @@ const Oprofile = () => {
         <div className="p-4">
           <p>URL: {currentUrl}</p>
           <button
-            className={`text-center w-100 d-sm-block mb-lg-0 mb-3 d-none ${styles.share_btn}`}
+            className={`text-center w-100 d-sm-block mb-lg-0 mb-3 d-none`}
+            style={{
+              background: "#ffffff",
+              border: "1px solid #046BFB",
+              color: "#046BFB",
+            }}
             onClick={handleCopyToClipboard}
           >
             Copy URL

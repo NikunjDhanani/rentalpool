@@ -97,24 +97,21 @@ const LiveProduct = () => {
   };
 
   const handleStatusUpdate = (status) => {
+    setLoading(true);
     axios({
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}products/myProducts/`,
-      method: "POST",
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}products/accessSingleProduct/${status}/`,
+      method: "DELETE",
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Token ${authToken}`,
       },
-      data: {
-        product_status: status,
-      },
     })
       .then((response) => {
-        if (response.status === 200) {
-          if (status === "Removed") {
-            toast.success("Product delete sucessfully");
-          } else if (status === "Removed") {
-            toast.success("Product delete sucessfully");
-          }
+        console.log(response, "response");
+        if (response.status === 204) {
+          loadProducts(1);
+          toast.success("Product delete sucessfully");
+          setLoading(false);
         }
       })
       .catch((err) => {
@@ -209,7 +206,7 @@ const LiveProduct = () => {
                                   <button
                                     className={styles.deleteBtn}
                                     onClick={() =>
-                                      handleStatusUpdate("Removed")
+                                      handleStatusUpdate(product.id)
                                     }
                                   >
                                     Delete

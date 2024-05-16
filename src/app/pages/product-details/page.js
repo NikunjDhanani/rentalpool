@@ -27,7 +27,7 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     if (localStorage) {
-      setLocalStorageData(localStorage.getItem("authToken"))
+      setLocalStorageData(localStorage.getItem("authToken"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -219,15 +219,14 @@ const ProductDetailPage = () => {
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setCurrentUrl(window.location.href);
+    if (product) {
+      setCurrentUrl(`https://app.rentalspool.com/product?id=${product.id}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  }, [product]);
   const handleCopyToClipboard = () => {
     navigator.clipboard
-      .writeText(currentUrl)
+      .writeText(`https://app.rentalspool.com/product?id=${product.id}`)
       .then(() => {
         // Clipboard successfully copied
         setModalOpen(false); // Close the modal
@@ -864,7 +863,9 @@ const ProductDetailPage = () => {
                     </svg>
                   </div>
                   <div className="product-description">
-                    <p>{capitalizeFirstLetter(truncateString(data?.title, 15))}</p>
+                    <p>
+                      {capitalizeFirstLetter(truncateString(data?.title, 15))}
+                    </p>
                     <div className="prices">
                       <h5>
                         <span>Rs {data.rent_per_day}</span>/day

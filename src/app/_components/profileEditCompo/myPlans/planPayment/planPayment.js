@@ -25,7 +25,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
   const authToken = localStorage.getItem("authToken");
   const totalPayAmount =
     (planPaymentData.original_price -
-      (rpCoinCheck && rpCoins) -
+      (rpCoinCheck && rpCoins.amount_to_reduce) -
       (planPaymentData.original_price - planPaymentData.current_price) -
       (selectedPromoCode.charge ?? userPromoCodeAmount)) *
     100;
@@ -105,7 +105,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
       },
     })
       .then((res) => {
-        setRpCoins(res.data.coins);
+        setRpCoins(res.data);
       })
       .catch((err) => {
         console.error(err);
@@ -220,6 +220,24 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
     setOpenModal(false);
   };
 
+  const handleDetalisCoin = (e) => {
+    axios({
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}users/checkCoins/`,
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Token ${authToken}`,
+      },
+    })
+      .then((res) => {
+        setRpCoins(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    setRpCoinCheck(e.target.checked);
+  };
+
   return (
     <>
       <div className={styles.my_account_tab_content_container}>
@@ -231,7 +249,12 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   onClick={() => setShowPlanPayment(false)}
                   className={styles.backBtn}
                 >
-                  <Image src="/assets/profileEdit/back.png" alt="back" height={8} width={13} />{" "}
+                  <Image
+                    src="/assets/profileEdit/back.png"
+                    alt="back"
+                    height={8}
+                    width={13}
+                  />{" "}
                   Back
                 </button>
               </div>
@@ -303,10 +326,11 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   <div className={styles.couponInputCheckboxDiv}>
                     <input
                       type="checkbox"
-                      onChange={(e) => setRpCoinCheck(e.target.checked)}
+                      onChange={(e) => handleDetalisCoin(e)}
                     />
                     <label>
-                      Use my RP Coins<p>Available : {rpCoins}</p>
+                      Use my RP Coins
+                      <p>Available : {rpCoins.coins}</p>
                     </label>
                   </div>
                 </div>
@@ -329,7 +353,7 @@ const PlanPayment = ({ planPaymentData, setShowPlanPayment }) => {
                   </div>
                   <div className={styles.coinTotalTitleDiv}>
                     <p>RP Coins</p>
-                    <p>{rpCoinCheck ? rpCoins : 0}</p>
+                    <p>{rpCoinCheck ? rpCoins.amount_to_reduce : 0}</p>
                   </div>
                   <div className={styles.coinTotalDiv}>
                     <p>Total</p>

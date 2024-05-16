@@ -140,8 +140,8 @@ const MyPlans = ({ setPlanPaymentData, setShowPlanPayment }) => {
                     index % 3 === 0
                       ? "#F1F7FF"
                       : index % 3 === 1
-                        ? "#FFECDD"
-                        : "#E8E8ED";
+                      ? "#FFECDD"
+                      : "#E8E8ED";
 
                   return (
                     <div
