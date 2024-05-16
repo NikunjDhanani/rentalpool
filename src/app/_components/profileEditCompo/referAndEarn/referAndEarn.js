@@ -47,7 +47,6 @@ const ReferAndEarn = () => {
   useEffect(() => {
     getCouponCode();
   }, []);
-  console.log(coinInfo, "coinInfo");
   return (
     <div className={styles.my_account_tab_content_container}>
       <div className={styles.edit_profile_container}>
@@ -75,7 +74,7 @@ const ReferAndEarn = () => {
                   </div>
                   <p className={styles.coinDescription}>
                     By using your referral code, your friend gets{" "}
-                    {coinInfo.coins_allocated_to_new_user} RP coins. (1 RP Coin
+                    {coinInfo?.coins_allocated_to_new_user} RP coins. (1 RP Coin
                     = 1 INR)
                   </p>
                 </div>
@@ -93,7 +92,7 @@ const ReferAndEarn = () => {
                     />
                   </div>
                   <p className={styles.coinDescription}>
-                    You also get {coinInfo.coins_allocated_to_existing_user} RP
+                    You also get {coinInfo?.coins_allocated_to_existing_user} RP
                     coins. (1 RP Coin = 1 INR)
                   </p>
                 </div>

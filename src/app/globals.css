@@ -4198,7 +4198,7 @@ p {
 .no-review-yet {
   color: #757575;
   font: 400 16px / 24px Poppins, -apple-system, Roboto, Helvetica, sans-serif;
-  text-align: left;
+  text-align: center;
   color: #525252;
   margin: 15px 30px;
 }

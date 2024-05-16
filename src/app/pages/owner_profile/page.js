@@ -14,7 +14,7 @@ import more_btn from "../../../../public/assets/icons/More.svg";
 // import share_btn from "../../assets/Share.svg";
 // import user_image from "/assets/product/defaultimg.png";
 import followers from "../../../../public/assets/icons/Users.svg";
-import { Button, Modal, Pagination } from "react-bootstrap";
+import { Modal, Pagination } from "react-bootstrap";
 import { useMediaQuery } from "../../_components/MediaQueryHook";
 import OwnerProfileService from "@/service/owener_profile.service";
 import DefaultImg from "../../../../public/assets/product/defaultimg.png";
@@ -25,6 +25,7 @@ const Oprofile = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const ownerId = searchParams.get("query");
+  const profile = localStorage.getItem("profile");
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -105,10 +106,9 @@ const Oprofile = () => {
     }
   };
 
-  const handleFollowRequest = async () => {
-    const authToken = localStorage.getItem("authToken");
-    const profile = localStorage.getItem("profile");
-
+  const handleFollowRequest = async (id) => {
+    const authToken =
+      localStorage.getItem("authToken") && localStorage.getItem("authToken");
     try {
       const response = await axios({
         url: `${process.env.NEXT_PUBLIC_BASE_URL}users/sendFollowRequest/`,
@@ -118,7 +118,7 @@ const Oprofile = () => {
           Authorization: `Token ${authToken}`,
         },
         data: {
-          followed_user: JSON.parse(profile).id,
+          followed_user: id,
         },
       });
       if (response.status === 201) {
@@ -171,8 +171,8 @@ const Oprofile = () => {
   };
 
   const handleReportOwner = async () => {
-    const authToken = localStorage.getItem("authToken");
-
+    const authToken =
+      localStorage.getItem("authToken") && localStorage.getItem("authToken");
     const userId =
       localStorage.getItem("profile") &&
       JSON.parse(localStorage.getItem("profile"))?.id;
@@ -199,8 +199,8 @@ const Oprofile = () => {
   };
 
   const handleBlockOwner = async () => {
-    const authToken = localStorage.getItem("authToken");
-
+    const authToken =
+      localStorage.getItem("authToken") && localStorage.getItem("authToken");
     const userId =
       localStorage.getItem("profile") &&
       JSON.parse(localStorage.getItem("profile"))?.id;
@@ -352,7 +352,7 @@ const Oprofile = () => {
                 >
                   {!sellerDetails.iFollowed ? (
                     <button
-                      onClick={() => handleFollowRequest()}
+                      onClick={() => handleFollowRequest(sellerDetails.id)}
                       className={`text-center text-white border-0 w-100  mb-lg-0 mb-3 ${styles.follower_btn}`}
                     >
                       Follow
@@ -416,9 +416,31 @@ const Oprofile = () => {
                               />
                             </div>
                             <p className={`pt-3 ${styles.cardText}`}>
-                              {item.title.length > 20
-                                ? item.title.slice(0, 20) + "..."
+                              {item.title.length > 19
+                                ? item.title.slice(0, 19) + "..."
                                 : item.title}
+                              {item.is_promoted && (
+                                <svg
+                                  style={{
+                                    marginLeft: "5px",
+                                    marginBottom: "5px",
+                                  }}
+                                  width="20"
+                                  height="20"
+                                  viewBox="0 0 20 20"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M18.6577 1.49454C18.6505 1.45999 18.6337 1.42819 18.6092 1.40287C18.5846 1.37755 18.5533 1.35975 18.519 1.35157C16.2311 0.792193 10.9448 2.78555 8.08073 5.64844C7.5699 6.15514 7.1042 6.7054 6.68893 7.29297C5.80573 7.21485 4.92252 7.28008 4.16979 7.60821C2.04596 8.54297 1.4276 10.982 1.25534 12.0313C1.24556 12.0887 1.24925 12.1476 1.2661 12.2034C1.28295 12.2591 1.31252 12.3102 1.35246 12.3526C1.3924 12.395 1.44164 12.4276 1.49629 12.4477C1.55095 12.4679 1.60954 12.4751 1.66744 12.4688L5.07799 12.0926C5.08043 12.3497 5.09594 12.6066 5.12448 12.8621C5.14164 13.0396 5.22042 13.2054 5.34713 13.3309L6.66784 14.6484C6.79338 14.775 6.95917 14.8537 7.13659 14.8711C7.39071 14.8995 7.64612 14.915 7.90182 14.9176L7.5276 18.3238C7.52136 18.3817 7.52861 18.4403 7.54879 18.4949C7.56897 18.5495 7.60153 18.5987 7.64392 18.6386C7.6863 18.6786 7.73736 18.7081 7.79308 18.725C7.84881 18.7419 7.90769 18.7456 7.9651 18.7359C9.01237 18.568 11.4557 17.9496 12.385 15.8258C12.7131 15.0731 12.7803 14.1941 12.7046 13.3152C13.2935 12.8999 13.8452 12.4341 14.3534 11.9231C17.2264 9.06446 19.2085 3.8961 18.6577 1.49454ZM11.487 8.5129C11.2246 8.25072 11.0459 7.91663 10.9735 7.55288C10.901 7.18913 10.9381 6.81207 11.08 6.46939C11.2219 6.12671 11.4622 5.8338 11.7705 5.62772C12.0789 5.42163 12.4415 5.31164 12.8124 5.31164C13.1833 5.31164 13.5458 5.42163 13.8542 5.62772C14.1626 5.8338 14.4029 6.12671 14.5448 6.46939C14.6866 6.81207 14.7237 7.18913 14.6512 7.55288C14.5788 7.91663 14.4001 8.25072 14.1378 8.5129C13.9638 8.68711 13.7572 8.82531 13.5298 8.91961C13.3023 9.01391 13.0586 9.06245 12.8124 9.06245C12.5662 9.06245 12.3224 9.01391 12.095 8.91961C11.8675 8.82531 11.6609 8.68711 11.487 8.5129Z"
+                                    fill="#EF6239"
+                                  />
+                                  <path
+                                    d="M6.57812 15.6027C6.36406 15.8172 6.0207 15.9008 5.60742 15.9723C4.67891 16.1305 3.85898 15.3281 4.02578 14.3895C4.08945 14.0336 4.27773 13.5348 4.39492 13.4176C4.42054 13.3925 4.43759 13.3599 4.44365 13.3245C4.44971 13.2892 4.44448 13.2528 4.42869 13.2206C4.41291 13.1884 4.38738 13.162 4.35572 13.1451C4.32406 13.1282 4.28789 13.1217 4.25234 13.1266C3.73311 13.1901 3.25005 13.4255 2.88008 13.7953C1.96172 14.7145 1.875 18.125 1.875 18.125C1.875 18.125 5.2875 18.0383 6.20586 17.1191C6.57682 16.7495 6.81253 16.2657 6.875 15.7457C6.88945 15.5824 6.69062 15.4852 6.57812 15.6027Z"
+                                    fill="#EF6239"
+                                  />
+                                </svg>
+                              )}
                             </p>
                             <div
                               className={`align-items-center ${styles.cardContent}`}
