@@ -1,25 +1,17 @@
 "use client";
-import React, { useState, useEffect } from "react";
 import SubHeader from "../../_components/SubHeader";
-import Sidebar from "../../_components/sidebar";
-import Page from '../product-page/page'
-import { useRouter } from "next/navigation";
+import Page from '../product-page/page';
 
 const layout = () => {
 
   return (
-    <div className="container">
+    <div className="container-lg">
       <SubHeader />
-      <div className="d-flex ">
-        {/* <Sidebar  /> */}
-       <Page />
+      <div className="d-flex">
+        <Page />
       </div>
     </div>
   );
 };
 
 export default layout;
-
-
-
-

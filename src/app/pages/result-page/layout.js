@@ -4,7 +4,7 @@ import Sidebar from "../../_components/sidebar";
 
 const layout = ({ children }) => {
   return (
-    <div className="container">
+    <div className="container-lg">
       {/* <SubHeader /> */}
       <div className="d-flex mt-5">
         {/* <Sidebar /> */}

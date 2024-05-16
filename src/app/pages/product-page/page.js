@@ -31,7 +31,7 @@ const ProductPage = () => {
   const [products, setProducts] = useState([]);
   const [activeButton, setActiveButton] = useState("");
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [displayedProductsCount, setDisplayedProductsCount] = useState(8);
+  const [displayedProductsCount, setDisplayedProductsCount] = useState(10);
   const [nextPageUrl, setNextPageUrl] = useState(null);
   const [totalPages, setTotalPages] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -276,10 +276,28 @@ const ProductPage = () => {
     };
   }, []);
 
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  function truncateString(str, maxLength) {
+    if (str == null) {
+      return "";
+    }
+    if (typeof str !== "string" || !str.length) {
+      return str;
+    }
+    if (str.length > maxLength) {
+      return str.substring(0, maxLength) + "...";
+    } else {
+      return str;
+    }
+  }
+
   return (
     <main className="product-page d-flex ">
       <div>
-        <Sidebar/>
+        <Sidebar />
       </div>
       <section className="w-100">
         <div className="w-100">
@@ -360,91 +378,80 @@ const ProductPage = () => {
             </div>
           ) : products.length ? (
             <>
-              <div className="popularproduct">
-                <div className="">
-                  <div className="productmain d-flex align-items-center  flex-wrap">
-                    {products.length &&
-                      products.slice(0, displayedProductsCount).map((data) => {
-                        return (
-                          <div
-                            key={data.id}
-                            onClick={() => productHandler(data.id)}
-                            className="product1"
+              <div className="productMainCard d-flex align-items-center justify-content-left flex-wrap mt-3">
+                {products.length &&
+                  products.slice(0, displayedProductsCount).map((data) => {
+                    return (
+                      <div
+                        key={data.id}
+                        onClick={() => productHandler(data.id)}
+                        className="product_card"
+                      >
+                        <Image
+                          src={data.primary_image}
+                          alt="product"
+                          className="product_image_for_popular_products"
+                          width={100}
+                          height={100}
+                          layout="responsive"
+                        />
+                        <div
+                          className="favoutite"
+                          onClick={() => toggleHeartColor(data.id)}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill={getHeartFillColor(data.id)}
+                            className="bi bi-heart-fill"
+                            viewBox="0 0 16 16"
                           >
-                            <Image
-                              id="productimg"
-                              src={data.primary_image}
-                              alt="product"
-                              width={300}
-                              height={200}
+                            <path
+                              fillRule="evenodd"
+                              d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
                             />
-                            <div
-                              className="favoutite"
-                              onClick={() => toggleHeartColor(data.id)}
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                fill={getHeartFillColor(data.id)}
-                                className="bi bi-heart-fill"
-                                viewBox="0 0 16 16"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
-                                />
-                              </svg>
-                            </div>
-                            <div className="product-description">
-                              <p>{truncateTitle(data.title)}</p>
-                              <div className="d-flex align-items-center justify-content-between">
-                                <div className="prices">
-                                  <h5>
-                                    <span>Rs {data.rent_per_day}</span>/day
-                                  </h5>
-                                  <h6>
-                                    {" "}
-                                    <svg
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M20 10.4167C20 15.8445 13.6 21.5 12 21.5C10.4 21.5 4 15.8445 4 10.4167C4 6.04441 7.58172 2.5 12 2.5C16.4183 2.5 20 6.04441 20 10.4167Z"
-                                        stroke="#717171"
-                                        strokeWidth="1.5"
-                                      />
-                                      <circle
-                                        cx="3"
-                                        cy="3"
-                                        r="3"
-                                        transform="matrix(-1 0 0 1 15 7)"
-                                        stroke="#717171"
-                                        strokeWidth="1.5"
-                                      />
-                                    </svg>
-                                    {data.seller.address}
-                                  </h6>
-                                </div>
-                                <button>Rent</button>
-                              </div>
+                          </svg>
+                        </div>
+                        <div className="product-description">
+                          <p>{capitalizeFirstLetter(truncateString(data.title, 15))}</p>
+                          <div className="prices">
+                            <h5>
+                              <span>Rs {data.rent_per_day}</span>/day
+                            </h5>
+                            <div className="d-flex align-items-center justify-content-between ">
+                              <h6>
+                                {" "}
+                                <svg
+                                  width="12"
+                                  height="12"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M20 10.4167C20 15.8445 13.6 21.5 12 21.5C10.4 21.5 4 15.8445 4 10.4167C4 6.04441 7.58172 2.5 12 2.5C16.4183 2.5 20 6.04441 20 10.4167Z"
+                                    stroke="#717171"
+                                    strokeWidth="1.5"
+                                  />
+                                  <circle
+                                    cx="3"
+                                    cy="3"
+                                    r="3"
+                                    transform="matrix(-1 0 0 1 15 7)"
+                                    stroke="#717171"
+                                    strokeWidth="1.5"
+                                  />
+                                </svg>
+                                {truncateString(data.seller.address, 36)}
+                              </h6>
+                              <button>Rent</button>
                             </div>
                           </div>
-                        );
-                      })}
-                  </div>
-                  {/* 
-              {window.innerWidth < 768 && (
-                <div className="loadmore">
-                  {!allProductsDisplayed && (
-                    <button onClick={loadMoreProducts}>Load more</button>
-                  )}
-                </div>
-              )} */}
-                </div>
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
               <nav aria-label="Page navigation example">
                 <ul className="pagination">

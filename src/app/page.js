@@ -195,6 +195,12 @@ const Page = () => {
   }, []);
 
   function truncateString(str, maxLength) {
+    if (str == null) {
+      return "";
+    }
+    if (typeof str !== "string" || !str.length) {
+      return str;
+    }
     if (str.length > maxLength) {
       return str.substring(0, maxLength) + "...";
     } else {
@@ -217,7 +223,7 @@ const Page = () => {
               <div className="rentalspool_details_main_page">
                 Get what you need, Rent what you have, All through Rentalspool!
               </div>
-              <button className="start_now_btn bg-primary">
+              <button className="start_now_btn bg-primary">Start Now{" "}
                 <svg
                   width="24"
                   height="24"
@@ -360,13 +366,12 @@ const Page = () => {
                 </div>
                 <div className="product-description">
                   <p>{capitalizeFirstLetter(truncateString(data.title, 15))}</p>
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div className="prices">
-                      <h5>
-                        <span>Rs {data.rent_per_day}</span>/day
-                      </h5>
-                      <div className="d-flex align-items-center justify-content-between ">
-                        <h6>
+                  <div className="prices">
+                    <h5>
+                      <span>Rs {data.rent_per_day}</span>/day
+                    </h5>
+                    <div className="d-flex align-items-center justify-content-between ">
+                      <h6>
                         {" "}
                         <svg
                           width="12"
@@ -392,7 +397,6 @@ const Page = () => {
                         {truncateString(data.seller.address, 36)}
                       </h6>
                       <button>Rent</button>
-                        </div>
                     </div>
                   </div>
                 </div>

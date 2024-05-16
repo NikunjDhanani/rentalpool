@@ -1,12 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { useSelector, useDispatch } from "react-redux";
 import { Togglesubcategories } from "@/feature/SubcatagoriesId";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 const SubHeader = () => {
   const dispatch = useDispatch();
-  const Value = useSelector((state) => state.subcatagoriesid.value);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showAllCategories, setShowAllCategories] = useState(false);
@@ -113,8 +112,8 @@ const SubHeader = () => {
           <div className="offcanvas-header">
             <div>
               <svg
-              data-bs-dismiss="offcanvas"
-              aria-label="Close"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"
                 width="17"
                 height="10"
                 viewBox="0 0 17 10"
@@ -171,21 +170,21 @@ const SubHeader = () => {
                 <div className="collapse show" id="collapseExample">
                   <div className="card card-body border-0 p-0 filter-div1">
                     <ul className="list-unstyled mb-0">
-                    {categories
-                  .slice(0, showAllCategories ? categories.length : 5)
-                  .map((category) => (
-                    <li
-                      key={category.id}
-                      className={`${selectedCategory === category.id ? 'filter-div1-current' : ''}`}
-                      onClick={() => handleCategorySelect(category.id)}
-                    >
-                      {category.title}
-                    </li>
-                  ))}
-                {!showAllCategories && categories.length > 5 && (
-                  <span onClick={toggleShowAllCategories}>See all</span>
-                )}
-                </ul>
+                      {categories
+                        .slice(0, showAllCategories ? categories.length : 5)
+                        .map((category) => (
+                          <li
+                            key={category.id}
+                            className={`${selectedCategory === category.id ? 'filter-div1-current' : ''}`}
+                            onClick={() => handleCategorySelect(category.id)}
+                          >
+                            {category.title}
+                          </li>
+                        ))}
+                      {!showAllCategories && categories.length > 5 && (
+                        <span onClick={toggleShowAllCategories}>See all</span>
+                      )}
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -222,38 +221,38 @@ const SubHeader = () => {
                 <div className="collapse show" id="collapseExample2">
                   <div className="card card-body border-0 p-0 filter-div2">
                     {selectedCategory && (
-                <div>
-                  {categories
-                    .find((category) => category.id === selectedCategory)
-                    ?.sub_categories?.slice(
-                      0,
-                      showAllSubcategories ? categories.length : 5
-                    )
-                    .map((subCategory) => (
-                      <div key={subCategory.id} className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                          onClick={() => StoresubCatagoriesId(subCategory.id)}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefault"
-                        >
-                          {subCategory.title}
-                        </label>
+                      <div>
+                        {categories
+                          .find((category) => category.id === selectedCategory)
+                          ?.sub_categories?.slice(
+                            0,
+                            showAllSubcategories ? categories.length : 5
+                          )
+                          .map((subCategory) => (
+                            <div key={subCategory.id} className="form-check">
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                value=""
+                                id="flexCheckDefault"
+                                onClick={() => StoresubCatagoriesId(subCategory.id)}
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="flexCheckDefault"
+                              >
+                                {subCategory.title}
+                              </label>
+                            </div>
+                          ))}
                       </div>
-                    ))}
-                </div>
-              )}
-              {selectedCategory &&
-                !showAllSubcategories &&
-                categories.find((category) => category.id === selectedCategory)
-                  ?.sub_categories?.length > 5 && (
-                  <span onClick={toggleShowAllSubcategories}>See all</span>
-                )}
+                    )}
+                    {selectedCategory &&
+                      !showAllSubcategories &&
+                      categories.find((category) => category.id === selectedCategory)
+                        ?.sub_categories?.length > 5 && (
+                        <span onClick={toggleShowAllSubcategories}>See all</span>
+                      )}
                   </div>
                 </div>
               </div>

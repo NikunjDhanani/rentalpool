@@ -21,11 +21,16 @@ const ProductDetailPage = () => {
   const [product, setProduct] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [sendInquryDetails, setSendInquryDetails] = useState({});
+  const [localStorageData, setLocalStorageData] = useState("");
 
-  const profile = localStorage.getItem("profile");
-  const authToken = localStorage.getItem("authToken");
   const owner = "Owner's Profile";
+
+  useEffect(() => {
+    if (localStorage) {
+      setLocalStorageData(localStorage.getItem("authToken"))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const validationSchema = Yup.object().shape({
     fullName: Yup.string().required("Full Name is required."),
@@ -207,12 +212,19 @@ const ProductDetailPage = () => {
   };
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState(null);
 
   const handleButtonClick = () => {
     setModalOpen(true);
   };
 
-  const currentUrl = window.location.href;
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentUrl(window.location.href);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleCopyToClipboard = () => {
     navigator.clipboard
       .writeText(currentUrl)
@@ -247,7 +259,7 @@ const ProductDetailPage = () => {
           method: "POST",
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Token ${authToken}`,
+            Authorization: `Token ${localStorageData}`,
           },
           data: formData,
         });
@@ -256,14 +268,31 @@ const ProductDetailPage = () => {
         console.error(error);
       }
     }
-    console.log(storeId, id, "jfjsdfjsdfs");
   };
+
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  function truncateString(str, maxLength) {
+    if (str == null) {
+      return "";
+    }
+    if (typeof str !== "string" || !str.length) {
+      return str;
+    }
+    if (str.length > maxLength) {
+      return str.substring(0, maxLength) + "...";
+    } else {
+      return str;
+    }
+  }
 
   return (
     <main>
       <div>
         <SubHeader />
-        <div className="product-detail container">
+        <div className="product-detail container-lg">
           <div className="product-detail-container">
             <div className="product-image-column">
               <div className="product-image-container">
@@ -798,23 +827,23 @@ const ProductDetailPage = () => {
       </div>
 
       <div className="related-imagediv">
-        <div className="container">
+        <div className="container-lg">
           <h1>Related Products</h1>
-
-          <div className="productmain related-product d-flex align-items-center flex-wrap">
+          <div className="productMainCard d-flex align-items-center justify-content-left flex-wrap mt-3">
             {filteredProducts.map((data) => {
               return (
                 <div
                   key={data.id}
-                  className="product1"
                   onClick={() => productHandler(data.id)}
+                  className="product_card"
                 >
                   <Image
-                    id="productimg"
                     src={data.primary_image}
                     alt="product"
-                    width={300}
-                    height={200}
+                    className="product_image_for_popular_products"
+                    width={100}
+                    height={100}
+                    layout="responsive"
                   />
                   <div
                     className="favoutite"
@@ -835,12 +864,12 @@ const ProductDetailPage = () => {
                     </svg>
                   </div>
                   <div className="product-description">
-                    <p>{truncateTitle(data.title)}</p>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div className="prices">
-                        <h5>
-                          <span>Rs {data.rent_per_day}</span>/day
-                        </h5>
+                    <p>{capitalizeFirstLetter(truncateString(data?.title, 15))}</p>
+                    <div className="prices">
+                      <h5>
+                        <span>Rs {data.rent_per_day}</span>/day
+                      </h5>
+                      <div className="d-flex align-items-center justify-content-between ">
                         <h6>
                           {" "}
                           <svg
@@ -864,10 +893,10 @@ const ProductDetailPage = () => {
                               strokeWidth="1.5"
                             />
                           </svg>
-                          {data.seller.address}
+                          {truncateString(data?.seller?.address, 36)}
                         </h6>
+                        <button>Rent</button>
                       </div>
-                      <button>Rent</button>
                     </div>
                   </div>
                 </div>
@@ -1027,6 +1056,7 @@ const ProductDetailPage = () => {
           </div>
         </div>
       </div>
+
       <Modal show={modalOpen} onHide={() => setModalOpen(false)}>
         <div className="p-4">
           <p>URL: {currentUrl}</p>
