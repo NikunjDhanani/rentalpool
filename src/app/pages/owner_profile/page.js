@@ -25,8 +25,6 @@ const Oprofile = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const ownerId = searchParams.get("query");
-  const authToken = localStorage.getItem("authToken");
-  const profile = localStorage.getItem("profile");
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -108,6 +106,9 @@ const Oprofile = () => {
   };
 
   const handleFollowRequest = async () => {
+    const authToken = localStorage.getItem("authToken");
+    const profile = localStorage.getItem("profile");
+
     try {
       const response = await axios({
         url: `${process.env.NEXT_PUBLIC_BASE_URL}users/sendFollowRequest/`,
@@ -170,6 +171,8 @@ const Oprofile = () => {
   };
 
   const handleReportOwner = async () => {
+    const authToken = localStorage.getItem("authToken");
+
     const userId =
       localStorage.getItem("profile") &&
       JSON.parse(localStorage.getItem("profile"))?.id;
@@ -196,6 +199,8 @@ const Oprofile = () => {
   };
 
   const handleBlockOwner = async () => {
+    const authToken = localStorage.getItem("authToken");
+
     const userId =
       localStorage.getItem("profile") &&
       JSON.parse(localStorage.getItem("profile"))?.id;

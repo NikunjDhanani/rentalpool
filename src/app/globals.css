@@ -2307,6 +2307,9 @@ p {
 .chat-part {
   position: absolute;
   bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
 }
 
 .incomeing-message {
@@ -2385,8 +2388,6 @@ p {
 .chat-box-message-input {
   color: #757575;
   background-color: white;
-  margin-bottom: 16px;
-  margin-top: 8px;
   border-radius: 30px;
   border: none;
   padding: 0px 24px;
@@ -2401,9 +2402,6 @@ p {
   cursor: pointer;
   background-color: #046BFB;
   position: relative;
-  margin-right: 12px;
-  margin-bottom: 16px;
-  margin-top: 8px;
 }
 
 .send-message-arrow {

@@ -6,6 +6,9 @@ import ReactStarRating from "react-star-ratings-component";
 import { io } from "socket.io-client";
 import styles from "../../_components/profileEditCompo/myPlans/planPayment/planPayment.module.css";
 import Image from "next/image";
+
+import useWebSocket, { ReadyState } from "react-use-websocket";
+
 const ChatBox = () => {
   const [senderMessageDetails, setSenderMessageDetails] = useState([]);
   const [senderUserDerails, setSenderUserDerails] = useState([]);
@@ -14,7 +17,36 @@ const ChatBox = () => {
   const [textValue, setTextValue] = useState("");
   const [textMessage, setTextMessage] = useState("");
 
-  const [chatMessage, setChatMessage] = useState("");
+  const [chatMessage, setChatMessage] = useState([]);
+  const [socketUrl, setSocketurl] = useState(null);
+
+  const SOCKET_URL = "wss://rentalspool.com/ws/chat/43/";
+  const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);
+
+  useEffect(() => {
+    if (readyState === WebSocket.OPEN) {
+      // WebSocket is connected, send the message
+      sendMessage(
+        JSON.stringify({
+          command: "fetch_old_chat",
+          user_id: 43,
+        })
+      );
+    }
+  }, [readyState, sendMessage]);
+
+  useEffect(() => {
+    if (lastMessage !== null) {
+      // Handle received message
+      const messageData = JSON.parse(lastMessage.data);
+      setChatMessage([...chatMessage, ...messageData?.content]);
+      console.log(messageData);
+    }
+  }, [lastMessage]);
+
+  useEffect(() => {
+    setSocketurl("wss://rentalspool.com/ws/chat/46/");
+  }, []);
 
   const handleClose = () => setOpenModal(false);
 
@@ -43,10 +75,9 @@ const ChatBox = () => {
               : senderUserDerails?.buyer?.id,
         },
       });
-      if (response.data.amount > 0) {
-        handlePayment(response.data);
-      } else {
-        handlePaymentCreateZeroOrder(response.data);
+      console.log("response", response);
+      if (response?.status === 200) {
+        setTextMessage("");
       }
     } catch (error) {
       console.error(error);
@@ -74,37 +105,6 @@ const ChatBox = () => {
       console.error(error);
     }
   };
-
-  const onConnect = () => {
-    console.log("Connect");
-  };
-
-  useEffect(() => {
-    const socket = io("wss://rentalspool.com/ws/chat/43/", {
-      autoConnect: false,
-    });
-
-    socket.connect();
-    socket.on("connect", onConnect);
-    socket.on("error", (error) => {
-      console.error("Socket connection error:", error);
-    });
-
-    // Emit the message to the server
-    socket.emit("fetch_old_chat", {
-      command: "fetch_old_chat",
-      user_id: 43,
-    });
-
-    socket.on("fetchallchat", (data) => {
-      setChatMessage(data.message);
-    });
-
-    // Clean up the socket connection when the component unmounts
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
 
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
@@ -138,7 +138,9 @@ const ChatBox = () => {
   };
 
   const handleSenderMessageDetails = (data) => {
+    console.log("DATA", data);
     setSenderUserDerails(data);
+    setSocketurl(`wss://rentalspool.com/ws/chat/${data.id}/`);
   };
 
   function isTodayOrFuture(dateString) {
@@ -253,8 +255,21 @@ const ChatBox = () => {
             </div>
           </div>
           <div className="chat-box">
-            <div className="chat-part">
-              <div className="d-flex justify-content-end">
+            <div className="chat-part w-100">
+              <div className="overflow-auto">
+                {chatMessage &&
+                  chatMessage.map((chat, i) => {
+                    return (
+                      <div className="d-flex" key={i}>
+                        <span className="incomeing-message">
+                          {chat.message}
+                        </span>
+                      </div>
+                    );
+                  })}
+              </div>
+
+              {/* <div className="d-flex justify-content-end">
                 <span className="bydefault-message">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -272,7 +287,7 @@ const ChatBox = () => {
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad.
                 </span>
-              </div>
+              </div> */}
               <div className="d-flex justify-content-between align-items-center">
                 <input
                   type="text"
@@ -281,7 +296,10 @@ const ChatBox = () => {
                   value={textMessage}
                   onChange={handleTypeMessage}
                 />
-                <div className="send-message" onClick={handleSendMessage}>
+                <div
+                  className="send-message"
+                  onClick={() => textMessage.trim() && handleSendMessage()}
+                >
                   <Image
                     className="send-message-arrow"
                     src="/assets/SendMassage.png"
